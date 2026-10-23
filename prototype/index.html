@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f0f0f0" />
+  <title>Loopline - offline music video studio</title>
+  <style>
+    @font-face { font-family: "Google Sans"; font-style: normal; font-weight: 400; src: url("../LooplineApp/Resources/Fonts/GoogleSans-Regular.ttf") format("truetype"); font-display: swap; }
+    @font-face { font-family: "Google Sans"; font-style: normal; font-weight: 500 600; src: url("../LooplineApp/Resources/Fonts/GoogleSans-Medium.ttf") format("truetype"); font-display: swap; }
+    @font-face { font-family: "Google Sans"; font-style: normal; font-weight: 700 900; src: url("../LooplineApp/Resources/Fonts/GoogleSans-Bold.ttf") format("truetype"); font-display: swap; }
+    @font-face { font-family: "Roboto Mono"; font-style: normal; font-weight: 300; src: url("../LooplineApp/Resources/Fonts/RobotoMono-Light.ttf") format("truetype"); font-display: swap; }
+
+    :root {
+      color-scheme: light;
+      --bg: #f0f0f0;
+      --surface: #ffffff;
+      --surface-2: #e5e5e5;
+      --surface-3: #e0e0e0;
+      --ink: #1e1e1e;
+      --muted: #595959;
+      --dim: #595959;
+      --line: rgba(30,30,30, .11);
+      --mint: #34a853;
+      --mint-strong: #34a853;
+      --yellow: #fbbc04;
+      --orange: #ff7daf;
+      --red: #ea4335;
+      --blue: #4285f4;
+      --shadow: 0 22px 70px rgba(0,0,0,.32);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      background: radial-gradient(circle at 70% -10%, #26344e 0, transparent 32%), var(--bg);
+      color: var(--ink);
+      font-family: "Google Sans", system-ui, sans-serif;
+      letter-spacing: -.01em;
+    }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    .app-shell { display: grid; grid-template-columns: 250px minmax(0, 1fr); min-height: 100vh; }
+    .rail {
+      border-right: 1px solid var(--line);
+      background: rgba(7, 11, 20, .72);
+      padding: 27px 18px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+    }
+    .brand { display: flex; align-items: center; gap: 11px; padding: 0 8px; }
+    .brand-mark {
+      width: 30px; height: 30px; border-radius: 10px;
+      display: grid; place-items: center; color: #08120f; font-weight: 900;
+      background: conic-gradient(from 210deg, var(--mint), #d4f6aa, var(--orange), var(--mint));
+      box-shadow: 0 0 0 5px rgba(52,168,83,.08);
+    }
+    .brand-name { font-size: 16px; font-weight: 780; letter-spacing: -.04em; }
+    .brand-note { color: var(--dim); font-size: 10px; margin-top: 2px; letter-spacing: .08em; text-transform: uppercase; }
+    .rail-label { padding: 0 9px; color: var(--dim); font-size: 10px; text-transform: uppercase; letter-spacing: .13em; font-weight: 750; }
+    .nav { display: grid; gap: 5px; }
+    .nav button {
+      border: 0; background: transparent; color: var(--muted); text-align: left; padding: 11px 12px; border-radius: 11px;
+      display: flex; gap: 11px; align-items: center; font-size: 13px; transition: .18s ease;
+    }
+    .nav button:hover, .nav button.active { color: var(--ink); background: var(--surface-2); }
+    .nav-icon { width: 19px; text-align: center; color: var(--dim); font-size: 16px; }
+    .nav button.active .nav-icon { color: var(--mint); }
+    .project-mini { border: 1px solid var(--line); background: linear-gradient(145deg, rgba(52,168,83,.09), rgba(66,133,244,.04)); border-radius: 15px; padding: 13px; }
+    .project-mini-title { font-size: 12px; font-weight: 700; }
+    .project-mini-meta { color: var(--muted); font-size: 11px; margin-top: 5px; line-height: 1.4; }
+    .project-mini-row { display:flex; justify-content: space-between; align-items: center; margin-top: 12px; color: var(--dim); font-size: 10px; }
+    .storage-bar { height: 4px; background: #263044; border-radius: 9px; overflow: hidden; margin-top: 7px; }
+    .storage-bar span { display: block; height: 100%; width: 28%; background: var(--mint); border-radius: inherit; }
+    .rail-bottom { margin-top: auto; display: grid; gap: 8px; }
+    .offline-pill, .tag { display: inline-flex; align-items: center; gap: 7px; width: fit-content; border: 1px solid rgba(52,168,83,.23); background: rgba(52,168,83,.08); color: var(--mint); border-radius: 999px; font-size: 10px; font-weight: 700; padding: 7px 10px; letter-spacing: .04em; }
+    .offline-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 12px var(--mint); }
+    .main { min-width: 0; padding: 28px clamp(18px, 4vw, 56px) 44px; }
+    .topbar { display:flex; justify-content: space-between; align-items: flex-start; gap: 18px; margin-bottom: 24px; }
+    .eyebrow { color: var(--mint); font-size: 10px; letter-spacing: .15em; text-transform: uppercase; font-weight: 800; }
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: clamp(24px, 3vw, 36px); line-height: 1; letter-spacing: -.055em; margin-top: 8px; }
+    .subtitle { color: var(--muted); margin-top: 9px; font-size: 13px; line-height: 1.5; max-width: 610px; }
+    .top-actions { display:flex; align-items:center; gap: 10px; }
+    .icon-btn, .secondary-btn, .primary-btn, .soft-btn { border: 1px solid var(--line); color: var(--ink); background: var(--surface); border-radius: 11px; padding: 10px 13px; font-size: 12px; transition: .18s ease; }
+    .icon-btn { width: 38px; height: 38px; padding: 0; display: grid; place-items: center; color: var(--muted); }
+    .icon-btn:hover, .secondary-btn:hover, .soft-btn:hover { background: var(--surface-3); border-color: rgba(30,30,30,.23); }
+    .primary-btn { border-color: transparent; color: #06110e; background: var(--mint); font-weight: 800; box-shadow: 0 9px 26px rgba(61,196,156,.18); }
+    .primary-btn:hover { background: #a4f1d6; transform: translateY(-1px); }
+    .primary-btn.recording { background: var(--red); color: white; box-shadow: 0 9px 28px rgba(255,111,125,.2); }
+    .soft-btn { background: rgba(52,168,83,.08); color: var(--mint); border-color: rgba(52,168,83,.18); }
+    .mode-tabs { display:flex; gap: 4px; background: var(--surface); padding: 5px; border: 1px solid var(--line); border-radius: 14px; width: fit-content; margin-bottom: 22px; }
+    .mode-tabs button { border: 0; background: transparent; color: var(--muted); font-size: 12px; padding: 9px 17px; border-radius: 9px; }
+    .mode-tabs button:hover, .mode-tabs button.active { background: var(--surface-3); color: var(--ink); }
+    .mode-tabs button.active { box-shadow: inset 0 -2px var(--mint); }
+    .content-grid { display:grid; grid-template-columns: minmax(0, 1.45fr) minmax(285px, .72fr); gap: 16px; align-items: start; }
+    .stack { display:grid; gap: 16px; min-width: 0; }
+    .card { background: rgba(16,22,34,.82); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .card-header { display:flex; justify-content: space-between; gap: 12px; align-items: flex-start; padding: 17px 18px 14px; border-bottom: 1px solid var(--line); }
+    .card-title { font-size: 13px; font-weight: 760; }
+    .card-kicker { color: var(--muted); font-size: 11px; margin-top: 5px; line-height: 1.4; }
+    .card-body { padding: 17px 18px; }
+    .stage-card { overflow: hidden; }
+    .stage-topline { display:flex; justify-content: space-between; align-items:center; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+    .stage-label { display:flex; align-items:center; gap: 8px; font-size: 11px; color: var(--muted); }
+    .live-dot { width: 7px; height: 7px; background: var(--red); border-radius: 50%; box-shadow: 0 0 12px rgba(255,111,125,.9); }
+    .stage-size { color: var(--dim); font-size: 10px; }
+    .stage-grid { padding: 12px; display:grid; gap: 8px; grid-template-columns: repeat(2, minmax(0, 1fr)); background: #080c15; }
+    .tile { min-height: 156px; position:relative; border: 1px solid rgba(255,255,255,.13); border-radius: 11px; overflow:hidden; background: linear-gradient(145deg, #2c3a5a, #0e1421 73%); cursor: pointer; transition: .18s ease; }
+    .tile:hover, .tile.active { border-color: var(--mint); transform: translateY(-1px); }
+    .tile.active { box-shadow: inset 0 0 0 1px var(--mint), 0 0 0 3px rgba(52,168,83,.08); }
+    .tile:nth-child(2) { background: linear-gradient(145deg, #684b61, #161729 75%); }
+    .tile:nth-child(3) { background: linear-gradient(145deg, #405c67, #101a26 75%); }
+    .tile:nth-child(4) { background: linear-gradient(145deg, #776548, #181820 75%); }
+    .tile:nth-child(5) { background: linear-gradient(145deg, #3d6b59, #101b20 75%); }
+    .tile:nth-child(6) { background: linear-gradient(145deg, #604e7a, #171529 75%); }
+    .tile::before { content: ""; position:absolute; inset: 17% 28% 20%; border-radius: 50% 50% 43% 43%; background: radial-gradient(circle at 50% 25%, rgba(255,237,202,.86) 0 15%, transparent 16%), linear-gradient(160deg, rgba(223,173,138,.75), rgba(62,40,56,.9)); filter: blur(.2px); opacity: .68; }
+    .tile::after { content: ""; position:absolute; width: 80px; height: 25px; left: 25%; bottom: 0; border-radius: 50% 50% 0 0; background: rgba(14,18,27,.8); }
+    .tile-empty { display:grid; place-items:center; background: repeating-linear-gradient(135deg, #121927, #121927 9px, #101522 9px, #101522 18px); }
+    .tile-empty::before, .tile-empty::after { display:none; }
+    .plus { width: 36px; height: 36px; border-radius: 50%; display:grid; place-items:center; border: 1px dashed rgba(255,255,255,.3); color: var(--muted); font-size: 23px; font-weight: 250; }
+    .tile-top, .tile-bottom { position:absolute; z-index: 2; left: 10px; right: 10px; display:flex; justify-content:space-between; align-items:center; }
+    .tile-top { top: 9px; }
+    .tile-bottom { bottom: 9px; }
+    .tile-name { font-size: 10px; font-weight: 780; text-shadow: 0 1px 8px rgba(0,0,0,.55); }
+    .tile-index { color: rgba(255,255,255,.66); font-size: 10px; }
+    .tile-badge { background: rgba(6,10,18,.68); border: 1px solid rgba(255,255,255,.13); border-radius: 5px; padding: 3px 5px; color: var(--mint); font-size: 9px; }
+    .stage-footer { display:flex; justify-content:space-between; align-items:center; gap:12px; padding: 13px 16px 15px; }
+    .stage-footer-note { color: var(--muted); font-size: 11px; line-height: 1.35; }
+    .stage-footer-note span { color: var(--ink); font-weight: 700; }
+    .control-card { padding: 0; }
+    .controls { display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 9px; padding: 13px 16px 16px; }
+    .control { border: 1px solid var(--line); background: rgba(255,255,255,.025); border-radius: 11px; padding: 10px; min-width: 0; }
+    .control-label { display:flex; justify-content:space-between; gap: 8px; color: var(--muted); font-size: 10px; margin-bottom: 8px; }
+    .control-value { color: var(--ink); font-weight: 800; }
+    .control select, .control input[type="number"] { color: var(--ink); background: transparent; border: 0; outline:0; width:100%; font-weight: 750; font-size: 13px; padding: 0; }
+    .range { width:100%; accent-color: var(--mint); }
+    .route-row { display:flex; align-items:center; gap:8px; }
+    .route-dot { width: 8px; height:8px; border-radius:50%; background: var(--mint); flex:none; }
+    .route-name { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:12px; font-weight:750; }
+    .route-latency { margin-left:auto; color:var(--yellow); font-size:10px; white-space:nowrap; }
+    .timeline-wrap { padding: 0 16px 16px; }
+    .timeline-head { display:flex; justify-content:space-between; align-items:center; padding: 13px 0 10px; }
+    .timeline-head h3 { font-size: 12px; }
+    .timeline-head span { color: var(--muted); font-size: 10px; }
+    .time-ruler { height: 20px; margin-left: 150px; display:flex; justify-content:space-between; color: var(--dim); font-size: 9px; border-bottom: 1px solid var(--line); }
+    .lanes { position:relative; }
+    .playhead { position:absolute; top: -1px; bottom: 0; left: 38%; width: 1px; background: var(--mint); z-index: 4; box-shadow: 0 0 9px var(--mint); pointer-events:none; }
+    .playhead::before { content:""; position:absolute; top:-4px; left:-4px; width:9px; height:9px; background:var(--mint); border-radius:50%; }
+    .lane { min-height: 57px; display:grid; grid-template-columns: 150px minmax(0,1fr); border-bottom: 1px solid rgba(30,30,30,.07); }
+    .lane:last-child { border-bottom:0; }
+    .lane-info { padding: 10px 9px 9px 0; display:flex; gap: 8px; align-items:center; min-width:0; }
+    .lane-color { width: 8px; height: 29px; border-radius: 4px; background: var(--mint); flex:none; }
+    .lane-meta { min-width:0; }
+    .lane-name { font-size: 11px; font-weight: 760; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .lane-sub { color:var(--dim); font-size:9px; margin-top: 3px; }
+    .lane-actions { margin-left:auto; display:flex; gap: 3px; }
+    .tiny-btn { width: 22px; height:22px; padding:0; border-radius:6px; border: 1px solid var(--line); background:transparent; color:var(--dim); font-size: 10px; }
+    .tiny-btn.active { color: var(--mint); background: rgba(52,168,83,.1); border-color: rgba(52,168,83,.23); }
+    .wave { align-self:center; height: 36px; border-radius:7px; position:relative; overflow:hidden; background: repeating-linear-gradient(90deg, transparent 0, transparent 11.9%, rgba(255,255,255,.035) 12%, transparent 12.2%); display:flex; align-items:center; gap: 2px; padding: 0 7px; }
+    .wave::before { content:""; position:absolute; left:0; right:0; top:50%; height:1px; background: rgba(255,255,255,.08); }
+    .bar { width: 3px; border-radius: 5px; background: var(--mint); opacity:.7; min-height:3px; }
+    .bar.dim { background: var(--blue); }
+    .bar.orange { background: var(--orange); }
+    .sync-card { border-color: rgba(52,168,83,.2); background: linear-gradient(145deg, rgba(52,168,83,.08), rgba(16,22,34,.9)); }
+    .sync-status { display:flex; gap: 11px; align-items:flex-start; }
+    .sync-orb { width: 31px; height: 31px; border-radius: 10px; display:grid; place-items:center; color:var(--mint); background:rgba(52,168,83,.11); font-weight:900; }
+    .sync-copy { min-width: 0; }
+    .sync-copy strong { display:block; font-size: 12px; }
+    .sync-copy p { color:var(--muted); font-size:11px; line-height:1.45; margin-top: 4px; }
+    .confidence { display:flex; align-items:center; gap: 8px; margin-top: 13px; }
+    .confidence-track { height: 6px; background:#253243; flex:1; border-radius: 99px; overflow:hidden; }
+    .confidence-track span { display:block; width: 91%; height:100%; background:linear-gradient(90deg,var(--mint-strong),var(--mint)); border-radius:inherit; }
+    .confidence-label { color:var(--mint); font-size: 10px; font-weight: 800; }
+    .offset-box { display:flex; justify-content:space-between; align-items:center; border-top: 1px solid var(--line); margin-top: 15px; padding-top: 12px; }
+    .offset-copy { color:var(--muted); font-size:10px; }
+    .offset-copy b { color:var(--ink); font-size:13px; display:block; margin-top:3px; }
+    .nudge-controls { display:flex; gap:5px; }
+    .nudge-controls button { width: 28px; height: 28px; border-radius:8px; background: var(--surface-3); border: 1px solid var(--line); color:var(--ink); }
+    .inspector { padding: 17px; }
+    .inspector-title { display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px; }
+    .inspector-title h3 { font-size:13px; }
+    .inspector-title span { color: var(--mint); font-size:10px; }
+    .avatar-row { display:flex; align-items:center; gap: 11px; padding-bottom: 16px; border-bottom:1px solid var(--line); }
+    .avatar { width: 38px; height:38px; border-radius: 12px; background: linear-gradient(145deg, var(--mint), #306b65); display:grid; place-items:center; color:#0b1615; font-size:13px; font-weight:900; }
+    .avatar-copy strong { display:block; font-size:12px; }
+    .avatar-copy span { display:block; color:var(--muted); font-size:10px; margin-top:3px; }
+    .meter { margin-left:auto; display:flex; align-items:flex-end; gap:2px; height:20px; }
+    .meter i { display:block; width:3px; border-radius: 2px; background:var(--mint); opacity:.85; }
+    .meter i:nth-child(1) { height: 7px; opacity:.35; }.meter i:nth-child(2) { height: 12px; opacity:.55; }.meter i:nth-child(3) { height: 17px; }.meter i:nth-child(4) { height: 10px; opacity:.65; }.meter i:nth-child(5) { height: 5px; opacity:.3; }
+    .inspector-block { padding: 14px 0; border-bottom:1px solid var(--line); }
+    .inspector-block:last-child { border-bottom:0; padding-bottom:0; }
+    .field-row { display:flex; justify-content:space-between; align-items:center; gap: 12px; margin-bottom: 11px; }
+    .field-label { color:var(--muted); font-size:11px; }
+    .field-value { color:var(--ink); font-size:11px; font-weight:750; }
+    .toggle { width: 31px; height: 18px; border-radius:99px; background:#293449; position:relative; border: 0; padding:0; }
+    .toggle::after { content:""; position:absolute; top:3px; left:3px; height:12px; width:12px; border-radius:50%; background:#8390a3; transition:.18s ease; }
+    .toggle.on { background:rgba(61,196,156,.55); }.toggle.on::after { left:16px; background:var(--mint); }
+    .filter-pills { display:flex; gap: 5px; flex-wrap:wrap; }
+    .filter-pills button { color:var(--muted); border:1px solid var(--line); border-radius:7px; background:transparent; padding:6px 8px; font-size:10px; }
+    .filter-pills button.active { color:var(--mint); border-color:rgba(52,168,83,.3); background:rgba(52,168,83,.08); }
+    .export-grid { display:grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .72fr); gap:16px; }
+    .export-preview { min-height: 410px; display:grid; place-items:center; padding: 24px; background: radial-gradient(circle at 50% 20%, #30415e, transparent 36%), #090d17; border-radius: var(--radius); border:1px solid var(--line); }
+    .export-phone { width:min(100%, 310px); aspect-ratio: 9/16; border-radius: 20px; border: 7px solid #0e1420; box-shadow: 0 18px 50px #0008; overflow:hidden; display:grid; grid-template-columns:repeat(2,1fr); gap: 3px; background:#0a101b; }
+    .export-phone div { background: linear-gradient(145deg,#6b5169,#171b2a); position:relative; }.export-phone div:nth-child(2){background:linear-gradient(145deg,#40646b,#121926)}.export-phone div:nth-child(3){background:linear-gradient(145deg,#6e6549,#1a1920)}.export-phone div:nth-child(4){background:linear-gradient(145deg,#3e6a5c,#101c20)}
+    .export-phone div::after { content:""; position:absolute; width:70%; aspect-ratio:1; left:15%; top:24%; border-radius:50%; background:rgba(241,192,154,.6); box-shadow: 0 60px 0 22px rgba(20,24,32,.55); }
+    .settings-list { display:grid; gap: 10px; }
+    .setting-row { display:grid; gap: 6px; padding-bottom: 13px; border-bottom: 1px solid var(--line); }
+    .setting-row label { color:var(--muted); font-size:10px; font-weight:700; letter-spacing:.03em; }
+    .setting-row select { background:var(--surface-2); color:var(--ink); border:1px solid var(--line); padding:10px; border-radius:9px; outline:none; font-size:12px; }
+    .export-note { display:flex; gap:8px; color:var(--muted); font-size:10px; line-height:1.45; padding: 11px 0; }
+    .export-note b { color: var(--mint); }
+    .render-panel { display:grid; gap: 13px; }
+    .render-progress { display:none; }
+    .render-progress.show { display:block; }
+    .progress-top { display:flex; justify-content:space-between; color:var(--muted); font-size:10px; margin-bottom:7px; }
+    .progress-top b { color:var(--mint); }
+    .progress-track { height: 7px; border-radius:99px; background:#263243; overflow:hidden; }.progress-track span { display:block; width:0; height:100%; background:linear-gradient(90deg,var(--mint-strong),var(--mint)); border-radius:inherit; transition:width .4s ease; }
+    .completion { display:none; border:1px solid rgba(52,168,83,.25); background:rgba(52,168,83,.08); border-radius:12px; padding:12px; }.completion.show { display:block; }
+    .completion strong { display:block; font-size:12px; }.completion p { color:var(--muted); font-size:10px; margin-top:5px; line-height:1.45; }
+    .completion-actions { display:flex; gap:7px; margin-top:10px; }.completion-actions button { flex:1; padding:8px; font-size:10px; }
+    .toast { position:fixed; bottom:22px; left:50%; transform:translate(-50%, 20px); opacity:0; pointer-events:none; background:#e7fff6; color:#08120f; border-radius:999px; padding:10px 15px; font-size:11px; font-weight:800; box-shadow:0 14px 36px #0008; transition:.25s ease; z-index:20; }.toast.show { opacity:1; transform:translate(-50%,0); }
+    .mode-panel { display:none; }.mode-panel.active { display:block; }
+    .small-copy { color:var(--muted); font-size:11px; line-height:1.5; }
+    /* The validation surface is intentionally an iPhone-sized portrait app, not a desktop dashboard. */
+    .app-shell { display:block; width:100%; max-width:430px; min-height:860px; margin:0 auto; overflow:hidden; border:1px solid var(--line); border-radius:32px; background:var(--surface); box-shadow:0 28px 90px rgba(0,0,0,.48); }
+    .rail { position:sticky; top:0; z-index:10; min-height:65px; flex-direction:row; justify-content:space-between; align-items:center; padding:12px 15px; border-right:0; border-bottom:1px solid var(--line); }
+    .brand { padding:0; }
+    .rail-label, .project-mini, .rail-bottom { display:none; }
+    .nav { display:flex; width:auto; }
+    .nav button { width:38px; height:38px; justify-content:center; padding:12px 0; }
+    .nav button span:not(.nav-icon) { display:none; }
+    .main { padding:22px 14px 34px; }
+    .topbar { display:block; }
+    .top-actions { margin-top:16px; }
+    .top-actions .offline-pill { margin-right:auto; }
+    .content-grid, .export-grid { grid-template-columns:1fr; }
+    .controls { grid-template-columns:repeat(2, minmax(0,1fr)); }
+    .tile { min-height:118px; }
+    .lane { grid-template-columns:113px minmax(0,1fr); }
+    .time-ruler { margin-left:113px; }
+    .lane-actions { display:none; }
+    .stage-grid { padding:8px; gap:5px; }
+    .stage-footer { padding-inline:12px; }
+    .footer-note { margin-top:25px; color:var(--dim); font-size:10px; text-align:center; }
+    @media (min-width: 641px) {
+      body { padding:20px; }
+    }
+    @media (max-width: 980px) {
+      .app-shell { grid-template-columns: 74px minmax(0,1fr); }
+      .rail { padding:22px 10px; align-items:center; }.brand { padding:0; }.brand-copy, .rail-label, .project-mini, .nav button span:not(.nav-icon), .rail-bottom .small-copy { display:none; }.nav { width:100%; }.nav button { justify-content:center; padding:12px 0; }.rail-bottom { justify-items:center; }
+      .content-grid, .export-grid { grid-template-columns:1fr; }
+    }
+    @media (max-width: 640px) {
+      .app-shell { display:block; }.rail { position:sticky; top:0; z-index:10; height:auto; min-height:65px; display:flex; flex-direction:row; justify-content:space-between; align-items:center; padding:12px 15px; border-right:0; border-bottom:1px solid var(--line); }.brand { display:flex; }.brand-copy { display:block; }.nav { display:flex; width:auto; }.nav button { width:38px; height:38px; }.rail-bottom { display:none; }.main { padding:22px 14px 34px; }.topbar { display:block; }.top-actions { margin-top:16px; }.top-actions .offline-pill { margin-right:auto; }.mode-tabs { width:100%; }.mode-tabs button { flex:1; padding-inline:6px; }.controls { grid-template-columns:repeat(2, minmax(0,1fr)); }.tile { min-height:118px; }.lane { grid-template-columns: 113px minmax(0,1fr); }.time-ruler { margin-left:113px; }.lane-actions { display:none; }.card-header, .card-body { padding-inline:14px; }.stage-grid { padding:8px; gap:5px; }.stage-footer { padding-inline:12px; }.export-preview { min-height:360px; }.export-phone { width:210px; }
+    }
+
+    body { background: var(--bg); }
+    :root { --line: rgba(30,30,30,.14); --shadow: none; }
+    .rail, .card { background: var(--surface); }
+    .eyebrow, .brand-note, .rail-label, .card-kicker, .control-label, .stage-size, .lane-sub, .time-ruler { font-family: "Roboto Mono", monospace; font-weight: 300; }
+    .primary-btn { background: #57caff; color: #1e1e1e; box-shadow: none; }
+    .primary-btn:hover { background: #c3ecf6; }
+    .primary-btn.recording { background: #f8d8d8; color: #1e1e1e; }
+    .soft-btn, .offline-pill, .tag { color: #1e1e1e; background: #ccf6c5; border-color: rgba(30,30,30,.14); }
+    .mode-tabs button.active, .nav button.active { background: #c3ecf6; }
+    .stage-grid { background: #1e1e1e; }
+    .tile-name, .tile-index, .tile-badge { color: #f0f0f0; }
+    .project-mini { background: #ffe7a5; }
+    .sync-card { background: #ccf6c5; border-color: var(--line); }
+    .export-preview { background: #c3ecf6; }
+    .confidence-track, .storage-bar, .progress-track, .toggle { background: #e5e5e5; }
+    .avatar { background: #ccf6c5; color: #1e1e1e; }
+    .toggle.on { background: #ccf6c5; }
+    .toast { background: #ffe7a5; color: #1e1e1e; }
+    .brand-mark { color: #1e1e1e; background: conic-gradient(#4285f4, #ea4335, #fbbc04, #34a853, #4285f4); box-shadow: none; }
+    .eyebrow, .confidence-label { color: #1e1e1e; }
+    .app-shell { box-shadow: 0 24px 70px rgba(30,30,30,.12); }
+    .stage-topline { flex-wrap: wrap; gap: 8px; }
+    .stage-label { flex: 1 1 180px; }
+    .stage-size { white-space: nowrap; }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="rail">
+      <div class="brand">
+        <div class="brand-mark">↗</div>
+        <div class="brand-copy"><div class="brand-name">loopline</div><div class="brand-note">iphone music studio</div></div>
+      </div>
+      <div class="rail-label">Workspace</div>
+      <nav class="nav" aria-label="Workspace navigation">
+        <button class="active" data-mode="capture"><span class="nav-icon">◉</span><span>Studio</span></button>
+        <button data-mode="mix"><span class="nav-icon">≋</span><span>Mix &amp; sync</span></button>
+        <button data-mode="export"><span class="nav-icon">↗</span><span>Exports</span></button>
+      </nav>
+      <div class="project-mini">
+        <div class="project-mini-title">Night Train</div>
+        <div class="project-mini-meta">4 tracks · 01:42 · edited just now</div>
+        <div class="storage-bar" aria-label="28 percent of project storage budget used"><span></span></div>
+        <div class="project-mini-row"><span>Local project</span><span>142 MB</span></div>
+      </div>
+      <div class="rail-bottom">
+        <span class="offline-pill"><i class="offline-dot"></i> Offline ready</span>
+        <div class="small-copy">Everything stays on this device until you choose to share.</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">Private iPhone session · local only</div>
+          <h1>Night Train</h1>
+          <p class="subtitle">Build a layered performance one part at a time. Your camera, clock, mix, and final file stay on this iPhone.</p>
+        </div>
+        <div class="top-actions">
+          <span class="offline-pill"><i class="offline-dot"></i> no network</span>
+          <button class="icon-btn" id="saveBtn" aria-label="Save project">⌘</button>
+          <button class="primary-btn" id="exportTopBtn">Render final</button>
+        </div>
+      </header>
+
+      <div class="mode-tabs" role="tablist" aria-label="Project modes">
+        <button class="active" data-mode="capture" role="tab">Capture</button>
+        <button data-mode="mix" role="tab">Mix &amp; sync</button>
+        <button data-mode="export" role="tab">Export</button>
+      </div>
+
+      <section class="mode-panel active" id="panel-capture">
+        <div class="content-grid">
+          <div class="stack">
+            <section class="card stage-card">
+              <div class="stage-topline">
+                <div class="stage-label"><i class="live-dot"></i><span id="stageStatus">Camera ready · select a tile to record</span></div>
+                <div class="stage-size">1080p · 30 fps · 48 kHz</div>
+              </div>
+              <div class="stage-grid" id="stageGrid">
+                <div class="tile active" data-track="0"><div class="tile-top"><span class="tile-index">01</span><span class="tile-badge">ACTIVE</span></div><div class="tile-bottom"><span class="tile-name">Lead</span><span class="tile-index">00:42</span></div></div>
+                <div class="tile" data-track="1"><div class="tile-top"><span class="tile-index">02</span><span class="tile-badge">TAKE 1</span></div><div class="tile-bottom"><span class="tile-name">High harmony</span><span class="tile-index">00:42</span></div></div>
+                <div class="tile" data-track="2"><div class="tile-top"><span class="tile-index">03</span><span class="tile-badge">TAKE 1</span></div><div class="tile-bottom"><span class="tile-name">Low harmony</span><span class="tile-index">00:42</span></div></div>
+                <div class="tile" data-track="3"><div class="tile-top"><span class="tile-index">04</span><span class="tile-badge">TAKE 1</span></div><div class="tile-bottom"><span class="tile-name">Percussion</span><span class="tile-index">00:36</span></div></div>
+                <div class="tile tile-empty" id="addTile"><span class="plus">+</span></div>
+              </div>
+              <div class="stage-footer">
+                <div class="stage-footer-note">Next take: <span id="nextTakeLabel">Lead · Take 2</span><br><span id="recordHint">Headphones connected · 24 ms route latency</span></div>
+                <button class="primary-btn" id="recordBtn">● Record take</button>
+              </div>
+            </section>
+
+            <section class="card control-card">
+              <div class="card-header"><div><div class="card-title">Clock &amp; monitoring</div><div class="card-kicker">The audio engine is the clock. The playhead follows it.</div></div><span class="tag">sample scheduled</span></div>
+              <div class="controls">
+                <div class="control"><div class="control-label"><span>Tempo</span><span class="control-value" id="bpmValue">96 BPM</span></div><input class="range" id="bpmRange" type="range" min="40" max="220" value="96" /></div>
+                <div class="control"><div class="control-label"><span>Meter</span></div><select><option>4 / 4</option><option>3 / 4</option><option>6 / 8</option><option>7 / 8</option></select></div>
+                <div class="control"><div class="control-label"><span>Count-in</span></div><select><option>1 bar</option><option>2 bars</option><option>Off</option></select></div>
+                <div class="control"><div class="control-label"><span>Input route</span></div><div class="route-row"><i class="route-dot"></i><span class="route-name">USB-C headphones</span><span class="route-latency">24 ms</span></div></div>
+              </div>
+            </section>
+
+            <section class="card">
+              <div class="card-header"><div><div class="card-title">Your takes</div><div class="card-kicker">Every take is kept until you decide to remove it.</div></div><button class="soft-btn" id="guideBtn">＋ Add guide</button></div>
+              <div class="timeline-wrap">
+                <div class="timeline-head"><h3>Arrangement timeline</h3><span>00:00 - 01:42</span></div>
+                <div class="time-ruler"><span>00:00</span><span>00:30</span><span>01:00</span><span>01:30</span><span>01:42</span></div>
+                <div class="lanes" id="lanes">
+                  <div class="playhead"></div>
+                  <div class="lane"><div class="lane-info"><i class="lane-color"></i><div class="lane-meta"><div class="lane-name">Lead</div><div class="lane-sub">Take 1 · 00:42</div></div><div class="lane-actions"><button class="tiny-btn active" data-toggle="mute" aria-label="Mute lead">M</button><button class="tiny-btn" data-toggle="solo" aria-label="Solo lead">S</button></div></div><div class="wave" data-wave="mint"></div></div>
+                  <div class="lane"><div class="lane-info"><i class="lane-color" style="background:var(--blue)"></i><div class="lane-meta"><div class="lane-name">High harmony</div><div class="lane-sub">Take 1 · +18 ms</div></div><div class="lane-actions"><button class="tiny-btn" data-toggle="mute" aria-label="Mute high harmony">M</button><button class="tiny-btn" data-toggle="solo" aria-label="Solo high harmony">S</button></div></div><div class="wave" data-wave="blue"></div></div>
+                  <div class="lane"><div class="lane-info"><i class="lane-color" style="background:var(--orange)"></i><div class="lane-meta"><div class="lane-name">Low harmony</div><div class="lane-sub">Take 1 · −12 ms</div></div><div class="lane-actions"><button class="tiny-btn" data-toggle="mute" aria-label="Mute low harmony">M</button><button class="tiny-btn" data-toggle="solo" aria-label="Solo low harmony">S</button></div></div><div class="wave" data-wave="orange"></div></div>
+                  <div class="lane"><div class="lane-info"><i class="lane-color" style="background:var(--yellow)"></i><div class="lane-meta"><div class="lane-name">Percussion</div><div class="lane-sub">Take 1 · 00:36</div></div><div class="lane-actions"><button class="tiny-btn" data-toggle="mute" aria-label="Mute percussion">M</button><button class="tiny-btn" data-toggle="solo" aria-label="Solo percussion">S</button></div></div><div class="wave" data-wave="yellow"></div></div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <aside class="stack">
+            <section class="card sync-card">
+              <div class="card-body">
+                <div class="sync-status"><div class="sync-orb">≈</div><div class="sync-copy"><strong id="syncTitle">Sync Assist is ready</strong><p id="syncDescription">Compare the selected take against Lead. We’ll suggest an offset without changing the source audio.</p></div></div>
+                <div class="confidence"><div class="confidence-track"><span id="confidenceBar"></span></div><span class="confidence-label" id="confidenceLabel">91% match</span></div>
+                <div class="offset-box"><div class="offset-copy">Recommended offset<b id="offsetValue">+18 ms</b></div><div class="nudge-controls"><button id="nudgeDown" aria-label="Nudge earlier">−</button><button id="nudgeUp" aria-label="Nudge later">＋</button></div></div>
+                <button class="soft-btn" id="syncBtn" style="width:100%; margin-top:14px;">Run sync assist</button>
+              </div>
+            </section>
+            <section class="card">
+              <div class="inspector">
+                <div class="inspector-title"><h3>Selected track</h3><span id="selectedTrackName">Lead</span></div>
+                <div class="avatar-row"><div class="avatar" id="avatarLetters">LD</div><div class="avatar-copy"><strong id="selectedTake">Lead · Take 1</strong><span id="selectedDuration">42 sec · Video + audio</span></div><div class="meter"><i></i><i></i><i></i><i></i><i></i></div></div>
+                <div class="inspector-block"><div class="field-row"><span class="field-label">Track volume</span><span class="field-value" id="volumeValue">0.0 dB</span></div><input class="range" id="volumeRange" type="range" min="-18" max="6" value="0" step=".5" /><div class="field-row" style="margin-top:14px;margin-bottom:0"><span class="field-label">Pan</span><span class="field-value" id="panValue">Center</span></div><input class="range" id="panRange" type="range" min="-100" max="100" value="0" /></div>
+                <div class="inspector-block"><div class="field-row"><span class="field-label">Noise gate</span><button class="toggle on" data-switch="gate" aria-label="Toggle noise gate"></button></div><div class="field-row"><span class="field-label">Vocal clarity</span><button class="toggle on" data-switch="clarity" aria-label="Toggle vocal clarity"></button></div><div class="field-row" style="margin-bottom:0"><span class="field-label">Reverb</span><button class="toggle" data-switch="reverb" aria-label="Toggle reverb"></button></div></div>
+                <div class="inspector-block"><div class="field-row"><span class="field-label">Video tile</span><span class="field-value">Fill · mirrored</span></div><div class="filter-pills"><button class="active">Fill</button><button>Fit</button><button>Mirror</button><button>Crop</button></div></div>
+              </div>
+            </section>
+            <section class="card"><div class="card-body"><div class="card-title">Local storage</div><p class="small-copy" style="margin-top:6px">At 1080p, this project has about 3.4 GB free for another 58 minutes of source video. No subscription ceiling.</p><div class="storage-bar" style="margin-top:12px"><span style="width:28%"></span></div><div style="display:flex;justify-content:space-between;color:var(--dim);font-size:10px;margin-top:7px"><span>142 MB used</span><span>500 MB estimated next hour</span></div></div></section>
+          </aside>
+        </div>
+      </section>
+
+      <section class="mode-panel" id="panel-mix">
+        <div class="content-grid">
+          <div class="stack">
+            <section class="card stage-card"><div class="stage-topline"><div class="stage-label"><i class="live-dot" style="background:var(--mint);box-shadow:0 0 12px var(--mint)"></i><span>Preview follows the final composition</span></div><div class="stage-size">playhead 00:38.420</div></div><div class="stage-grid" id="mixStageGrid"><div class="tile active" data-track="0"><div class="tile-top"><span class="tile-index">01</span><span class="tile-badge">LEAD</span></div><div class="tile-bottom"><span class="tile-name">Lead</span><span class="tile-index">−0.4 dB</span></div></div><div class="tile" data-track="1"><div class="tile-top"><span class="tile-index">02</span><span class="tile-badge">+18 ms</span></div><div class="tile-bottom"><span class="tile-name">High harmony</span><span class="tile-index">−1.2 dB</span></div></div><div class="tile" data-track="2"><div class="tile-top"><span class="tile-index">03</span><span class="tile-badge">−12 ms</span></div><div class="tile-bottom"><span class="tile-name">Low harmony</span><span class="tile-index">−2.1 dB</span></div></div><div class="tile" data-track="3"><div class="tile-top"><span class="tile-index">04</span><span class="tile-badge">PAN R</span></div><div class="tile-bottom"><span class="tile-name">Percussion</span><span class="tile-index">−3.4 dB</span></div></div></div><div class="stage-footer"><div class="stage-footer-note">Preview quality: <span>proxy 720p</span><br><span>Export will use original clips.</span></div><button class="primary-btn" data-mode="export">Go to export ↗</button></div></section>
+            <section class="card"><div class="card-header"><div><div class="card-title">Precision timeline</div><div class="card-kicker">Drag the playhead. Nudge selected clips in milliseconds or frames.</div></div><span class="tag">waveform zoom 15×</span></div><div class="timeline-wrap"><div class="timeline-head"><h3>All audio</h3><span>snap: off · grid: 10 ms</span></div><div class="time-ruler"><span>00:00</span><span>00:30</span><span>01:00</span><span>01:30</span><span>01:42</span></div><div class="lanes"><div class="playhead" style="left:46%"></div><div class="lane"><div class="lane-info"><i class="lane-color"></i><div class="lane-meta"><div class="lane-name">Lead</div><div class="lane-sub">0.0 ms · center</div></div></div><div class="wave" data-wave="mint"></div></div><div class="lane"><div class="lane-info"><i class="lane-color" style="background:var(--blue)"></i><div class="lane-meta"><div class="lane-name">High harmony</div><div class="lane-sub">+18 ms · L 12</div></div></div><div class="wave" data-wave="blue"></div></div><div class="lane"><div class="lane-info"><i class="lane-color" style="background:var(--orange)"></i><div class="lane-meta"><div class="lane-name">Low harmony</div><div class="lane-sub">−12 ms · R 10</div></div></div><div class="wave" data-wave="orange"></div></div><div class="lane"><div class="lane-info"><i class="lane-color" style="background:var(--yellow)"></i><div class="lane-meta"><div class="lane-name">Percussion</div><div class="lane-sub">+0 ms · R 20</div></div></div><div class="wave" data-wave="yellow"></div></div></div></div></section>
+          </div>
+          <aside class="stack"><section class="card sync-card"><div class="card-body"><div class="sync-status"><div class="sync-orb">✓</div><div class="sync-copy"><strong>All tracks are inside tolerance</strong><p>Audio onset spread is 6 ms. Video tiles will land within one 30 fps frame.</p></div></div><div class="confidence"><div class="confidence-track"><span style="width:96%"></span></div><span class="confidence-label">96% stable</span></div><button class="primary-btn" data-mode="capture" style="width:100%;margin-top:15px">Record another take</button></div></section><section class="card"><div class="inspector"><div class="inspector-title"><h3>Mix bus</h3><span style="color:var(--yellow)">−1.0 dBTP</span></div><div class="inspector-block" style="padding-top:0"><div class="field-row"><span class="field-label">Master volume</span><span class="field-value">−0.4 dB</span></div><input class="range" type="range" min="-12" max="6" value="-0.4" step=".1" /><div class="field-row" style="margin-top:15px"><span class="field-label">Limiter</span><button class="toggle on" data-switch="limiter" aria-label="Toggle limiter"></button></div><div class="field-row" style="margin-bottom:0"><span class="field-label">Normalize stems</span><button class="toggle" data-switch="normalize" aria-label="Toggle normalize stems"></button></div></div><div class="inspector-block"><div class="field-row"><span class="field-label">Effect chain</span><span class="field-value">Clean vocal</span></div><div class="filter-pills"><button class="active">EQ</button><button class="active">Gate</button><button class="active">Comp</button><button>Reverb</button></div></div></div></section></aside>
+        </div>
+      </section>
+
+      <section class="mode-panel" id="panel-export">
+        <div class="export-grid">
+          <section class="export-preview"><div class="export-phone" aria-label="Four-tile video preview"><div></div><div></div><div></div><div></div></div></section>
+          <section class="card"><div class="card-header"><div><div class="card-title">Render a local master</div><div class="card-kicker">A verified file is created before the share sheet opens.</div></div><span class="tag">offline</span></div><div class="card-body"><div class="settings-list"><div class="setting-row"><label for="formatSelect">Video format</label><select id="formatSelect"><option>H.264 MP4 · compatible</option><option>HEVC MOV · smaller</option><option>HEVC MP4 · smaller</option></select></div><div class="setting-row"><label for="qualitySelect">Quality</label><select id="qualitySelect"><option>1080p · 30 fps · 42 MB est.</option><option>720p · 30 fps · 21 MB est.</option><option>4K · 30 fps · 168 MB est.</option></select></div><div class="setting-row"><label for="ratioSelect">Frame</label><select id="ratioSelect"><option>16:9 landscape</option><option>9:16 portrait</option><option>1:1 square</option><option>4:5 portrait</option></select></div><div class="setting-row"><label for="audioSelect">Audio master</label><select id="audioSelect"><option>AAC 256 kbps · in video</option><option>AAC 320 kbps · in video</option><option>Apple Lossless · audio only</option><option>WAV 24-bit · audio only</option></select></div></div><div class="export-note"><b>✓</b><span>4 source clips checked · all media local · 3.4 GB free · master limiter on</span></div><div class="render-panel"><button class="primary-btn" id="renderBtn">Render to device</button><div class="render-progress" id="renderProgress"><div class="progress-top"><span id="renderLabel">Preparing composition…</span><b id="renderPercent">0%</b></div><div class="progress-track"><span id="renderBar"></span></div></div><div class="completion" id="completion"><strong>Saved locally · Night Train.mp4</strong><p>1080p H.264 · 01:42 · 41.8 MB · audio verified at 48 kHz. Ready in Photos and On My iPhone.</p><div class="completion-actions"><button class="soft-btn" id="photosBtn">Save to Photos</button><button class="secondary-btn" id="shareBtn">Share file ↗</button></div></div></div></div></section>
+        </div>
+      </section>
+      <div class="footer-note">iPhone prototype · simulated camera and audio · validates product flow, not native AVFoundation behavior.</div>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script>
+    const $ = (selector, root = document) => root.querySelector(selector);
+    const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+    const state = { mode: 'capture', recording: false, activeTrack: 0, bpm: 96, offset: 18, trackNames: ['Lead', 'High harmony', 'Low harmony', 'Percussion'] };
+    const toast = (message) => { const node = $('#toast'); node.textContent = message; node.classList.add('show'); clearTimeout(window.__toast); window.__toast = setTimeout(() => node.classList.remove('show'), 2400); };
+    const switchMode = (mode) => {
+      state.mode = mode;
+      $$('.mode-panel').forEach(panel => panel.classList.toggle('active', panel.id === `panel-${mode}`));
+      $$('[data-mode]').forEach(button => button.classList.toggle('active', button.dataset.mode === mode));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    $$('[data-mode]').forEach(button => button.addEventListener('click', () => switchMode(button.dataset.mode)));
+
+    $$('.wave').forEach((wave, waveIndex) => {
+      const tone = wave.dataset.wave || 'mint';
+      const bars = Array.from({ length: 62 }, (_, i) => {
+        const variance = Math.abs(Math.sin((i + 2) * (waveIndex + 1) * .81)) * 28 + Math.random() * 16;
+        const height = Math.max(4, Math.round(variance));
+        return `<i class="bar ${tone === 'blue' ? 'dim' : tone === 'orange' || tone === 'yellow' ? 'orange' : ''}" style="height:${height}%"></i>`;
+      }).join('');
+      wave.innerHTML = bars;
+    });
+
+    $('#bpmRange').addEventListener('input', (event) => { state.bpm = event.target.value; $('#bpmValue').textContent = `${state.bpm} BPM`; });
+    $('#volumeRange').addEventListener('input', (event) => { const value = Number(event.target.value); $('#volumeValue').textContent = `${value > 0 ? '+' : ''}${value.toFixed(1)} dB`; });
+    $('#panRange').addEventListener('input', (event) => { const value = Number(event.target.value); $('#panValue').textContent = value === 0 ? 'Center' : `${value < 0 ? 'L ' : 'R '}${Math.abs(value)}`; });
+
+    const selectTrack = (index, name) => {
+      state.activeTrack = index;
+      $$('.tile').forEach(tile => tile.classList.toggle('active', tile.dataset.track === String(index)));
+      if (name) { $('#selectedTrackName').textContent = name; $('#selectedTake').textContent = `${name} · Take 1`; $('#avatarLetters').textContent = name.split(' ').map(word => word[0]).join('').slice(0,2).toUpperCase(); }
+      $('#nextTakeLabel').textContent = `${name || 'Lead'} · Take 2`;
+      $('#syncDescription').textContent = `Compare ${name || 'this take'} against Lead. We’ll suggest an offset without changing the source audio.`;
+    };
+    const bindCaptureTile = (tile) => tile.addEventListener('click', () => { const name = state.trackNames[Number(tile.dataset.track)] || 'New part'; selectTrack(Number(tile.dataset.track), name); toast(`Selected ${name}`); });
+    $$('.tile[data-track]', $('#stageGrid')).forEach(bindCaptureTile);
+    $('#mixStageGrid').querySelectorAll('.tile[data-track]').forEach(tile => tile.addEventListener('click', () => toast(`Previewing ${tile.querySelector('.tile-name').textContent}`)));
+
+    $('#recordBtn').addEventListener('click', () => {
+      state.recording = !state.recording;
+      const button = $('#recordBtn'); button.classList.toggle('recording', state.recording); button.textContent = state.recording ? '■ Stop take' : '● Record take';
+      $('#stageStatus').textContent = state.recording ? 'Recording · click scheduled · 00:18' : 'Camera ready · take saved as draft';
+      $('#recordHint').textContent = state.recording ? 'Take 2 · 00:18 · tap stop when finished' : 'Headphones connected · 24 ms route latency';
+      if (!state.recording) toast('Take saved locally · ready to review'); else toast('Count-in started · record is armed');
+    });
+    $('#addTile').addEventListener('click', () => {
+      const index = state.trackNames.length; const name = `New part ${index - 3}`; state.trackNames.push(name);
+      const tile = document.createElement('div'); tile.className = 'tile'; tile.dataset.track = index; tile.innerHTML = `<div class="tile-top"><span class="tile-index">${String(index + 1).padStart(2, '0')}</span><span class="tile-badge">EMPTY</span></div><div class="tile-bottom"><span class="tile-name">${name}</span><span class="tile-index">ready</span></div>`;
+      $('#stageGrid').insertBefore(tile, $('#addTile')); bindCaptureTile(tile); selectTrack(index, name); toast('New tile added · layout remains editable');
+    });
+    $('#guideBtn').addEventListener('click', () => toast('Guide picker opened · choose an audio/video file from Files or Photos'));
+    $('#saveBtn').addEventListener('click', () => toast('Project saved to On My iPhone'));
+    $('#exportTopBtn').addEventListener('click', () => switchMode('export'));
+    $('#syncBtn').addEventListener('click', () => {
+      $('#syncTitle').textContent = 'Sync Assist complete'; $('#syncDescription').textContent = 'Best correlation found on the first phrase. No source audio was changed.'; $('#confidenceLabel').textContent = '96% match'; $('#confidenceBar').style.width = '96%'; toast('Suggested offset applied · +18 ms');
+    });
+    const updateOffset = (delta) => { state.offset += delta; $('#offsetValue').textContent = `${state.offset >= 0 ? '+' : '−'}${Math.abs(state.offset)} ms`; };
+    $('#nudgeDown').addEventListener('click', () => updateOffset(-1)); $('#nudgeUp').addEventListener('click', () => updateOffset(1));
+    $$('[data-toggle="mute"], [data-toggle="solo"]').forEach(button => button.addEventListener('click', () => { button.classList.toggle('active'); toast(`${button.dataset.toggle} ${button.classList.contains('active') ? 'enabled' : 'disabled'}`); }));
+    $$('[data-switch]').forEach(toggle => toggle.addEventListener('click', () => { toggle.classList.toggle('on'); }));
+
+    $('#renderBtn').addEventListener('click', () => {
+      const progress = $('#renderProgress'); const bar = $('#renderBar'); const percent = $('#renderPercent'); const label = $('#renderLabel'); const completion = $('#completion');
+      $('#renderBtn').disabled = true; $('#renderBtn').style.opacity = '.55'; progress.classList.add('show'); completion.classList.remove('show');
+      let value = 0; const stages = [[18,'Preparing composition…'],[42,'Rendering audio mix…'],[68,'Compositing video tiles…'],[86,'Encoding H.264…'],[100,'Verifying local file…']];
+      const timer = setInterval(() => { value += value < 70 ? 4 : 2; const stage = stages.find(item => value <= item[0]) || stages[stages.length - 1]; if (value >= 100) value = 100; bar.style.width = `${value}%`; percent.textContent = `${value}%`; label.textContent = stage[1]; if (value === 100) { clearInterval(timer); setTimeout(() => { completion.classList.add('show'); $('#renderBtn').disabled = false; $('#renderBtn').style.opacity = '1'; toast('Render complete · local file verified'); }, 450); } }, 150);
+    });
+    $('#photosBtn').addEventListener('click', () => toast('Saved Night Train.mp4 to Photos')); $('#shareBtn').addEventListener('click', () => toast('System share sheet opened with the verified file'));
+  </script>
+</body>
+</html>

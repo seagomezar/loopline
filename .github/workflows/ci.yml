@@ -1,0 +1,16 @@
+name: Loopline checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  native:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - name: Core and media integration tests
+        run: bash harness/run-core-tests.sh
+      - name: iPhone SDK build
+        run: bash harness/run-ios-build.sh
+      - name: Simulator UI tests
+        run: bash harness/run-ui-tests.sh
