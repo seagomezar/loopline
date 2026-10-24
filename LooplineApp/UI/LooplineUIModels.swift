@@ -84,6 +84,7 @@ final class LooplineViewModel: ObservableObject {
     @Published private(set) var isCountingIn = false
     @Published private(set) var recordingElapsed: TimeInterval = 0
     @Published var syncState: SyncAssistState = .manual
+    @Published var isManualSyncExpanded = false
     @Published private(set) var canUndoSync = false
     @Published var exportState: LooplineExportState = .idle
     @Published var hasSavedExport = false
@@ -292,9 +293,28 @@ final class LooplineViewModel: ObservableObject {
         edit(id) { $0.mix.gainCentibels = value <= 0 ? -12000 : Int64((20 * log10(value) * 100).rounded()) }
     }
     func nudgeTrack(_ id: UUID, by milliseconds: Int) {
+        if let current = tracks.first(where: { $0.id == id }), undoSync?.id != id {
+            undoSync = (id, current.offsetMilliseconds)
+            canUndoSync = true
+        }
         let rate = Int64(project?.manifest.project.timebase.sampleRate.hertz ?? 48_000)
         edit(id) { track in track.placement.syncOffset = SampleOffset(track.placement.syncOffset.rawValue + Int64(milliseconds) * rate / 1000) }
-        cancelSync()
+        if let updated = tracks.first(where: { $0.id == id }) {
+            syncState = .applied(offsetMilliseconds: updated.offsetMilliseconds)
+        } else {
+            cancelSync()
+        }
+    }
+    func setTrackOffset(_ id: UUID, milliseconds: Int) {
+        if let current = tracks.first(where: { $0.id == id }), undoSync?.id != id {
+            undoSync = (id, current.offsetMilliseconds)
+            canUndoSync = true
+        }
+        let rate = project?.manifest.project.timebase.sampleRate ?? .rate48k
+        edit(id) { track in
+            track.placement.syncOffset = SampleTimebase(sampleRate: rate).samples(forMilliseconds: Int64(milliseconds))
+        }
+        syncState = .applied(offsetMilliseconds: milliseconds)
     }
     func updateClickVolume(_ value: Double) { clickVolume = value }
 
@@ -508,8 +528,29 @@ final class LooplineViewModel: ObservableObject {
                 syncState = .ready(confidence: result.confidencePercent,
                     recommendationMilliseconds: reference.offsetMilliseconds + result.offsetMilliseconds)
             } catch {
-                if !Task.isCancelled { syncState = .manual; errorMessage = error.localizedDescription }
+                if !Task.isCancelled {
+                    syncState = .manual
+                    isManualSyncExpanded = true
+                    errorMessage = error.localizedDescription
+                }
             }
+        }
+    }
+
+    func toggleManualSync() {
+        let wasPendingResult: Bool = {
+            if syncState.isAnalyzing { return true }
+            if case .ready = syncState { return true }
+            return false
+        }()
+        cancelSync()
+        if wasPendingResult {
+            isManualSyncExpanded = true
+        } else {
+            isManualSyncExpanded.toggle()
+        }
+        if selectedTrackID == nil {
+            selectedTrackID = tracks.last?.id
         }
     }
 

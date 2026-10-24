@@ -161,13 +161,14 @@ struct LooplineTrackLane: View {
                     .tint(.looplineBlue).accessibilityLabel("Volume for \(track.name)")
                 Text("\(Int(track.volume * 100))%").font(LooplineTheme.text(11, mono: true)).frame(width: 42)
             }
-            HStack(spacing: 2) {
+            HStack(spacing: 6) {
                 Text("\(track.offsetMilliseconds > 0 ? "+" : "")\(track.offsetMilliseconds) ms")
                     .font(LooplineTheme.text(12, mono: true)).frame(maxWidth: .infinity, alignment: .leading)
                     .accessibilityIdentifier("track.offset.\(track.name)")
                 ForEach([-10, -1, 1, 10], id: \.self) { value in
                     Button("\(value > 0 ? "+" : "")\(value)") { onNudge(value) }
-                        .font(LooplineTheme.text(12, mono: true)).frame(minWidth: 38, minHeight: 44)
+                        .font(LooplineTheme.text(12, mono: true)).frame(minWidth: 42, minHeight: 44)
+                        .background(Color.looplineBackground, in: RoundedRectangle(cornerRadius: 10))
                         .accessibilityLabel("Move \(track.name) by \(value) milliseconds")
                 }
             }

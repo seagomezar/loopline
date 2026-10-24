@@ -66,10 +66,100 @@ struct LooplineMixSyncView: View {
                         LooplinePrimaryButton(title: model.syncState.isAnalyzing ? "Comparing…" : "Find a match", icon: "wand.and.stars", tint: .looplinePastelBlue,
                             isDisabled: model.syncState.isAnalyzing || model.tracks.count < 2) { model.runSyncAssist() }
                     }
-                    Button("Manual") { model.cancelSync() }.font(LooplineTheme.text(13, weight: .medium)).frame(minWidth: 70, minHeight: 48)
+                    Button {
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            model.toggleManualSync()
+                        }
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "slider.horizontal.3")
+                            Text("Manual")
+                        }
+                        .font(LooplineTheme.text(13, weight: .bold))
+                        .foregroundStyle(Color.looplineInk)
+                        .padding(.horizontal, 14)
+                        .frame(minWidth: 96, minHeight: 52)
+                        .background(
+                            model.isManualSyncExpanded ? Color.looplinePastelYellow : Color.looplineSurfaceRaised,
+                            in: RoundedRectangle(cornerRadius: 16)
+                        )
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(model.isManualSyncExpanded ? Color.looplineInk.opacity(0.25) : Color.looplineLine, lineWidth: 1)
+                        }
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("Manual")
+                }
+                if model.isManualSyncExpanded, let selected = model.selectedTrack {
+                    manualSyncPanel(for: selected)
                 }
                 if model.canUndoSync { Button("Undo last adjustment") { model.undoLastSync() }.font(LooplineTheme.text(13)).frame(minHeight: 44) }
             }
         }.disabled(model.transportBusy)
+    }
+
+    @ViewBuilder
+    private func manualSyncPanel(for selected: LooplineTrack) -> some View {
+        let boundLimit = max(500, Double(abs(selected.offsetMilliseconds) + 100))
+        VStack(alignment: .leading, spacing: 12) {
+            Divider()
+            if model.tracks.count > 1 {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        ForEach(model.tracks) { item in
+                            Button {
+                                model.selectedTrackID = item.id
+                            } label: {
+                                HStack(spacing: 6) {
+                                    Circle().fill(item.tint).frame(width: 8, height: 8)
+                                    Text(item.name).font(LooplineTheme.text(12, weight: .bold))
+                                }
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 8)
+                                .background(
+                                    model.selectedTrack?.id == item.id ? Color.looplinePastelBlue : Color.looplineBackground,
+                                    in: Capsule()
+                                )
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
+            }
+            HStack {
+                Text("Offset: \(selected.offsetMilliseconds > 0 ? "+" : "")\(selected.offsetMilliseconds) ms")
+                    .font(LooplineTheme.text(13, weight: .bold, mono: true))
+                Spacer()
+                Button("Reset 0 ms") {
+                    model.setTrackOffset(selected.id, milliseconds: 0)
+                }
+                .font(LooplineTheme.text(12, weight: .medium))
+                .foregroundStyle(selected.offsetMilliseconds == 0 ? Color.looplineMuted : Color.looplineBlue)
+                .disabled(selected.offsetMilliseconds == 0)
+            }
+            Slider(
+                value: Binding(
+                    get: { Double(selected.offsetMilliseconds) },
+                    set: { model.setTrackOffset(selected.id, milliseconds: Int($0.rounded())) }
+                ),
+                in: -boundLimit...boundLimit,
+                step: 5
+            )
+            .tint(.looplineBlue)
+            .accessibilityLabel("Manual timing offset for \(selected.name)")
+            HStack(spacing: 6) {
+                ForEach([-50, -10, -1, 1, 10, 50], id: \.self) { delta in
+                    Button("\(delta > 0 ? "+" : "")\(delta)") {
+                        model.nudgeTrack(selected.id, by: delta)
+                    }
+                    .font(LooplineTheme.text(12, weight: .medium, mono: true))
+                    .frame(maxWidth: .infinity, minHeight: 40)
+                    .background(Color.looplineBackground, in: RoundedRectangle(cornerRadius: 10))
+                    .buttonStyle(.plain)
+                }
+            }
+        }
+        .padding(.top, 4)
     }
 }
