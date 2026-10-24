@@ -25,7 +25,7 @@ final class AudioClockService: ObservableObject {
                 } else if notification.name == AVAudioSession.routeChangeNotification {
                     let reason = AVAudioSession.RouteChangeReason(rawValue:
                         notification.userInfo?[AVAudioSessionRouteChangeReasonKey] as? UInt ?? 0) ?? .unknown
-                    began = reason != .categoryChange && reason != .wakeFromSleep && reason != .unknown
+                    began = reason == .oldDeviceUnavailable || reason == .newDeviceAvailable
                 } else { began = true }
                 Task { @MainActor [weak self] in
                     guard let self else { return }

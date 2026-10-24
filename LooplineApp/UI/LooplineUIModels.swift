@@ -330,6 +330,19 @@ final class LooplineViewModel: ObservableObject {
                 try audioClock.configure()
                 try await captureCoordinator.prepare()
                 let playback = tracks.isEmpty ? nil : try await MediaCompositionBuilder.make(inputs: renderInputs(), options: renderOptions)
+                var overdubPlayer: AVPlayer?
+                if let playback {
+                    let item = playback.playerItem()
+                    let preparedPlayer = AVPlayer(playerItem: item)
+                    preparedPlayer.automaticallyWaitsToMinimizeStalling = false
+                    for _ in 0..<100 where item.status == .unknown {
+                        try Task.checkCancellation()
+                        try await Task.sleep(for: .milliseconds(15))
+                    }
+                    _ = await preparedPlayer.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero)
+                    overdubPlayer = preparedPlayer
+                    self.player = preparedPlayer
+                }
                 try Task.checkCancellation()
                 let (draft, url) = try store.beginTake(in: project)
                 self.project = draft
@@ -343,19 +356,18 @@ final class LooplineViewModel: ObservableObject {
                         denominator: beatDenominator, subdivisions: subdivisions, accentEnabled: accentEnabled,
                         volume: clickVolume, startHostSeconds: start)
                 }
-                if let playback {
-                    let player = AVPlayer(playerItem: playback.playerItem())
-                    player.automaticallyWaitsToMinimizeStalling = false
-                    self.player = player
-                    player.setRate(1, time: .zero, atHostTime: CMTime(seconds: projectZero, preferredTimescale: 1_000_000_000))
-                }
+                var overdubStarted = overdubPlayer == nil
                 isPreparing = false
                 isRecording = true
                 while !Task.isCancelled, isRecording {
                     let elapsed = CMClockGetTime(CMClockGetHostTimeClock()).seconds - projectZero
+                    if !overdubStarted, elapsed >= 0 {
+                        overdubPlayer?.play()
+                        overdubStarted = true
+                    }
                     isCountingIn = elapsed < 0
                     recordingElapsed = max(0, elapsed)
-                    try await Task.sleep(for: .milliseconds(80))
+                    try await Task.sleep(for: .milliseconds(overdubStarted ? 80 : 15))
                 }
             } catch is CancellationError {
                 if !isFinalizing {
