@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loopline — Estudio Multipista de Video y Audio en tu iPhone</title>
+  <meta name="description" content="Loopline es un estudio multipista 100% offline para iPhone. Graba voces o instrumentos en capas, sincroniza automáticamente con Sync Assist y exporta videos en cuadrícula hasta en 4K." />
+  <style>
+    :root {
+      --canvas: #F0F0F0;
+      --surface: #FFFFFF;
+      --ink: #1E1E1E;
+      --muted: #5A5A5A;
+      --blue: #4285F4;
+      --blue-pastel: #C3ECF6;
+      --green: #34A853;
+      --green-pastel: #CCF6C5;
+      --red: #EA4335;
+      --red-pastel: #F8D8D8;
+      --yellow: #FBBC04;
+      --yellow-pastel: #FFE7A5;
+      --radius: 24px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Google Sans", "Segoe UI", Roboto, sans-serif;
+      background: var(--canvas);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+    header {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 28px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.4rem;
+      text-decoration: none;
+      color: var(--ink);
+    }
+    .bars {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .bars span {
+      display: block;
+      width: 6px;
+      border-radius: 99px;
+    }
+    .bars .b1 { height: 18px; background: var(--blue); }
+    .bars .b2 { height: 28px; background: var(--red); }
+    .bars .b3 { height: 22px; background: var(--yellow); }
+    .bars .b4 { height: 32px; background: var(--green); }
+    nav {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    nav a {
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    nav a:hover { text-decoration: underline; }
+    .hero {
+      max-width: 1120px;
+      margin: 16px auto 48px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 40px;
+      align-items: center;
+    }
+    @media (max-width: 840px) {
+      .hero { grid-template-columns: 1fr; }
+    }
+    .eyebrow {
+      font-family: ui-monospace, "Roboto Mono", monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      line-height: 1.08;
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+    .lead {
+      font-size: 1.15rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .badge {
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .badge-green { background: var(--green-pastel); color: var(--ink); }
+    .badge-blue { background: var(--blue-pastel); color: var(--ink); }
+    .badge-yellow { background: var(--yellow-pastel); color: var(--ink); }
+    .hero-shot {
+      background: var(--surface);
+      padding: 20px;
+      border-radius: 32px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+    .hero-shot img {
+      max-width: 300px;
+      width: 100%;
+      border-radius: 24px;
+    }
+    .features {
+      max-width: 1120px;
+      margin: 0 auto 64px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+    }
+    .card-tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-family: ui-monospace, "Roboto Mono", monospace;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+    }
+    .card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .gallery {
+      max-width: 1120px;
+      margin: 0 auto 64px;
+      padding: 0 24px;
+    }
+    .gallery h2 {
+      font-size: 2rem;
+      margin-bottom: 24px;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .gallery-grid img {
+      width: 100%;
+      border-radius: 20px;
+      background: var(--surface);
+      padding: 10px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+    }
+    footer {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 32px 24px 48px;
+      border-top: 1px solid #DCDCDC;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    footer a {
+      color: var(--ink);
+      text-decoration: none;
+      margin-left: 16px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="brand" href="index.html">
+      <span class="bars"><span class="b1"></span><span class="b2"></span><span class="b3"></span><span class="b4"></span></span>
+      loopline
+    </a>
+    <nav>
+      <a href="#features">Características</a>
+      <a href="#screens">Capturas</a>
+      <a href="support.html">Soporte</a>
+      <a href="privacy-policy.html">Privacidad</a>
+      <a href="terms-and-conditions.html">Términos</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">TU ESTUDIO MULTIPISTA EN EL DISPOSITIVO · IPHONE</div>
+      <h1>Cada parte.<br/>Todo tú.</h1>
+      <p class="lead">
+        Loopline es un estudio de grabación multipista de video y audio 100% offline para iPhone. Graba arreglos vocales o instrumentales en capas con metrónomo y monitoreo por audífonos, alinea tus tomas con <strong>Sync Assist</strong> y exporta videos en cuadrícula en H.264 o HEVC hasta en 4K.
+      </p>
+      <div class="badges">
+        <span class="badge badge-green">100% En el dispositivo (Offline)</span>
+        <span class="badge badge-blue">2 a 8+ Pistas en Cuadrícula</span>
+        <span class="badge badge-yellow">Exportación 720p · 1080p · 4K</span>
+      </div>
+    </div>
+    <div class="hero-shot">
+      <img src="screenshots/capture.png" alt="Captura de pantalla de Loopline en iPhone" />
+    </div>
+  </section>
+
+  <section id="features" class="features">
+    <div class="card">
+      <span class="card-tag" style="background: var(--blue-pastel);">01 · CAPTURA</span>
+      <h3>Grabación Overdub con Count-In</h3>
+      <p>Graba tu primera parte con conteo previo y metrónomo opcional, y añade nuevas voces o instrumentos escuchando las partes anteriores por audífonos.</p>
+    </div>
+    <div class="card">
+      <span class="card-tag" style="background: var(--green-pastel);">02 · SYNC ASSIST</span>
+      <h3>Sincronización y Mezcla No Destructiva</h3>
+      <p>Ajusta volumen, mute, solo y compensación temporal en milisegundos por pista, o aplica recomendaciones automáticas de Sync Assist con opción de deshacer.</p>
+    </div>
+    <div class="card">
+      <span class="card-tag" style="background: var(--red-pastel);">03 · MULTIPISTA</span>
+      <h3>Cuadrícula Dinámica de 2 a 8+ Partes</h3>
+      <p>Previsualiza exactamente la misma composición que vas a exportar, con ondas de audio reales, miniaturas por toma y recuperación segura de borradores.</p>
+    </div>
+    <div class="card">
+      <span class="card-tag" style="background: var(--yellow-pastel);">04 · EXPORTACIÓN</span>
+      <h3>Video Verificado Listo para Compartir</h3>
+      <p>Renderiza a 30 fps en H.264 MP4 o HEVC MP4/MOV en 720p, 1080p o 4K. Guarda en Archivos, Fotos o comparte directamente sin subir nada a la nube.</p>
+    </div>
+  </section>
+
+  <section id="screens" class="gallery">
+    <h2>Diseñado para músicos y creadores</h2>
+    <div class="gallery-grid">
+      <img src="screenshots/capture.png" alt="Pantalla de Captura en Loopline" />
+      <img src="screenshots/eight-track-session.png" alt="Sesión de 8 pistas en Loopline" />
+      <img src="screenshots/mix.png" alt="Mezcla y Sincronización en Loopline" />
+      <img src="screenshots/export.png" alt="Exportación de video en Loopline" />
+    </div>
+  </section>
+
+  <footer>
+    <div>© 2026 Sebastian Gomez. Todos los derechos reservados.</div>
+    <div>
+      <a href="support.html">Soporte</a>
+      <a href="privacy-policy.html">Política de Privacidad</a>
+      <a href="terms-and-conditions.html">Términos y Condiciones</a>
+    </div>
+  </footer>
+</body>
+</html>
