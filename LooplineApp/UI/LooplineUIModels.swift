@@ -346,8 +346,7 @@ final class LooplineViewModel: ObservableObject {
 
     #if DEBUG && targetEnvironment(simulator)
     func seedSimulatorSession(trackCount: Int) async {
-        guard !transportBusy, let project, let store = projectStore,
-              project.manifest.project.tracks.isEmpty else { return }
+        guard !transportBusy, let project, let store = projectStore else { return }
         isPreparing = true
         do {
             let seeded = try await SimulatorSessionFixture.populate(project, store: store, trackCount: trackCount)

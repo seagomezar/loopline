@@ -286,10 +286,22 @@ private struct CapturePreviewCard: View {
                 if capture.isConfigured {
                     LooplineCameraPreview(coordinator: capture)
                 } else if !model.isCountingIn {
+                    #if DEBUG && targetEnvironment(simulator)
+                    if ProcessInfo.processInfo.arguments.contains("-LooplineScreenshotScene"),
+                       let firstTrack = model.tracks.first {
+                        LooplineClipThumbnail(url: firstTrack.sourceURL, placement: firstTrack.placement)
+                    } else {
+                        VStack(spacing: 12) {
+                            Image(systemName: "video").font(LooplineTheme.text(28))
+                            Text("Your next part starts here").font(LooplineTheme.text(14))
+                        }.foregroundStyle(Color.looplineBackground)
+                    }
+                    #else
                     VStack(spacing: 12) {
                         Image(systemName: "video").font(LooplineTheme.text(28))
                         Text("Your next part starts here").font(LooplineTheme.text(14))
                     }.foregroundStyle(Color.looplineBackground)
+                    #endif
                 }
                 if model.isCountingIn, let remaining = model.countdownBeatsRemaining {
                     countdownOverlay(remaining: remaining)

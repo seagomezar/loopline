@@ -406,7 +406,12 @@ struct MediaComposition {
     }
 
     func exportVideoComposition() -> AVMutableVideoComposition {
+        #if targetEnvironment(simulator)
+        return videoComposition
+        #else
         guard let overlayImage else { return videoComposition }
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
         let exportVideo = AVMutableVideoComposition()
         exportVideo.renderSize = videoComposition.renderSize
         exportVideo.frameDuration = videoComposition.frameDuration
@@ -420,13 +425,17 @@ struct MediaComposition {
         overlayLayer.contentsGravity = .resize
         let parentLayer = CALayer()
         parentLayer.frame = CGRect(origin: .zero, size: size)
+        parentLayer.isGeometryFlipped = true
         parentLayer.addSublayer(videoLayer)
         parentLayer.addSublayer(overlayLayer)
+        CATransaction.commit()
+        CATransaction.flush()
         exportVideo.animationTool = AVVideoCompositionCoreAnimationTool(
             postProcessingAsVideoLayer: videoLayer,
             in: parentLayer
         )
         return exportVideo
+        #endif
     }
 }
 

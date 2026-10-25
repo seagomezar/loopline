@@ -60,6 +60,34 @@ struct LooplineRootView: View {
                let index = arguments.firstIndex(of: "-LooplineSeedTrackCount"), arguments.indices.contains(index + 1),
                let count = Int(arguments[index + 1]), (2...8).contains(count) {
                 await model.seedSimulatorSession(trackCount: count)
+                if let sceneIdx = arguments.firstIndex(of: "-LooplineScreenshotScene"),
+                   arguments.indices.contains(sceneIdx + 1) {
+                    let scene = arguments[sceneIdx + 1]
+                    switch scene {
+                    case "1":
+                        model.nextPartTitle = "Lead Flute"
+                        model.select(.capture)
+                    case "2":
+                        model.exportPreviewMode = .realPreview
+                        model.select(.export)
+                    case "3":
+                        model.select(.mix)
+                    case "4":
+                        model.exportPreviewMode = .frameCrop
+                        model.select(.export)
+                    case "5":
+                        model.newProject()
+                        if let currentID = model.currentProjectID {
+                            model.renameProject(currentID, to: "Vocal Harmony Arrangement")
+                        }
+                        if let first = model.projects.first(where: { $0.title.contains("Chamber") }) {
+                            model.open(first)
+                        }
+                        showingProjects = true
+                    default:
+                        break
+                    }
+                }
             }
             #endif
         }

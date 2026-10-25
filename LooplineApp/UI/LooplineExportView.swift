@@ -6,49 +6,74 @@ struct LooplineExportView: View {
     @State private var showingFiles = false
 
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 24) {
-                LooplineTopBar(eyebrow: "Made here. Saved here.", title: "Yours to share.")
-                if !model.tracks.isEmpty {
-                    LooplineExportPreviewCard(model: model)
-                        .disabled(model.exportState.isRendering)
+        ScrollViewReader { proxy in
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 24) {
+                    LooplineTopBar(eyebrow: "Made here. Saved here.", title: "Yours to share.")
+                    if !model.tracks.isEmpty {
+                        LooplineExportPreviewCard(model: model)
+                            .id("exportPreviewCard")
+                            .disabled(model.exportState.isRendering)
 
-                    LooplineSurface {
-                        LooplineFrameCropControls(
-                            tracks: model.tracks,
-                            selectedTrack: model.selectedTrack,
-                            onSelect: { model.selectedTrackID = $0 },
-                            onMoveBy: { id, delta in model.moveTrack(id, by: delta) },
-                            onMoveToSlot: { id, slot in model.moveTrack(id, toSlot: slot) },
-                            onUpdateFraming: { id, panX, panY, zoom in
-                                model.setTrackFraming(id, panX: panX, panY: panY, zoom: zoom)
-                            },
-                            onResetTrack: { model.resetTrackFraming($0) },
-                            onResetAll: { model.resetAllTrackFraming() }
-                        )
+                        LooplineSurface {
+                            LooplineFrameCropControls(
+                                tracks: model.tracks,
+                                selectedTrack: model.selectedTrack,
+                                onSelect: { model.selectedTrackID = $0 },
+                                onMoveBy: { id, delta in model.moveTrack(id, by: delta) },
+                                onMoveToSlot: { id, slot in model.moveTrack(id, toSlot: slot) },
+                                onUpdateFraming: { id, panX, panY, zoom in
+                                    model.setTrackFraming(id, panX: panX, panY: panY, zoom: zoom)
+                                },
+                                onResetTrack: { model.resetTrackFraming($0) },
+                                onResetAll: { model.resetAllTrackFraming() }
+                            )
+                        }
+                        .id("exportCropControls")
+                        .disabled(model.exportState.isRendering)
                     }
-                    .disabled(model.exportState.isRendering)
+                    outputState
+                        .id("exportOutputState")
+                    LooplineSurface {
+                        VStack(alignment: .leading, spacing: 18) {
+                            Text("Your finishing touches").font(LooplineTheme.text(18, weight: .bold))
+                            LooplineFrameLayoutPicker(selection: $model.exportLayout, partCount: model.tracks.count)
+                            Divider()
+                            picker("Video", selection: $model.exportFormat, choices: ["H.264 MP4", "HEVC MP4", "HEVC MOV"])
+                            Divider()
+                            picker("Resolution", selection: $model.exportResolution, choices: ["720p", "1080p", "4K"])
+                            Text("Portrait · 30 fps · AAC audio\nYour timing, levels, and frame layout carry through to the finished video.")
+                                .font(LooplineTheme.text(11, mono: true)).foregroundStyle(Color.looplineMuted).lineSpacing(5)
+                        }.font(LooplineTheme.text(14))
+                    }.disabled(model.exportState.isRendering)
+                    if case .idle = model.exportState {
+                        LooplinePrimaryButton(title: "Create my video", icon: "arrow.down.to.line", tint: .looplineHalftoneBlue,
+                            isDisabled: model.tracks.isEmpty || model.transportBusy) { model.startExport() }
+                    }
+                    Text("Your recording stays on your iPhone. Sharing is always your choice.")
+                        .font(LooplineTheme.text(12)).foregroundStyle(Color.looplineMuted).frame(maxWidth: .infinity).multilineTextAlignment(.center)
+                }.padding(20)
+            }
+            .onChange(of: model.nativeExportURL) { _, newURL in
+                if newURL != nil {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        proxy.scrollTo("exportOutputState", anchor: .top)
+                    }
                 }
-                outputState
-                LooplineSurface {
-                    VStack(alignment: .leading, spacing: 18) {
-                        Text("Your finishing touches").font(LooplineTheme.text(18, weight: .bold))
-                        LooplineFrameLayoutPicker(selection: $model.exportLayout, partCount: model.tracks.count)
-                        Divider()
-                        picker("Video", selection: $model.exportFormat, choices: ["H.264 MP4", "HEVC MP4", "HEVC MOV"])
-                        Divider()
-                        picker("Resolution", selection: $model.exportResolution, choices: ["720p", "1080p", "4K"])
-                        Text("Portrait · 30 fps · AAC audio\nYour timing, levels, and frame layout carry through to the finished video.")
-                            .font(LooplineTheme.text(11, mono: true)).foregroundStyle(Color.looplineMuted).lineSpacing(5)
-                    }.font(LooplineTheme.text(14))
-                }.disabled(model.exportState.isRendering)
-                if case .idle = model.exportState {
-                    LooplinePrimaryButton(title: "Create my video", icon: "arrow.down.to.line", tint: .looplineHalftoneBlue,
-                        isDisabled: model.tracks.isEmpty || model.transportBusy) { model.startExport() }
+            }
+            .onAppear {
+                #if DEBUG && targetEnvironment(simulator)
+                let args = ProcessInfo.processInfo.arguments
+                if let idx = args.firstIndex(of: "-LooplineScreenshotScene"),
+                   args.indices.contains(idx + 1), args[idx + 1] == "4" {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                        withAnimation(.none) {
+                            proxy.scrollTo("exportPreviewCard", anchor: .top)
+                        }
+                    }
                 }
-                Text("Your recording stays on your iPhone. Sharing is always your choice.")
-                    .font(LooplineTheme.text(12)).foregroundStyle(Color.looplineMuted).frame(maxWidth: .infinity).multilineTextAlignment(.center)
-            }.padding(20)
+                #endif
+            }
         }
         .task(id: model.tracks.count) {
             if !model.tracks.isEmpty && model.exportPreviewPlayer == nil {
