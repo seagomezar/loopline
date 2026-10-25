@@ -206,6 +206,37 @@ public struct MetronomeEvent: Codable, Hashable, Sendable {
     }
 }
 
+public struct MetronomePulseStatus: Codable, Hashable, Sendable {
+    public let isCountingIn: Bool
+    public let countdownBeatsRemaining: Int?
+    public let totalCountInBeats: Int
+    public let barNumber: Int
+    public let beatInBar: Int
+    public let beatsPerBar: Int
+    public let beatProgress: Double
+    public let isDownbeat: Bool
+
+    public init(
+        isCountingIn: Bool,
+        countdownBeatsRemaining: Int?,
+        totalCountInBeats: Int,
+        barNumber: Int,
+        beatInBar: Int,
+        beatsPerBar: Int,
+        beatProgress: Double,
+        isDownbeat: Bool
+    ) {
+        self.isCountingIn = isCountingIn
+        self.countdownBeatsRemaining = countdownBeatsRemaining
+        self.totalCountInBeats = totalCountInBeats
+        self.barNumber = barNumber
+        self.beatInBar = beatInBar
+        self.beatsPerBar = beatsPerBar
+        self.beatProgress = beatProgress
+        self.isDownbeat = isDownbeat
+    }
+}
+
 /// Pure beat/sample math. Audio scheduling belongs to the AVFoundation layer;
 /// this type only produces deterministic event decisions and sample positions.
 public enum MetronomeMath {
@@ -336,5 +367,76 @@ public enum MetronomeMath {
             configuration: configuration,
             rounding: rule
         )
+    }
+
+    public static func pulseStatus(
+        elapsedFromProjectZero: Double,
+        configuration: MetronomeConfiguration
+    ) -> MetronomePulseStatus {
+        let beatsPerBar = max(1, configuration.timeSignature.beatsPerBar)
+        let denominator = max(1, configuration.timeSignature.beatUnitDenominator)
+        let bpm = max(1.0, configuration.tempo.beatsPerMinute)
+        let beatDuration = (60.0 / bpm) * (4.0 / Double(denominator))
+        let totalCountInBeats = max(0, configuration.countInBars) * beatsPerBar
+        let countInDuration = Double(totalCountInBeats) * beatDuration
+
+        if elapsedFromProjectZero < 0 {
+            guard totalCountInBeats > 0 else {
+                return MetronomePulseStatus(
+                    isCountingIn: false,
+                    countdownBeatsRemaining: nil,
+                    totalCountInBeats: 0,
+                    barNumber: 1,
+                    beatInBar: 1,
+                    beatsPerBar: beatsPerBar,
+                    beatProgress: 0,
+                    isDownbeat: true
+                )
+            }
+            let elapsedFromCountInStart = elapsedFromProjectZero + countInDuration
+            if elapsedFromCountInStart < 0 {
+                return MetronomePulseStatus(
+                    isCountingIn: true,
+                    countdownBeatsRemaining: totalCountInBeats,
+                    totalCountInBeats: totalCountInBeats,
+                    barNumber: 1,
+                    beatInBar: 1,
+                    beatsPerBar: beatsPerBar,
+                    beatProgress: 1.0,
+                    isDownbeat: true
+                )
+            }
+            let rawBeatIndex = Int((elapsedFromCountInStart / beatDuration).rounded(.down))
+            let beatIndex = min(totalCountInBeats - 1, max(0, rawBeatIndex))
+            let remaining = totalCountInBeats - beatIndex
+            let barNumber = (beatIndex / beatsPerBar) + 1
+            let beatInBar = (beatIndex % beatsPerBar) + 1
+            let progress = min(1.0, max(0.0, (elapsedFromCountInStart - Double(beatIndex) * beatDuration) / beatDuration))
+            return MetronomePulseStatus(
+                isCountingIn: true,
+                countdownBeatsRemaining: remaining,
+                totalCountInBeats: totalCountInBeats,
+                barNumber: barNumber,
+                beatInBar: beatInBar,
+                beatsPerBar: beatsPerBar,
+                beatProgress: progress,
+                isDownbeat: beatInBar == 1
+            )
+        } else {
+            let beatIndex = max(0, Int((elapsedFromProjectZero / beatDuration).rounded(.down)))
+            let barNumber = (beatIndex / beatsPerBar) + 1
+            let beatInBar = (beatIndex % beatsPerBar) + 1
+            let progress = min(1.0, max(0.0, (elapsedFromProjectZero - Double(beatIndex) * beatDuration) / beatDuration))
+            return MetronomePulseStatus(
+                isCountingIn: false,
+                countdownBeatsRemaining: nil,
+                totalCountInBeats: totalCountInBeats,
+                barNumber: barNumber,
+                beatInBar: beatInBar,
+                beatsPerBar: beatsPerBar,
+                beatProgress: progress,
+                isDownbeat: beatInBar == 1
+            )
+        }
     }
 }

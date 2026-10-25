@@ -57,7 +57,7 @@ final class RenderCoordinator: ObservableObject {
         exporter = session
         let exportID = UUID()
         activeExportID = exportID
-        session.videoComposition = package.videoComposition
+        session.videoComposition = package.exportVideoComposition()
         session.audioMix = package.audioMix
         session.shouldOptimizeForNetworkUse = false
         let progress = Task { @MainActor [weak self] in

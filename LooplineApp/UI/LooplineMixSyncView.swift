@@ -3,14 +3,22 @@ import SwiftUI
 
 struct LooplineMixSyncView: View {
     @ObservedObject var model: LooplineViewModel
+    @State private var trackPendingDeletion: LooplineTrack?
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 24) {
                 LooplineTopBar(eyebrow: "\(model.trackCountLabel) · \(model.projectDuration)", title: "Better together.")
                 if let player = model.player {
-                    VideoPlayer(player: player).frame(height: stageHeight).clipShape(RoundedRectangle(cornerRadius: 20))
+                    VideoPlayer(player: player)
+                        .overlay {
+                            LooplinePlayerTitlesOverlay(tracks: model.tracks, layout: model.exportLayout)
+                                .aspectRatio(9.0 / 16.0, contentMode: .fit)
+                                .allowsHitTesting(false)
+                        }
+                        .frame(height: stageHeight)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
                 } else if !model.tracks.isEmpty {
-                    LooplineStageGrid(tracks: model.tracks, compact: true)
+                    LooplineStageGrid(tracks: model.tracks, compact: true, layout: model.exportLayout)
                         .frame(height: stageHeight)
                 } else {
                     LooplineSurface {
@@ -30,7 +38,9 @@ struct LooplineMixSyncView: View {
                         LooplineTrackLane(track: track, isSelected: model.selectedTrackID == track.id,
                             onSelect: { model.selectedTrackID = track.id },
                             onMute: { model.toggleMute(for: track.id) }, onSolo: { model.toggleSolo(for: track.id) },
-                            onNudge: { model.nudgeTrack(track.id, by: $0) }, onVolumeChange: { model.setVolume($0, for: track.id) })
+                            onNudge: { model.nudgeTrack(track.id, by: $0) }, onVolumeChange: { model.setVolume($0, for: track.id) },
+                            onRename: { model.renameTrack(track.id, to: $0) },
+                            onDelete: { trackPendingDeletion = track })
                             .disabled(model.transportBusy)
                     }
                 }
@@ -38,6 +48,24 @@ struct LooplineMixSyncView: View {
                     isDisabled: model.transportBusy) { model.select(.capture) }
                     .accessibilityIdentifier("mix.addPart")
             }.padding(20)
+        }
+        .alert(
+            trackPendingDeletion.map { "Delete \($0.name)?" } ?? "Delete part?",
+            isPresented: Binding(
+                get: { trackPendingDeletion != nil },
+                set: { if !$0 { trackPendingDeletion = nil } }
+            ),
+            presenting: trackPendingDeletion
+        ) { track in
+            Button("Delete part", role: .destructive) {
+                model.deleteTrack(track.id)
+                trackPendingDeletion = nil
+            }
+            Button("Cancel", role: .cancel) {
+                trackPendingDeletion = nil
+            }
+        } message: { track in
+            Text("This removes \(track.name) and its recorded video and audio from this session.")
         }
     }
     // Keep the transport at the same scroll position when the player replaces the grid.

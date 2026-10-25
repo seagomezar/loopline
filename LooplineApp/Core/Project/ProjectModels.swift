@@ -139,12 +139,72 @@ public struct TrackVideoSettings: Codable, Hashable, Sendable {
     public var isVisible: Bool
     public var tileIndex: Int
     public var isMirrored: Bool
+    /// Normalized horizontal pan in basis points (-10,000 ... +10,000). Zero is centered.
+    public var panXBasisPoints: Int
+    /// Normalized vertical pan in basis points (-10,000 ... +10,000). Zero is centered.
+    public var panYBasisPoints: Int
+    /// Zoom factor in basis points (10,000 = 1.0x ... 30,000 = 3.0x).
+    public var zoomBasisPoints: Int
 
-    public init(isVisible: Bool = true, tileIndex: Int = 0, isMirrored: Bool = false) {
+    public init(
+        isVisible: Bool = true,
+        tileIndex: Int = 0,
+        isMirrored: Bool = false,
+        panXBasisPoints: Int = 0,
+        panYBasisPoints: Int = 0,
+        zoomBasisPoints: Int = 10_000
+    ) {
         precondition(tileIndex >= 0, "Tile index cannot be negative")
         self.isVisible = isVisible
         self.tileIndex = tileIndex
         self.isMirrored = isMirrored
+        self.panXBasisPoints = min(10_000, max(-10_000, panXBasisPoints))
+        self.panYBasisPoints = min(10_000, max(-10_000, panYBasisPoints))
+        self.zoomBasisPoints = min(30_000, max(10_000, zoomBasisPoints))
+    }
+
+    public var panX: Double {
+        get { Double(panXBasisPoints) / 10_000.0 }
+        set { panXBasisPoints = min(10_000, max(-10_000, Int((newValue * 10_000.0).rounded()))) }
+    }
+
+    public var panY: Double {
+        get { Double(panYBasisPoints) / 10_000.0 }
+        set { panYBasisPoints = min(10_000, max(-10_000, Int((newValue * 10_000.0).rounded()))) }
+    }
+
+    public var zoom: Double {
+        get { Double(zoomBasisPoints) / 10_000.0 }
+        set { zoomBasisPoints = min(30_000, max(10_000, Int((newValue * 10_000.0).rounded()))) }
+    }
+
+    public var isDefaultFraming: Bool {
+        panXBasisPoints == 0 && panYBasisPoints == 0 && zoomBasisPoints == 10_000
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case isVisible, tileIndex, isMirrored, panXBasisPoints, panYBasisPoints, zoomBasisPoints
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let isVisible = try container.decodeIfPresent(Bool.self, forKey: .isVisible) ?? true
+        let tileIndex = try container.decodeIfPresent(Int.self, forKey: .tileIndex) ?? 0
+        let isMirrored = try container.decodeIfPresent(Bool.self, forKey: .isMirrored) ?? false
+        let panX = try container.decodeIfPresent(Int.self, forKey: .panXBasisPoints) ?? 0
+        let panY = try container.decodeIfPresent(Int.self, forKey: .panYBasisPoints) ?? 0
+        let zoom = try container.decodeIfPresent(Int.self, forKey: .zoomBasisPoints) ?? 10_000
+        guard tileIndex >= 0 else {
+            throw DecodingError.dataCorruptedError(forKey: .tileIndex, in: container, debugDescription: "Negative tileIndex")
+        }
+        self.init(
+            isVisible: isVisible,
+            tileIndex: tileIndex,
+            isMirrored: isMirrored,
+            panXBasisPoints: panX,
+            panYBasisPoints: panY,
+            zoomBasisPoints: zoom
+        )
     }
 }
 

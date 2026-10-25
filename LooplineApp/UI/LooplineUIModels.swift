@@ -27,6 +27,12 @@ struct LooplineTrack: Identifiable {
     var symbol: String
     var waveform: [Double]
     var sourceURL: URL?
+    var panX: Double = 0
+    var panY: Double = 0
+    var zoom: Double = 1.0
+    var placement: VideoFramePlacement {
+        VideoFramePlacement(panX: panX, panY: panY, zoom: zoom)
+    }
     var formattedDuration: String { Self.time(duration) }
     static func time(_ seconds: Double) -> String {
         let total = max(0, Int(seconds.rounded(.down)))
@@ -56,9 +62,39 @@ enum SyncAssistState {
     var isAnalyzing: Bool { if case .analyzing = self { true } else { false } }
 }
 
+final class PlayerTimeObservation: @unchecked Sendable {
+    private weak var player: AVPlayer?
+    private let token: Any
+    init(player: AVPlayer, token: Any) {
+        self.player = player
+        self.token = token
+    }
+    deinit {
+        player?.removeTimeObserver(token)
+    }
+}
+
 enum LooplineExportState {
     case idle, rendering(progress: Double), completed(fileName: String, fileSize: String, duration: String)
     var isRendering: Bool { if case .rendering = self { true } else { false } }
+}
+
+enum ExportPreviewMode: String, CaseIterable, Identifiable {
+    case realPreview
+    case frameCrop
+    var id: String { rawValue }
+    var title: String {
+        switch self {
+        case .realPreview: "Real preview"
+        case .frameCrop: "Touch crop"
+        }
+    }
+    var icon: String {
+        switch self {
+        case .realPreview: "play.rectangle.fill"
+        case .frameCrop: "crop"
+        }
+    }
 }
 
 @MainActor
@@ -76,12 +112,30 @@ final class LooplineViewModel: ObservableObject {
     @Published var clickVolume = 0.55 { didSet { persistSettings() } }
     @Published var subdivisions = 2 { didSet { persistSettings() } }
     @Published var accentEnabled = true { didSet { persistSettings() } }
-    @Published var columns = 2 { didSet { persistSettings() } }
+    @Published var columns = 2 {
+        didSet {
+            if !restoring, exportLayout.preferredColumns != columns {
+                exportLayout = .from(columns: columns)
+            }
+            persistSettings()
+        }
+    }
+    @Published var exportLayout: VideoLayoutStyle = .grid2 {
+        didSet {
+            if !restoring, columns != exportLayout.preferredColumns {
+                columns = exportLayout.preferredColumns
+            }
+            persistSettings()
+        }
+    }
     @Published var exportFormat = "H.264 MP4" { didSet { persistSettings() } }
     @Published var exportResolution = "1080p" { didSet { persistSettings() } }
+    @Published var nextPartTitle = ""
     @Published private(set) var isRecording = false
     @Published private(set) var isFinalizing = false
     @Published private(set) var isCountingIn = false
+    @Published private(set) var pulseStatus: MetronomePulseStatus?
+    @Published private(set) var countdownBeatsRemaining: Int?
     @Published private(set) var recordingElapsed: TimeInterval = 0
     @Published var syncState: SyncAssistState = .manual
     @Published var isManualSyncExpanded = false
@@ -95,6 +149,16 @@ final class LooplineViewModel: ObservableObject {
     @Published private(set) var isPreparing = false
     @Published private(set) var hasRecoverableDraft = false
     @Published var player: AVPlayer?
+    @Published var exportPreviewMode: ExportPreviewMode = .realPreview
+    @Published var isFullScreenPreviewPresented = false
+    @Published private(set) var exportPreviewPlayer: AVPlayer?
+    @Published private(set) var exportPreviewOverlayImage: CGImage?
+    @Published private(set) var isExportPreviewPlaying = false
+    @Published private(set) var isExportPreviewLoading = false
+    @Published private(set) var previewCurrentTime: Double = 0
+    @Published private(set) var previewDuration: Double = 0
+    @Published var isExportPreviewLooping = true
+    @Published var isScrubbingPreview = false
     let captureCoordinator = CaptureCoordinator()
     let audioClock = AudioClockService()
     let renderCoordinator = RenderCoordinator()
@@ -106,8 +170,11 @@ final class LooplineViewModel: ObservableObject {
     private var syncTask: Task<Void, Never>?
     private var waveformTask: Task<Void, Never>?
     private var previewTask: Task<Void, Never>?
+    private var exportPreviewTask: Task<Void, Never>?
     private var exportMonitorTask: Task<Void, Never>?
     private var playbackEndObserver: NotificationObservation?
+    private var exportPlaybackEndObserver: NotificationObservation?
+    private var timeObservation: PlayerTimeObservation?
     private var cancellables: Set<AnyCancellable> = []
     private var syncTarget: UUID?
     private var undoSync: (id: UUID, offset: Int)?
@@ -149,26 +216,47 @@ final class LooplineViewModel: ObservableObject {
 
     deinit {
         recordingTask?.cancel(); syncTask?.cancel(); waveformTask?.cancel()
-        previewTask?.cancel(); exportMonitorTask?.cancel()
+        previewTask?.cancel(); exportPreviewTask?.cancel(); exportMonitorTask?.cancel()
         captureCoordinator.stopPreview()
     }
 
     var selectedTrack: LooplineTrack? { tracks.first { $0.id == selectedTrackID } ?? tracks.first }
+    var currentProjectID: UUID? { project?.id }
     var formattedRecordingTime: String { LooplineTrack.time(recordingElapsed) }
+    var defaultNextPartTitle: String { LocalProjectStore.nextDefaultTrackName(for: project?.manifest.project.tracks ?? []) }
+    var effectiveNextPartTitle: String {
+        let trimmed = nextPartTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? defaultNextPartTitle : trimmed
+    }
+    var currentBeatInBar: Int { pulseStatus?.beatInBar ?? 0 }
+    var currentBarNumber: Int { pulseStatus?.barNumber ?? 0 }
+    var beatPulseProgress: Double { pulseStatus?.beatProgress ?? 0 }
+    var isDownbeatPulse: Bool { pulseStatus?.isDownbeat ?? false }
     var projectDuration: String { LooplineTrack.time(durationSeconds) }
     var durationSeconds: Double {
         guard let project else { return 0 }
         return Double(project.manifest.project.duration.rawValue) / Double(project.manifest.project.timebase.sampleRate.hertz)
     }
+    var effectivePreviewDuration: Double {
+        let candidate = previewDuration > 0 ? previewDuration : durationSeconds
+        return max(0.1, candidate)
+    }
+    var formattedPreviewCurrentTime: String { LooplineTrack.time(previewCurrentTime) }
+    var formattedPreviewDuration: String { LooplineTrack.time(effectivePreviewDuration) }
     var transportBusy: Bool { isRecording || isFinalizing || isPreparing || exportState.isRendering }
     var trackCountLabel: String { "\(tracks.count) \(tracks.count == 1 ? "part" : "parts")" }
-    var renderOptions: RenderOptions { RenderOptions(format: exportFormat, resolution: exportResolution, columns: columns) }
+    var renderOptions: RenderOptions {
+        RenderOptions(format: exportFormat, resolution: exportResolution, columns: columns, layout: exportLayout)
+    }
 
     func select(_ tab: LooplineTab) {
         guard !transportBusy else { return }
         stopPlayback()
         selectedTab = tab
         if tab != .capture { captureCoordinator.stopPreview() }
+        if tab == .export, !tracks.isEmpty {
+            prepareExportPreview(autoPlay: false, preserveTime: false)
+        }
     }
 
     func open(_ stored: StoredProject) {
@@ -191,8 +279,10 @@ final class LooplineViewModel: ObservableObject {
         subdivisions = stored.settings.subdivisions
         accentEnabled = stored.settings.accentEnabled
         columns = stored.settings.columns
+        exportLayout = stored.settings.exportLayout ?? .from(columns: stored.settings.columns)
         exportFormat = stored.settings.exportFormat
         exportResolution = stored.settings.exportResolution
+        nextPartTitle = ""
         hasRecoverableDraft = stored.pendingTake != nil
         refreshTracks()
         selectedTrackID = tracks.first?.id
@@ -208,9 +298,49 @@ final class LooplineViewModel: ObservableObject {
     func newProject() {
         guard !transportBusy, let store = projectStore else { return }
         do {
-            let created = try store.createProject(title: "Session \(projects.count + 1)")
+            let defaultTitle = LocalProjectStore.nextDefaultProjectTitle(for: projects)
+            let created = try store.createProject(title: defaultTitle)
             projects.insert(created, at: 0)
             open(created)
+        } catch { errorMessage = error.localizedDescription }
+    }
+
+    func renameProject(_ id: UUID, to newTitle: String) {
+        guard !transportBusy, let store = projectStore else { return }
+        let target = (project?.id == id ? project : nil) ?? projects.first(where: { $0.id == id })
+        guard let target else { return }
+        do {
+            let updated = try store.renameProject(target, to: newTitle)
+            if project?.id == id {
+                project = updated
+                projectTitle = updated.manifest.project.name
+            }
+            if let index = projects.firstIndex(where: { $0.id == id }) {
+                projects[index] = updated
+            } else {
+                projects.insert(updated, at: 0)
+            }
+        } catch { errorMessage = error.localizedDescription }
+    }
+
+    func deleteProject(_ id: UUID) {
+        guard !transportBusy, let store = projectStore else { return }
+        let wasCurrentProject = (project?.id == id)
+        if wasCurrentProject {
+            stopPlayback()
+            cancelSync()
+            invalidateExport()
+        }
+        do {
+            try store.deleteProject(id)
+            projects.removeAll { $0.id == id }
+            if projects.isEmpty {
+                let fresh = try store.createProject(title: "My first session")
+                projects = [fresh]
+                open(fresh)
+            } else if wasCurrentProject, let next = projects.first {
+                open(next)
+            }
         } catch { errorMessage = error.localizedDescription }
     }
 
@@ -241,7 +371,8 @@ final class LooplineViewModel: ObservableObject {
                 offsetMilliseconds: Int(project.manifest.project.timebase.milliseconds(for: track.placement.effectiveTimelineStart)),
                 volume: track.mix.gainCentibels <= -12000 ? 0 : pow(10, Double(track.mix.gainCentibels) / 2000),
                 isMuted: track.mix.isMuted, isSolo: track.mix.isSoloed, tint: colors[index % colors.count],
-                symbol: "waveform", waveform: cached[track.id.rawValue] ?? [], sourceURL: exists ? url : nil)
+                symbol: "waveform", waveform: cached[track.id.rawValue] ?? [], sourceURL: exists ? url : nil,
+                panX: track.video.panX, panY: track.video.panY, zoom: track.video.zoom)
         }
         waveformTask?.cancel()
         waveformTask = Task { [weak self] in
@@ -263,9 +394,19 @@ final class LooplineViewModel: ObservableObject {
             initialTimeSignature: TimeSignature(beatsPerBar: beatsPerBar, beatUnitDenominator: beatDenominator))
         updated.settings = SessionSettings(countInBars: countInBars, clickEnabled: clickEnabled,
             clickVolume: clickVolume, subdivisions: subdivisions, accentEnabled: accentEnabled,
-            columns: columns, exportFormat: exportFormat, exportResolution: exportResolution)
+            columns: columns, exportLayout: exportLayout, exportFormat: exportFormat, exportResolution: exportResolution)
         store.updateDuration(&updated)
-        do { try store.save(updated); project = updated; updateProjectList(updated); invalidateExport(); stopPlayback() }
+        do {
+            try store.save(updated)
+            project = updated
+            updateProjectList(updated)
+            invalidateExport()
+            if selectedTab == .export && !tracks.isEmpty {
+                prepareExportPreview(autoPlay: isExportPreviewPlaying, preserveTime: true, debounceMilliseconds: 25)
+            } else {
+                stopPlayback()
+            }
+        }
         catch {
             if let saved = project { open(saved) }
             errorMessage = error.localizedDescription
@@ -283,7 +424,11 @@ final class LooplineViewModel: ObservableObject {
             updateProjectList(updated)
             refreshTracks()
             invalidateExport()
-            stopPlayback()
+            if selectedTab == .export && !tracks.isEmpty {
+                prepareExportPreview(autoPlay: isExportPreviewPlaying, preserveTime: true, debounceMilliseconds: 25)
+            } else {
+                stopPlayback()
+            }
         } catch { errorMessage = error.localizedDescription }
     }
 
@@ -291,6 +436,120 @@ final class LooplineViewModel: ObservableObject {
     func toggleSolo(for id: UUID) { edit(id) { $0.mix.isSoloed.toggle() } }
     func setVolume(_ value: Double, for id: UUID) {
         edit(id) { $0.mix.gainCentibels = value <= 0 ? -12000 : Int64((20 * log10(value) * 100).rounded()) }
+    }
+    func renameTrack(_ id: UUID, to newName: String) {
+        let trimmed = newName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+        edit(id) { $0.name = trimmed }
+    }
+    func setTrackFraming(_ id: UUID, panX: Double, panY: Double, zoom: Double) {
+        guard !transportBusy, var updated = project, let store = projectStore,
+              let index = updated.manifest.project.tracks.firstIndex(where: { $0.id.rawValue == id }) else { return }
+        let clampedPanX = min(1.0, max(-1.0, panX))
+        let clampedPanY = min(1.0, max(-1.0, panY))
+        let clampedZoom = min(3.0, max(1.0, zoom))
+        updated.manifest.project.tracks[index].video.panX = clampedPanX
+        updated.manifest.project.tracks[index].video.panY = clampedPanY
+        updated.manifest.project.tracks[index].video.zoom = clampedZoom
+        if let uiIndex = tracks.firstIndex(where: { $0.id == id }) {
+            tracks[uiIndex].panX = updated.manifest.project.tracks[index].video.panX
+            tracks[uiIndex].panY = updated.manifest.project.tracks[index].video.panY
+            tracks[uiIndex].zoom = updated.manifest.project.tracks[index].video.zoom
+        }
+        store.updateDuration(&updated)
+        do {
+            try store.save(updated)
+            project = updated
+            updateProjectList(updated)
+            invalidateExport()
+            if selectedTab == .export && !tracks.isEmpty {
+                prepareExportPreview(autoPlay: isExportPreviewPlaying, preserveTime: true, debounceMilliseconds: 65)
+            } else {
+                stopPlayback()
+            }
+        } catch { errorMessage = error.localizedDescription }
+    }
+    func resetTrackFraming(_ id: UUID) {
+        setTrackFraming(id, panX: 0, panY: 0, zoom: 1.0)
+    }
+    func resetAllTrackFraming() {
+        guard !transportBusy, var updated = project, let store = projectStore else { return }
+        for index in updated.manifest.project.tracks.indices {
+            updated.manifest.project.tracks[index].video.panXBasisPoints = 0
+            updated.manifest.project.tracks[index].video.panYBasisPoints = 0
+            updated.manifest.project.tracks[index].video.zoomBasisPoints = 10_000
+        }
+        for uiIndex in tracks.indices {
+            tracks[uiIndex].panX = 0
+            tracks[uiIndex].panY = 0
+            tracks[uiIndex].zoom = 1.0
+        }
+        store.updateDuration(&updated)
+        do {
+            try store.save(updated)
+            project = updated
+            updateProjectList(updated)
+            invalidateExport()
+            if selectedTab == .export && !tracks.isEmpty {
+                prepareExportPreview(autoPlay: isExportPreviewPlaying, preserveTime: true, debounceMilliseconds: 25)
+            } else {
+                stopPlayback()
+            }
+        } catch { errorMessage = error.localizedDescription }
+    }
+    func moveTrack(_ id: UUID, toSlot slotIndex: Int) {
+        guard !transportBusy, let current = project, let store = projectStore else { return }
+        do {
+            let updated = try store.moveTrack(id, toSlot: slotIndex, in: current)
+            project = updated
+            updateProjectList(updated)
+            refreshTracks()
+            selectedTrackID = id
+            invalidateExport()
+            if selectedTab == .export && !tracks.isEmpty {
+                prepareExportPreview(autoPlay: isExportPreviewPlaying, preserveTime: true, debounceMilliseconds: 25)
+            } else {
+                stopPlayback()
+            }
+        } catch { errorMessage = error.localizedDescription }
+    }
+    func moveTrack(_ id: UUID, by delta: Int) {
+        guard !transportBusy, let current = project, let store = projectStore else { return }
+        do {
+            let updated = try store.moveTrack(id, by: delta, in: current)
+            project = updated
+            updateProjectList(updated)
+            refreshTracks()
+            selectedTrackID = id
+            invalidateExport()
+            if selectedTab == .export && !tracks.isEmpty {
+                prepareExportPreview(autoPlay: isExportPreviewPlaying, preserveTime: true, debounceMilliseconds: 25)
+            } else {
+                stopPlayback()
+            }
+        } catch { errorMessage = error.localizedDescription }
+    }
+    func deleteTrack(_ id: UUID) {
+        guard !transportBusy, let current = project, let store = projectStore else { return }
+        stopPlayback()
+        cancelSync()
+        if undoSync?.id == id {
+            undoSync = nil
+            canUndoSync = false
+        }
+        do {
+            let updated = try store.deleteTrack(id, in: current)
+            project = updated
+            updateProjectList(updated)
+            refreshTracks()
+            if selectedTrackID == id || !tracks.contains(where: { $0.id == selectedTrackID }) {
+                selectedTrackID = tracks.first?.id
+            }
+            if tracks.count < 2 {
+                isManualSyncExpanded = false
+            }
+            invalidateExport()
+        } catch { errorMessage = error.localizedDescription }
     }
     func nudgeTrack(_ id: UUID, by milliseconds: Int) {
         if let current = tracks.first(where: { $0.id == id }), undoSync?.id != id {
@@ -376,6 +635,12 @@ final class LooplineViewModel: ObservableObject {
                         denominator: beatDenominator, subdivisions: subdivisions, accentEnabled: accentEnabled,
                         volume: clickVolume, startHostSeconds: start)
                 }
+                let metronomeConfig = MetronomeConfiguration(
+                    tempo: Tempo(beatsPerMinute: Double(tempo)),
+                    timeSignature: TimeSignature(beatsPerBar: beatsPerBar, beatUnitDenominator: beatDenominator),
+                    subdivision: MetronomeSubdivision(divisionsPerBeat: subdivisions),
+                    countInBars: countInBars
+                )
                 var overdubStarted = overdubPlayer == nil
                 isPreparing = false
                 isRecording = true
@@ -385,13 +650,19 @@ final class LooplineViewModel: ObservableObject {
                         overdubPlayer?.play()
                         overdubStarted = true
                     }
-                    isCountingIn = elapsed < 0
+                    let status = MetronomeMath.pulseStatus(elapsedFromProjectZero: elapsed, configuration: metronomeConfig)
+                    pulseStatus = status
+                    isCountingIn = status.isCountingIn
+                    countdownBeatsRemaining = status.countdownBeatsRemaining
                     recordingElapsed = max(0, elapsed)
-                    try await Task.sleep(for: .milliseconds(overdubStarted ? 80 : 15))
+                    try await Task.sleep(for: .milliseconds(overdubStarted ? 25 : 15))
                 }
             } catch is CancellationError {
                 if !isFinalizing {
                     isPreparing = false
+                    isCountingIn = false
+                    pulseStatus = nil
+                    countdownBeatsRemaining = nil
                     audioClock.stopMetronome()
                     stopPlayback()
                     do { try await saveFinishedTake(captureCoordinator.stopRecording()) }
@@ -403,6 +674,8 @@ final class LooplineViewModel: ObservableObject {
                 isPreparing = false
                 isRecording = false
                 isCountingIn = false
+                pulseStatus = nil
+                countdownBeatsRemaining = nil
                 audioClock.stopMetronome()
                 stopPlayback()
                 hasRecoverableDraft = self.project?.pendingTake != nil
@@ -417,6 +690,8 @@ final class LooplineViewModel: ObservableObject {
         isRecording = false
         isFinalizing = true
         isCountingIn = false
+        pulseStatus = nil
+        countdownBeatsRemaining = nil
         recordingTask?.cancel()
         audioClock.stopMetronome()
         stopPlayback()
@@ -433,7 +708,7 @@ final class LooplineViewModel: ObservableObject {
         guard var project = self.project, project.pendingTake != nil, let store = projectStore else { return }
         if let take {
             let duration = try await AVURLAsset(url: take.url).load(.duration)
-            project = try store.commitTake(in: project, duration: duration.seconds, offsetMilliseconds: take.offsetMilliseconds)
+            project = try store.commitTake(in: project, duration: duration.seconds, offsetMilliseconds: take.offsetMilliseconds, name: nextPartTitle)
         } else {
             project.pendingTake = nil
             try store.save(project)
@@ -442,6 +717,7 @@ final class LooplineViewModel: ObservableObject {
         updateProjectList(project)
         refreshTracks()
         if take != nil {
+            nextPartTitle = ""
             selectedTrackID = tracks.last?.id
             selectedTab = .mix
         }
@@ -488,6 +764,7 @@ final class LooplineViewModel: ObservableObject {
         player = nil
         isPlaying = false
         playbackEndObserver = nil
+        stopExportPreview(clearPlayer: true)
     }
 
     func togglePlayback() {
@@ -506,6 +783,208 @@ final class LooplineViewModel: ObservableObject {
                 player?.play()
             } catch { if !Task.isCancelled { errorMessage = error.localizedDescription } }
         }
+    }
+
+    private func detachTimeObserver() {
+        timeObservation = nil
+    }
+
+    private func attachTimeObserver(to player: AVPlayer) {
+        detachTimeObserver()
+        let interval = CMTime(seconds: 0.05, preferredTimescale: 600)
+        let token = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
+            let seconds = time.seconds
+            guard seconds.isFinite else { return }
+            Task { @MainActor [weak self] in
+                guard let self, !self.isScrubbingPreview else { return }
+                self.previewCurrentTime = max(0, seconds)
+            }
+        }
+        timeObservation = PlayerTimeObservation(player: player, token: token)
+    }
+
+    func stopExportPreview(clearPlayer: Bool = true) {
+        exportPreviewTask?.cancel()
+        exportPreviewTask = nil
+        exportPreviewPlayer?.pause()
+        isExportPreviewPlaying = false
+        isExportPreviewLoading = false
+        if clearPlayer {
+            detachTimeObserver()
+            exportPreviewPlayer = nil
+            exportPreviewOverlayImage = nil
+            exportPlaybackEndObserver = nil
+            previewCurrentTime = 0
+            previewDuration = 0
+        }
+    }
+
+    func prepareExportPreview(autoPlay: Bool = false, preserveTime: Bool = false, debounceMilliseconds: Int = 0) {
+        exportPreviewTask?.cancel()
+        guard !tracks.isEmpty, !isRecording, !isFinalizing, !exportState.isRendering else {
+            if tracks.isEmpty { stopExportPreview(clearPlayer: true) }
+            return
+        }
+        let shouldPlay = autoPlay || isExportPreviewPlaying
+        let savedTime = preserveTime ? previewCurrentTime : 0
+        exportPreviewTask = Task { [weak self] in
+            guard let self else { return }
+            if debounceMilliseconds > 0 {
+                try? await Task.sleep(for: .milliseconds(debounceMilliseconds))
+            }
+            guard !Task.isCancelled else { return }
+            self.isExportPreviewLoading = true
+            defer { self.isExportPreviewLoading = false }
+            do {
+                if shouldPlay {
+                    try self.audioClock.configure()
+                }
+                let item: AVPlayerItem
+                let overlay: CGImage?
+                if let url = self.nativeExportURL, FileManager.default.fileExists(atPath: url.path) {
+                    let asset = AVURLAsset(url: url)
+                    let loadedDuration = try await asset.load(.duration)
+                    try Task.checkCancellation()
+                    item = AVPlayerItem(asset: asset)
+                    overlay = nil
+                    let sec = loadedDuration.seconds
+                    self.previewDuration = (sec.isFinite && sec > 0) ? sec : self.durationSeconds
+                } else {
+                    let package = try await MediaCompositionBuilder.make(inputs: self.renderInputs(), options: self.renderOptions)
+                    try Task.checkCancellation()
+                    item = package.playerItem()
+                    overlay = package.overlayImage
+                    let sec = package.asset.duration.seconds
+                    self.previewDuration = (sec.isFinite && sec > 0) ? sec : self.durationSeconds
+                }
+                self.exportPreviewOverlayImage = overlay
+                let clampedTarget = preserveTime ? min(max(0, savedTime), max(0, self.effectivePreviewDuration - 0.05)) : 0
+                let targetCMTime = CMTime(seconds: clampedTarget, preferredTimescale: 600)
+
+                if let existing = self.exportPreviewPlayer {
+                    existing.pause()
+                    existing.replaceCurrentItem(with: item)
+                    _ = await existing.seek(to: targetCMTime, toleranceBefore: .zero, toleranceAfter: .zero)
+                } else {
+                    let created = AVPlayer(playerItem: item)
+                    created.automaticallyWaitsToMinimizeStalling = false
+                    _ = await created.seek(to: targetCMTime, toleranceBefore: .zero, toleranceAfter: .zero)
+                    try Task.checkCancellation()
+                    self.exportPreviewPlayer = created
+                    self.attachTimeObserver(to: created)
+                }
+                try Task.checkCancellation()
+                self.previewCurrentTime = clampedTarget
+                self.exportPlaybackEndObserver = NotificationObservation(
+                    NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: item, queue: .main) { [weak self] _ in
+                        Task { @MainActor [weak self] in
+                            guard let self else { return }
+                            if self.isExportPreviewLooping {
+                                self.previewCurrentTime = 0
+                                self.exportPreviewPlayer?.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] finished in
+                                    guard finished else { return }
+                                    Task { @MainActor [weak self] in
+                                        guard let self, self.isExportPreviewPlaying else { return }
+                                        self.exportPreviewPlayer?.play()
+                                    }
+                                }
+                            } else {
+                                self.isExportPreviewPlaying = false
+                                self.previewCurrentTime = 0
+                                self.exportPreviewPlayer?.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero)
+                            }
+                        }
+                    }
+                )
+                if shouldPlay {
+                    self.isExportPreviewPlaying = true
+                    self.exportPreviewPlayer?.play()
+                } else {
+                    self.isExportPreviewPlaying = false
+                }
+            } catch is CancellationError {
+                return
+            } catch {
+                if !Task.isCancelled {
+                    self.isExportPreviewPlaying = false
+                    self.errorMessage = error.localizedDescription
+                }
+            }
+        }
+    }
+
+    func toggleExportPreviewPlayback() {
+        guard !transportBusy, !tracks.isEmpty else { return }
+        if exportPreviewMode != .realPreview && !isExportPreviewPlaying {
+            exportPreviewMode = .realPreview
+        }
+        if isExportPreviewPlaying {
+            exportPreviewPlayer?.pause()
+            isExportPreviewPlaying = false
+        } else if let exportPreviewPlayer, exportPreviewPlayer.currentItem != nil {
+            do { try audioClock.configure() } catch { errorMessage = error.localizedDescription }
+            if previewCurrentTime >= effectivePreviewDuration - 0.08 {
+                previewCurrentTime = 0
+                exportPreviewPlayer.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] _ in
+                    Task { @MainActor [weak self] in
+                        guard let self else { return }
+                        self.isExportPreviewPlaying = true
+                        self.exportPreviewPlayer?.play()
+                    }
+                }
+            } else {
+                isExportPreviewPlaying = true
+                exportPreviewPlayer.play()
+            }
+        } else {
+            prepareExportPreview(autoPlay: true, preserveTime: true)
+        }
+    }
+
+    func restartExportPreview() {
+        guard !transportBusy, !tracks.isEmpty else { return }
+        exportPreviewMode = .realPreview
+        previewCurrentTime = 0
+        if let exportPreviewPlayer, exportPreviewPlayer.currentItem != nil {
+            let wasPlaying = isExportPreviewPlaying
+            exportPreviewPlayer.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] _ in
+                Task { @MainActor [weak self] in
+                    if wasPlaying { self?.exportPreviewPlayer?.play() }
+                }
+            }
+        } else {
+            prepareExportPreview(autoPlay: false, preserveTime: false)
+        }
+    }
+
+    func seekExportPreview(to seconds: Double) {
+        guard !transportBusy, !tracks.isEmpty else { return }
+        let clamped = min(max(0, seconds), effectivePreviewDuration)
+        previewCurrentTime = clamped
+        if exportPreviewMode != .realPreview {
+            exportPreviewMode = .realPreview
+        }
+        if let exportPreviewPlayer, exportPreviewPlayer.currentItem != nil {
+            let target = CMTime(seconds: clamped, preferredTimescale: 600)
+            exportPreviewPlayer.seek(to: target, toleranceBefore: .zero, toleranceAfter: .zero)
+        } else {
+            prepareExportPreview(autoPlay: false, preserveTime: true)
+        }
+    }
+
+    func openFullScreenPreview() {
+        guard !transportBusy, !tracks.isEmpty else { return }
+        exportPreviewMode = .realPreview
+        isFullScreenPreviewPresented = true
+        if exportPreviewPlayer == nil {
+            prepareExportPreview(autoPlay: true, preserveTime: true)
+        } else if !isExportPreviewPlaying {
+            toggleExportPreviewPlayback()
+        }
+    }
+
+    func closeFullScreenPreview() {
+        isFullScreenPreviewPresented = false
     }
 
     private func renderInputs() throws -> [RenderTrackInput] {
@@ -580,6 +1059,7 @@ final class LooplineViewModel: ObservableObject {
 
     func startExport() {
         guard !transportBusy, let project, let store = projectStore else { return }
+        isFullScreenPreviewPresented = false
         stopPlayback()
         do {
             let inputs = try renderInputs()
@@ -597,6 +1077,9 @@ final class LooplineViewModel: ObservableObject {
                         let size = try url.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? 0
                         exportState = .completed(fileName: url.lastPathComponent,
                             fileSize: ByteCountFormatter.string(fromByteCount: Int64(size), countStyle: .file), duration: projectDuration)
+                        if selectedTab == .export {
+                            prepareExportPreview(autoPlay: false, preserveTime: false)
+                        }
                         return
                     case let .failed(message): errorMessage = message; exportState = .idle; return
                     case .idle: exportState = .idle; return
@@ -607,7 +1090,14 @@ final class LooplineViewModel: ObservableObject {
             }
         } catch { errorMessage = error.localizedDescription; exportState = .idle }
     }
-    func cancelExport() { exportMonitorTask?.cancel(); renderCoordinator.cancel(); exportState = .idle }
+    func cancelExport() {
+        exportMonitorTask?.cancel()
+        renderCoordinator.cancel()
+        exportState = .idle
+        if selectedTab == .export && !tracks.isEmpty {
+            prepareExportPreview(autoPlay: false, preserveTime: false)
+        }
+    }
     func saveExport() {
         guard let url = nativeExportURL else { return }
         Task {
@@ -616,7 +1106,12 @@ final class LooplineViewModel: ObservableObject {
         }
     }
     func markExportSaved() { hasSavedExport = true }
-    func resetExport() { invalidateExport() }
+    func resetExport() {
+        invalidateExport()
+        if selectedTab == .export && !tracks.isEmpty {
+            prepareExportPreview(autoPlay: false, preserveTime: false)
+        }
+    }
     func handleBackground() {
         if isRecording { finishTake() }
         else if isPreparing { recordingTask?.cancel() }

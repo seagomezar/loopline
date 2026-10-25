@@ -104,4 +104,63 @@ final class CoreTests: XCTestCase {
         XCTAssertEqual(offset.adding(SampleOffset(480)).samples.rawValue, 0)
         XCTAssertEqual(offset.source, .waveformCorrelation)
     }
+
+    func testPulseStatusSynchronizesCountdownAndBeatProgressWithTempoAndMeter() {
+        // 120 BPM, 4/4, 1 bar count-in => 4 beats of 0.5s each (total 2.0s count-in)
+        let config44 = MetronomeConfiguration(
+            tempo: .bpm120,
+            timeSignature: .commonTime,
+            subdivision: .eighth,
+            countInBars: 1
+        )
+
+        let preRoll = MetronomeMath.pulseStatus(elapsedFromProjectZero: -2.2, configuration: config44)
+        XCTAssertTrue(preRoll.isCountingIn)
+        XCTAssertEqual(preRoll.countdownBeatsRemaining, 4)
+        XCTAssertEqual(preRoll.barNumber, 1)
+        XCTAssertEqual(preRoll.beatInBar, 1)
+        XCTAssertTrue(preRoll.isDownbeat)
+
+        let beat1 = MetronomeMath.pulseStatus(elapsedFromProjectZero: -1.9, configuration: config44)
+        XCTAssertTrue(beat1.isCountingIn)
+        XCTAssertEqual(beat1.countdownBeatsRemaining, 4)
+        XCTAssertEqual(beat1.beatInBar, 1)
+        XCTAssertTrue(beat1.isDownbeat)
+        XCTAssertEqual(beat1.beatProgress, 0.2, accuracy: 0.001)
+
+        let beat2 = MetronomeMath.pulseStatus(elapsedFromProjectZero: -1.4, configuration: config44)
+        XCTAssertTrue(beat2.isCountingIn)
+        XCTAssertEqual(beat2.countdownBeatsRemaining, 3)
+        XCTAssertEqual(beat2.beatInBar, 2)
+        XCTAssertFalse(beat2.isDownbeat)
+
+        let beat3 = MetronomeMath.pulseStatus(elapsedFromProjectZero: -0.9, configuration: config44)
+        XCTAssertEqual(beat3.countdownBeatsRemaining, 2)
+        XCTAssertEqual(beat3.beatInBar, 3)
+
+        let beat4 = MetronomeMath.pulseStatus(elapsedFromProjectZero: -0.4, configuration: config44)
+        XCTAssertEqual(beat4.countdownBeatsRemaining, 1)
+        XCTAssertEqual(beat4.beatInBar, 4)
+
+        let liveBar1Beat1 = MetronomeMath.pulseStatus(elapsedFromProjectZero: 0.1, configuration: config44)
+        XCTAssertFalse(liveBar1Beat1.isCountingIn)
+        XCTAssertNil(liveBar1Beat1.countdownBeatsRemaining)
+        XCTAssertEqual(liveBar1Beat1.barNumber, 1)
+        XCTAssertEqual(liveBar1Beat1.beatInBar, 1)
+        XCTAssertTrue(liveBar1Beat1.isDownbeat)
+
+        // 120 BPM, 6/8, 2 bars count-in => 12 eighth-note beats of 0.25s each (total 3.0s count-in)
+        let config68 = MetronomeConfiguration(
+            tempo: .bpm120,
+            timeSignature: .sixEight,
+            subdivision: .quarter,
+            countInBars: 2
+        )
+        let bar2Beat1 = MetronomeMath.pulseStatus(elapsedFromProjectZero: -1.45, configuration: config68)
+        XCTAssertTrue(bar2Beat1.isCountingIn)
+        XCTAssertEqual(bar2Beat1.countdownBeatsRemaining, 6)
+        XCTAssertEqual(bar2Beat1.barNumber, 2)
+        XCTAssertEqual(bar2Beat1.beatInBar, 1)
+        XCTAssertTrue(bar2Beat1.isDownbeat)
+    }
 }

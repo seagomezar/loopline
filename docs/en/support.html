@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Soporte y Ayuda / Support &amp; Help Center — Loopline</title>
+  <meta name="description" content="Centro de soporte oficial de Loopline en Español e Inglés. Guía de grabación multipista, títulos de voces, 16 diseños de marco, Touch Crop y exportación 4K. / Official Loopline Support Center.">
+  <meta name="theme-color" content="#0D0E12">
+  <link rel="canonical" href="https://seagomezar.github.io/loopline/support.html">
+  <style>
+    :root {
+      --bg: #0D0E12;
+      --surface: #161820;
+      --surface-elevated: #1E212B;
+      --border: rgba(255, 255, 255, 0.10);
+      --border-strong: rgba(255, 255, 255, 0.18);
+      --text: #F5F6FA;
+      --muted: #A3A8B8;
+      --coral: #FF5A3C;
+      --amber: #FFB833;
+      --teal: #1FD6A8;
+      --max-w: 940px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; color-scheme: dark; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    html[data-lang="es"] [data-i18n="en"] { display: none !important; }
+    html[data-lang="en"] [data-i18n="es"] { display: none !important; }
+    html[data-lang="both"] [data-i18n="en"] {
+      display: block;
+      margin-top: 0.45rem;
+      color: #D5D9E6;
+    }
+    html[data-lang="both"] span[data-i18n="en"] {
+      display: inline;
+      margin-top: 0;
+      margin-left: 0.35rem;
+    }
+
+    .container {
+      width: min(100% - 2.5rem, var(--max-w));
+      margin-inline: auto;
+    }
+
+    header.site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(13, 14, 18, 0.85);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.95rem 0;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .lang-switcher {
+      display: inline-flex;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-strong);
+      border-radius: 999px;
+      padding: 0.2rem;
+      gap: 0.2rem;
+    }
+
+    .lang-btn {
+      appearance: none;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    .lang-btn[aria-pressed="true"] {
+      background: linear-gradient(135deg, var(--coral), #FF7A45);
+      color: #0D0E12;
+    }
+
+    main {
+      padding: clamp(2.5rem, 5vw, 4rem) 0;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 1.3rem + 2.8vw, 3rem);
+      line-height: 1.15;
+      margin-bottom: 0.7rem;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-bottom: 2rem;
+      font-size: 1.05rem;
+    }
+
+    .support-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: clamp(1.35rem, 3vw, 2rem);
+      margin-bottom: 1.35rem;
+    }
+
+    .support-card.contact-box {
+      border-color: rgba(255, 90, 60, 0.42);
+      background: linear-gradient(145deg, rgba(255, 90, 60, 0.12), rgba(22, 24, 32, 0.96));
+    }
+
+    h2 {
+      font-size: clamp(1.3rem, 1.05rem + 0.9vw, 1.6rem);
+      color: var(--amber);
+      margin-bottom: 0.85rem;
+    }
+
+    h3 {
+      font-size: 1.08rem;
+      color: var(--text);
+      margin-top: 1.15rem;
+      margin-bottom: 0.35rem;
+    }
+
+    p {
+      color: var(--muted);
+      margin-bottom: 0.65rem;
+    }
+
+    .btn-mail {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      padding: 0.75rem 1.3rem;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--coral), #FF7A45);
+      color: #0D0E12;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    a { color: var(--coral); }
+
+    footer.site-footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0 3rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-bar">
+      <a class="brand" href="index.html">← Loopline</a>
+      <div class="nav-controls">
+        <nav aria-label="Navegación de soporte / Support navigation">
+          <ul class="nav-links">
+            <li><a href="index.html">Inicio / Home</a></li>
+            <li><a href="privacy-policy.html">Privacidad / Privacy</a></li>
+            <li><a href="terms-and-conditions.html">Términos / Terms</a></li>
+          </ul>
+        </nav>
+        <div class="lang-switcher" role="group" aria-label="Idioma / Language">
+          <button type="button" class="lang-btn" data-set-lang="es" aria-pressed="false">ES</button>
+          <button type="button" class="lang-btn" data-set-lang="en" aria-pressed="false">EN</button>
+          <button type="button" class="lang-btn" data-set-lang="both" aria-pressed="true">ES + EN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>
+      <span data-i18n="es">Centro de Soporte y Ayuda</span>
+      <span data-i18n="en">Support &amp; Help Center</span>
+    </h1>
+    <p class="subtitle">
+      <span data-i18n="es">Asistencia directa y preguntas frecuentes para Loopline v1.0 en iPhone e iPad.</span>
+      <span data-i18n="en">Direct assistance and frequently asked questions for Loopline v1.0 on iPhone and iPad.</span>
+    </p>
+
+    <section class="support-card contact-box">
+      <h2>
+        <span data-i18n="es">Contacto Directo con Soporte</span>
+        <span data-i18n="en">Direct Support Contact</span>
+      </h2>
+      <p data-i18n="es">
+        ¿Necesitas ayuda técnica, quieres reportar un problema o sugerir una función para tu instrumento o ensamble? Escríbenos directamente y te responderemos en menos de 24–48 horas hábiles:
+      </p>
+      <p data-i18n="en">
+        Need technical help, want to report an issue, or have a feature request for your instrument or ensemble? Email us directly and we will respond within 24–48 business hours:
+      </p>
+      <p>
+        <a class="btn-mail" href="mailto:seagomezar@gmail.com?subject=Loopline%20Support">seagomezar@gmail.com</a>
+      </p>
+    </section>
+
+    <section class="support-card">
+      <h2>
+        <span data-i18n="es">Preguntas Frecuentes (FAQ) — Grabación, Diseño y Exportación</span>
+        <span data-i18n="en">Frequently Asked Questions (FAQ) — Recording, Layout &amp; Export</span>
+      </h2>
+
+      <h3>
+        <span data-i18n="es">1. ¿Cómo lograr la mejor sincronización al grabar varias voces (Overdub)?</span>
+        <span data-i18n="en">1. How do I get the tightest synchronization when overdubbing multiple parts?</span>
+      </h3>
+      <p data-i18n="es">
+        Recomendamos utilizar audífonos con cable o audífonos de baja latencia mientras grabas la segunda toma en adelante. De esta forma escucharás el metrónomo y las voces anteriores con claridad sin que se filtren en el micrófono. Si notas una pequeña diferencia, ve a la pestaña <strong>Mix &amp; Sync</strong> y pulsa <strong>Run Sync Assist</strong> o ajusta el control deslizante manual (±250 ms).
+      </p>
+      <p data-i18n="en">
+        We recommend wearing wired headphones (or low-latency monitors) when recording your second part onward so you hear the metronome and previous takes clearly without microphone bleed. To fine-tune timing afterward, open the <strong>Mix &amp; Sync</strong> tab and tap <strong>Run Sync Assist</strong> or adjust the manual offset slider (±250 ms).
+      </p>
+
+      <h3>
+        <span data-i18n="es">2. ¿Cómo agrego o edito el título de cada voz («Flute 1», «First voice») en el video?</span>
+        <span data-i18n="en">2. How do I add or edit custom part headlines ("Flute 1", "First voice") burned into the video?</span>
+      </h3>
+      <p data-i18n="es">
+        En la pestaña <strong>Capture</strong>, puedes escribir el título de la próxima toma en la barra <em>Next part title</em> antes de grabar, o tocar el ícono de lápiz en cualquier toma ya grabada para renombrarla. El título se incluye automáticamente dentro de cada marco al previsualizar y exportar.
+      </p>
+      <p data-i18n="en">
+        In the <strong>Capture</strong> tab, enter the upcoming take's name in the <em>Next part title</em> bar before recording, or tap the pencil badge on any recorded tile to rename it. Custom headlines are automatically rendered inside each frame in both the live preview and exported video.
+      </p>
+
+      <h3>
+        <span data-i18n="es">3. ¿Cómo elijo entre los 16 diseños de marco, muevo el orden de las voces y ajusto el recorte (Touch Crop)?</span>
+        <span data-i18n="en">3. How do I choose among the 16 layouts, reorder voice slots, and adjust framing (Touch Crop)?</span>
+      </h3>
+      <p data-i18n="es">
+        En la pestaña <strong>Export</strong>:
+        (a) Elige cualquiera de los 16 diseños organizados en <em>Combinations</em>, <em>Rows</em> o <em>Columns &amp; Grids</em>;
+        (b) En <em>Voice &amp; Frame Order</em>, usa los botones <strong>Earlier / Later</strong> para cambiar qué voz ocupa la posición #1, #2, #3…;
+        (c) En la tarjeta superior, cambia a <strong>Touch crop</strong> para abrir el lienzo grande de 520 pt donde puedes arrastrar el video con un dedo y hacer zoom (1.0× a 3.0×) con dos dedos o con los botones <strong>− / +</strong>.
+      </p>
+      <p data-i18n="en">
+        In the <strong>Export</strong> tab:
+        (a) Pick any of the 16 layouts grouped under <em>Combinations</em>, <em>Rows</em>, or <em>Columns &amp; Grids</em>;
+        (b) Under <em>Voice &amp; Frame Order</em>, tap <strong>Earlier / Later</strong> to change which voice occupies slot #1, #2, #3…;
+        (c) In the top preview card, switch to <strong>Touch crop</strong> to use the enlarged 520 pt workspace where you can drag to pan and pinch-to-zoom (1.0× to 3.0×) or tap the <strong>− / +</strong> buttons on each tile.
+      </p>
+
+      <h3>
+        <span data-i18n="es">4. ¿Cómo veo el video final completo antes de exportarlo?</span>
+        <span data-i18n="en">4. How can I preview the complete final video before exporting?</span>
+      </h3>
+      <p data-i18n="es">
+        En la pestaña <strong>Export</strong>, selecciona el modo <strong>Real preview</strong> para reproducir la composición 9:16 real con todas las voces y títulos integrados, o toca el botón <strong>Full preview</strong> para abrir el reproductor en pantalla completa con barra de progreso y repetición continua.
+      </p>
+      <p data-i18n="en">
+        In the <strong>Export</strong> tab, keep the mode on <strong>Real preview</strong> to play back the real 9:16 composition with all audio tracks and burned-in titles, or tap <strong>Full preview</strong> to open the full-screen video player with timeline scrubbing and loop playback.
+      </p>
+
+      <h3>
+        <span data-i18n="es">5. ¿Cómo renombro o elimino sesiones completas para liberar espacio?</span>
+        <span data-i18n="en">5. How do I rename or delete entire sessions to free up storage space?</span>
+      </h3>
+      <p data-i18n="es">
+        Toca el botón de sesiones en la barra superior para abrir <strong>Your sessions</strong>. Junto a cada sesión encontrarás el botón de lápiz para renombrarla y el botón de papelera para eliminar la sesión completa junto con todos sus archivos `.mov` del dispositivo.
+      </p>
+      <p data-i18n="en">
+        Tap the sessions button in the top bar to open <strong>Your sessions</strong>. Next to any session, tap the pencil icon to rename it or the trash icon to permanently delete the session and all of its local `.mov` media files.
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 Sebastian Gomez (`seagomezar`). Loopline — <a href="index.html">Inicio / Home</a> • <a href="privacy-policy.html">Privacidad / Privacy</a> • <a href="terms-and-conditions.html">Términos / Terms</a></p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const buttons = document.querySelectorAll('[data-set-lang]');
+      const params = new URLSearchParams(window.location.search);
+
+      function applyLang(lang) {
+        const valid = (lang === 'en' || lang === 'es' || lang === 'both') ? lang : 'both';
+        root.setAttribute('data-lang', valid);
+        root.setAttribute('lang', valid === 'en' ? 'en' : 'es');
+        buttons.forEach(function (btn) {
+          btn.setAttribute('aria-pressed', btn.getAttribute('data-set-lang') === valid ? 'true' : 'false');
+        });
+      }
+
+      const urlLang = params.get('lang');
+      if (urlLang === 'en' || urlLang === 'es' || urlLang === 'both') {
+        applyLang(urlLang);
+      }
+
+      buttons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          applyLang(btn.getAttribute('data-set-lang'));
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

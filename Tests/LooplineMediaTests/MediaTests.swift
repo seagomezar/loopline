@@ -158,6 +158,80 @@ extension MediaTests {
             for: reopened.manifest.project.tracks[0].activeTake!.media.mediaPath, in: reopened).path))
     }
 
+    func testCustomPartHeadlinesRenameAndIndividualTrackDeletionPersistCleanly() throws {
+        let fixture = try AudioFixture()
+        defer { fixture.remove() }
+        let store = try LocalProjectStore(rootURL: fixture.root.appendingPathComponent("Projects"))
+        var project = try store.createProject(title: "Ensemble")
+
+        // Record Flute 1
+        let (draft1, url1) = try store.beginTake(in: project)
+        try FileManager.default.copyItem(at: fixture.reference, to: url1)
+        project = try store.commitTake(in: draft1, duration: 4, name: "  Flute 1  ")
+        XCTAssertEqual(project.manifest.project.tracks[0].name, "Flute 1")
+
+        // Record First voice
+        let (draft2, url2) = try store.beginTake(in: project)
+        try FileManager.default.copyItem(at: fixture.reference, to: url2)
+        project = try store.commitTake(in: draft2, duration: 6, name: "First voice")
+        XCTAssertEqual(project.manifest.project.tracks[1].name, "First voice")
+
+        // Rename First voice -> Flute 3
+        let secondTrackID = project.manifest.project.tracks[1].id.rawValue
+        project = try store.renameTrack(secondTrackID, to: "Flute 3", in: project)
+        XCTAssertEqual(project.manifest.project.tracks[1].name, "Flute 3")
+
+        // Delete Flute 1 and verify its media file is removed while Flute 3 remains intact
+        let firstTrackID = project.manifest.project.tracks[0].id.rawValue
+        XCTAssertTrue(FileManager.default.fileExists(atPath: url1.path))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: url2.path))
+        project = try store.deleteTrack(firstTrackID, in: project)
+
+        XCTAssertEqual(project.manifest.project.tracks.count, 1)
+        XCTAssertEqual(project.manifest.project.tracks[0].name, "Flute 3")
+        XCTAssertEqual(project.manifest.project.tracks[0].video.tileIndex, 0)
+        XCTAssertFalse(FileManager.default.fileExists(atPath: url1.path))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: url2.path))
+
+        let reopened = try XCTUnwrap(store.loadProjects().first)
+        XCTAssertEqual(reopened.manifest.project.tracks.map(\.name), ["Flute 3"])
+        XCTAssertEqual(reopened.manifest.project.tracks[0].video.tileIndex, 0)
+    }
+
+    func testAllFrameLayoutStylesProduceNonOverlappingTilesAndPersist() throws {
+        let canvas = CGRect(x: 0, y: 0, width: 1, height: 1)
+        for style in VideoLayoutStyle.allCases {
+            for count in 1...8 {
+                let rects = style.normalizedRects(for: count)
+                XCTAssertEqual(rects.count, count, "\(style.rawValue) must produce \(count) rects")
+                for i in 0..<rects.count {
+                    let r = rects[i]
+                    XCTAssertGreaterThan(r.width, 0.01)
+                    XCTAssertGreaterThan(r.height, 0.01)
+                    XCTAssertGreaterThanOrEqual(r.minX, -0.0001)
+                    XCTAssertGreaterThanOrEqual(r.minY, -0.0001)
+                    XCTAssertLessThanOrEqual(r.maxX, canvas.maxX + 0.0001)
+                    XCTAssertLessThanOrEqual(r.maxY, canvas.maxY + 0.0001)
+                    for j in (i + 1)..<rects.count {
+                        let intersection = r.insetBy(dx: 0.001, dy: 0.001).intersection(rects[j].insetBy(dx: 0.001, dy: 0.001))
+                        XCTAssertTrue(intersection.isNull || intersection.isEmpty,
+                            "\(style.rawValue) rects \(i) and \(j) must not overlap for count \(count)")
+                    }
+                }
+            }
+        }
+
+        let fixture = try AudioFixture()
+        defer { fixture.remove() }
+        let store = try LocalProjectStore(rootURL: fixture.root.appendingPathComponent("Projects"))
+        var project = try store.createProject(title: "Frames layout")
+        project.settings.exportLayout = .heroTop
+        project.settings.columns = VideoLayoutStyle.heroTop.preferredColumns
+        try store.save(project)
+        let reopened = try XCTUnwrap(store.loadProjects().first)
+        XCTAssertEqual(reopened.settings.exportLayout, .heroTop)
+    }
+
     func testUnfinishedTakeRemainsRecoverableAfterReopen() throws {
         let fixture = try AudioFixture()
         defer { fixture.remove() }
@@ -339,6 +413,229 @@ extension MediaTests {
         try await RenderCoordinator().write(package, to: output)
         let renderedOnset = try await Self.firstAudibleTime(in: output)
         XCTAssertEqual(renderedOnset, sourceOnset + 0.12, accuracy: 0.02)
+    }
+
+    func testRenameAndDeleteProjectRemovesDirectoryAndAssets() throws {
+        let fixture = try AudioFixture()
+        defer { fixture.remove() }
+        let store = try LocalProjectStore(rootURL: fixture.root.appendingPathComponent("Projects"))
+        var sessionA = try store.createProject(title: "Session 1")
+        let sessionB = try store.createProject(title: "Session 2")
+
+        let (draft, takeURL) = try store.beginTake(in: sessionA)
+        try FileManager.default.copyItem(at: fixture.reference, to: takeURL)
+        sessionA = try store.commitTake(in: draft, duration: 4, name: "Flute 1")
+
+        let renderURL = try store.makeRenderURL(for: sessionA)
+        try Data("fake-render".utf8).write(to: renderURL)
+
+        let renamed = try store.renameProject(sessionA, to: " Chamber Trio ")
+        XCTAssertEqual(renamed.title, "Chamber Trio")
+        XCTAssertEqual(renamed.manifest.project.name, "Chamber Trio")
+        XCTAssertThrowsError(try store.renameProject(renamed, to: "   "))
+
+        let sessionADir = store.projectDirectory(for: sessionA.id)
+        XCTAssertTrue(FileManager.default.fileExists(atPath: takeURL.path))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: renderURL.path))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: sessionADir.path))
+
+        try store.deleteProject(sessionA.id)
+        XCTAssertFalse(FileManager.default.fileExists(atPath: takeURL.path))
+        XCTAssertFalse(FileManager.default.fileExists(atPath: renderURL.path))
+        XCTAssertFalse(FileManager.default.fileExists(atPath: sessionADir.path))
+
+        let remaining = try store.loadProjects()
+        XCTAssertEqual(remaining.map(\.id), [sessionB.id])
+        XCTAssertEqual(LocalProjectStore.nextDefaultProjectTitle(for: remaining), "Session 3")
+    }
+
+    @MainActor
+    func testExportRendersPartTitlesIntoVideoFrames() async throws {
+        let fixture = try AudioFixture()
+        defer { fixture.remove() }
+        let source = try await Self.makeMovie(in: fixture.root)
+        let store = try LocalProjectStore(rootURL: fixture.root.appendingPathComponent("Projects"))
+        var project = try store.createProject(title: "Titled Ensemble")
+
+        let (draft1, url1) = try store.beginTake(in: project)
+        try FileManager.default.copyItem(at: source, to: url1)
+        project = try store.commitTake(in: draft1, duration: 2, name: "Flute 1")
+
+        let (draft2, url2) = try store.beginTake(in: project)
+        try FileManager.default.copyItem(at: source, to: url2)
+        project = try store.commitTake(in: draft2, duration: 2, name: "First voice")
+
+        project.settings.exportResolution = "720p"
+        project.settings.exportLayout = .grid1
+        try store.save(project)
+
+        let snapshot = try RenderSnapshot(project: project, store: store)
+        XCTAssertEqual(snapshot.inputs.map(\.title), ["Flute 1", "First voice"])
+
+        let package = try await MediaCompositionBuilder.make(inputs: snapshot.inputs, options: snapshot.options)
+        let overlay = try XCTUnwrap(package.overlayImage)
+        XCTAssertEqual(overlay.width, 720)
+        XCTAssertEqual(overlay.height, 1280)
+        XCTAssertNotNil(package.exportVideoComposition().animationTool)
+
+        let destination = fixture.root.appendingPathComponent("titled-export.mp4")
+        try await RenderCoordinator().write(package, to: destination)
+        XCTAssertTrue(FileManager.default.fileExists(atPath: destination.path))
+
+        let untitledInputs = snapshot.inputs.map { input -> RenderTrackInput in
+            var copy = input
+            copy.title = nil
+            return copy
+        }
+        let untitledPackage = try await MediaCompositionBuilder.make(inputs: untitledInputs, options: snapshot.options)
+        let untitledDestination = fixture.root.appendingPathComponent("untitled-export.mp4")
+        try await RenderCoordinator().write(untitledPackage, to: untitledDestination)
+
+        let titledFrame = try await AVAssetImageGenerator(asset: AVURLAsset(url: destination))
+            .image(at: CMTime(seconds: 0.5, preferredTimescale: 600)).image
+        let untitledFrame = try await AVAssetImageGenerator(asset: AVURLAsset(url: untitledDestination))
+            .image(at: CMTime(seconds: 0.5, preferredTimescale: 600)).image
+
+        func regionDiff(_ imgA: CGImage, _ imgB: CGImage, rect: CGRect) -> Int {
+            let w = imgA.width
+            let h = imgA.height
+            var bufA = [UInt8](repeating: 0, count: w * h * 4)
+            var bufB = [UInt8](repeating: 0, count: w * h * 4)
+            let cs = CGColorSpaceCreateDeviceRGB()
+            let info = CGImageAlphaInfo.premultipliedLast.rawValue
+            bufA.withUnsafeMutableBytes { ptr in
+                let ctx = CGContext(data: ptr.baseAddress, width: w, height: h, bitsPerComponent: 8, bytesPerRow: w * 4, space: cs, bitmapInfo: info)!
+                ctx.draw(imgA, in: CGRect(x: 0, y: 0, width: w, height: h))
+            }
+            bufB.withUnsafeMutableBytes { ptr in
+                let ctx = CGContext(data: ptr.baseAddress, width: w, height: h, bitsPerComponent: 8, bytesPerRow: w * 4, space: cs, bitmapInfo: info)!
+                ctx.draw(imgB, in: CGRect(x: 0, y: 0, width: w, height: h))
+            }
+            var diff = 0
+            for y in Int(rect.minY)..<Int(rect.maxY) {
+                for x in Int(rect.minX)..<Int(rect.maxX) {
+                    let idx = (y * w + x) * 4
+                    diff += abs(Int(bufA[idx]) - Int(bufB[idx]))
+                        + abs(Int(bufA[idx + 1]) - Int(bufB[idx + 1]))
+                        + abs(Int(bufA[idx + 2]) - Int(bufB[idx + 2]))
+                }
+            }
+            return diff
+        }
+
+        // Tile 0 bottom-left (y: 580..<635) and Tile 1 bottom-left (y: 1220..<1275) in top-down bitmap coordinates
+        let tile0BottomLeftDiff = regionDiff(titledFrame, untitledFrame, rect: CGRect(x: 10, y: 580, width: 150, height: 55))
+        let tile1BottomLeftDiff = regionDiff(titledFrame, untitledFrame, rect: CGRect(x: 10, y: 1220, width: 180, height: 55))
+        XCTAssertGreaterThan(tile0BottomLeftDiff, 50_000, "Tile 0 bottom-left must contain rendered title badge")
+        XCTAssertGreaterThan(tile1BottomLeftDiff, 50_000, "Tile 1 bottom-left must contain rendered title badge")
+    }
+
+    @MainActor
+    func testPerFrameVideoPanAndZoomCropPersistAndCoverTile() async throws {
+        let tile = CGRect(x: 100, y: 200, width: 360, height: 640)
+        let sourceSize = CGSize(width: 240, height: 320)
+        for panX in [-1.0, -0.5, 0.0, 0.5, 1.0] {
+            for panY in [-1.0, -0.5, 0.0, 0.5, 1.0] {
+                for zoom in [1.0, 1.6, 2.8] {
+                    let placement = VideoFramePlacement(panX: panX, panY: panY, zoom: zoom)
+                    let rect = placement.videoRect(forSourceSize: sourceSize, inTile: tile)
+                    XCTAssertLessThanOrEqual(rect.minX, tile.minX + 0.01, "Video must cover left edge of tile")
+                    XCTAssertGreaterThanOrEqual(rect.maxX, tile.maxX - 0.01, "Video must cover right edge of tile")
+                    XCTAssertLessThanOrEqual(rect.minY, tile.minY + 0.01, "Video must cover top edge of tile")
+                    XCTAssertGreaterThanOrEqual(rect.maxY, tile.maxY - 0.01, "Video must cover bottom edge of tile")
+                }
+            }
+        }
+
+        let fixture = try AudioFixture()
+        defer { fixture.remove() }
+        let source = try await Self.makeMovie(in: fixture.root)
+        let store = try LocalProjectStore(rootURL: fixture.root.appendingPathComponent("Projects"))
+        var project = try store.createProject(title: "Framed Session")
+        let (draft, takeURL) = try store.beginTake(in: project)
+        try FileManager.default.copyItem(at: source, to: takeURL)
+        project = try store.commitTake(in: draft, duration: 2, name: "Flute 1")
+
+        project.manifest.project.tracks[0].video.panX = 0.75
+        project.manifest.project.tracks[0].video.panY = -0.5
+        project.manifest.project.tracks[0].video.zoom = 1.85
+        try store.save(project)
+
+        let reopened = try XCTUnwrap(store.loadProjects().first)
+        XCTAssertEqual(reopened.manifest.project.tracks[0].video.panX, 0.75, accuracy: 0.001)
+        XCTAssertEqual(reopened.manifest.project.tracks[0].video.panY, -0.5, accuracy: 0.001)
+        XCTAssertEqual(reopened.manifest.project.tracks[0].video.zoom, 1.85, accuracy: 0.001)
+
+        let snapshot = try RenderSnapshot(project: reopened, store: store)
+        XCTAssertEqual(snapshot.inputs[0].panX, 0.75, accuracy: 0.001)
+        XCTAssertEqual(snapshot.inputs[0].panY, -0.5, accuracy: 0.001)
+        XCTAssertEqual(snapshot.inputs[0].zoom, 1.85, accuracy: 0.001)
+
+        let package = try await MediaCompositionBuilder.make(inputs: snapshot.inputs, options: RenderOptions(resolution: "720p"))
+        let destination = fixture.root.appendingPathComponent("framed-export.mp4")
+        try await RenderCoordinator().write(package, to: destination)
+        XCTAssertTrue(FileManager.default.fileExists(atPath: destination.path))
+    }
+
+    func testMoveTrackReordersFrameSlotsAndPersists() throws {
+        let fixture = try AudioFixture()
+        defer { fixture.remove() }
+        let store = try LocalProjectStore(rootURL: fixture.root.appendingPathComponent("Projects"))
+        var project = try store.createProject(title: "Slot Order")
+
+        for name in ["Flute 1", "Flute 2", "First voice"] {
+            let (draft, takeURL) = try store.beginTake(in: project)
+            try FileManager.default.copyItem(at: fixture.reference, to: takeURL)
+            project = try store.commitTake(in: draft, duration: 3, name: name)
+        }
+
+        let voiceID = project.manifest.project.tracks[2].id.rawValue
+        // Move "First voice" from slot 2 (#3) to slot 0 (#1)
+        project = try store.moveTrack(voiceID, toSlot: 0, in: project)
+        XCTAssertEqual(project.manifest.project.tracks.map(\.name), ["First voice", "Flute 1", "Flute 2"])
+        XCTAssertEqual(project.manifest.project.tracks.map(\.video.tileIndex), [0, 1, 2])
+
+        // Move "First voice" one slot later (+1 -> slot 1 / #2)
+        project = try store.moveTrack(voiceID, by: 1, in: project)
+        XCTAssertEqual(project.manifest.project.tracks.map(\.name), ["Flute 1", "First voice", "Flute 2"])
+        XCTAssertEqual(project.manifest.project.tracks.map(\.video.tileIndex), [0, 1, 2])
+
+        let reopened = try XCTUnwrap(store.loadProjects().first)
+        XCTAssertEqual(reopened.manifest.project.tracks.map(\.name), ["Flute 1", "First voice", "Flute 2"])
+        let snapshot = try RenderSnapshot(project: reopened, store: store)
+        XCTAssertEqual(snapshot.inputs.sorted(by: { $0.order < $1.order }).map(\.title), ["Flute 1", "First voice", "Flute 2"])
+    }
+
+    @MainActor
+    func testExportPreviewPlayerItemReflectsLiveLayoutOrderAndCropChanges() async throws {
+        let fixture = try AudioFixture()
+        defer { fixture.remove() }
+        let source = try await Self.makeMovie(in: fixture.root)
+        let store = try LocalProjectStore(rootURL: fixture.root.appendingPathComponent("Projects"))
+        var project = try store.createProject(title: "Live Preview")
+
+        for name in ["Flute 1", "First voice"] {
+            let (draft, takeURL) = try store.beginTake(in: project)
+            try FileManager.default.copyItem(at: source, to: takeURL)
+            project = try store.commitTake(in: draft, duration: 2, name: name)
+        }
+
+        project.settings.exportLayout = .heroTop
+        project.settings.exportResolution = "720p"
+        project.manifest.project.tracks[0].video.zoom = 1.6
+        project.manifest.project.tracks[0].video.panX = 0.4
+        try store.save(project)
+
+        let snapshot = try RenderSnapshot(project: project, store: store)
+        let composition = try await MediaCompositionBuilder.make(inputs: snapshot.inputs, options: snapshot.options)
+        let item = composition.playerItem()
+        XCTAssertNotNil(item.videoComposition)
+        XCTAssertEqual(item.videoComposition?.renderSize, CGSize(width: 720, height: 1280))
+        XCTAssertNotNil(composition.overlayImage)
+        XCTAssertEqual(composition.overlayImage?.width, 720)
+        XCTAssertEqual(composition.overlayImage?.height, 1280)
+        let loadedDuration = try await item.asset.load(.duration)
+        XCTAssertGreaterThan(loadedDuration.seconds, 1.5)
     }
 
     private static func firstAudibleTime(in url: URL) async throws -> Double {

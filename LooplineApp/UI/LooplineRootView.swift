@@ -64,23 +64,223 @@ struct LooplineRootView: View {
             #endif
         }
         .sheet(isPresented: $showingProjects) {
-            NavigationStack {
-                List {
-                    Button { model.newProject(); showingProjects = false } label: { Label("New session", systemImage: "plus") }
-                    ForEach(model.projects) { project in
-                        Button { model.open(project); showingProjects = false } label: {
-                            VStack(alignment: .leading, spacing: 5) {
-                                Text(project.title).font(LooplineTheme.text(18, weight: .bold))
-                                Text("\(project.manifest.project.tracks.count) parts · Saved on this iPhone").font(LooplineTheme.text(12, mono: true))
-                            }.padding(.vertical, 8)
-                        }
-                    }
-                }.tint(.looplineInk).navigationTitle("Your sessions")
-                    .toolbar { Button("Done") { showingProjects = false } }
-            }.preferredColorScheme(.light)
+            LooplineSessionsSheet(model: model, isPresented: $showingProjects)
+                .preferredColorScheme(.light)
         }
         .alert("Loopline", isPresented: Binding(get: { model.errorMessage != nil }, set: { if !$0 { model.errorMessage = nil } })) {
             Button("OK") { model.errorMessage = nil }
         } message: { Text(model.errorMessage ?? "") }
+    }
+}
+
+@MainActor
+struct LooplineSessionsSheet: View {
+    @ObservedObject var model: LooplineViewModel
+    @Binding var isPresented: Bool
+    @State private var editingProjectID: UUID?
+    @State private var draftSessionTitle = ""
+    @State private var projectPendingDelete: StoredProject?
+
+    var body: some View {
+        NavigationStack {
+            List {
+                Section {
+                    Button {
+                        model.newProject()
+                        isPresented = false
+                    } label: {
+                        HStack(spacing: 10) {
+                            Image(systemName: "plus.circle.fill")
+                                .font(LooplineTheme.text(18, weight: .bold))
+                                .foregroundStyle(Color.looplineBlue)
+                            Text("New session")
+                                .font(LooplineTheme.text(16, weight: .bold))
+                                .foregroundStyle(Color.looplineInk)
+                        }
+                        .padding(.vertical, 4)
+                    }
+                    .accessibilityIdentifier("session.new")
+                }
+
+                Section("Saved sessions") {
+                    ForEach(model.projects) { project in
+                        let isActive = model.currentProjectID == project.id
+                        let isEditing = editingProjectID == project.id
+                        VStack(alignment: .leading, spacing: 10) {
+                            HStack(spacing: 10) {
+                                Button {
+                                    model.open(project)
+                                    isPresented = false
+                                } label: {
+                                    VStack(alignment: .leading, spacing: 5) {
+                                        HStack(spacing: 8) {
+                                            Text(project.title)
+                                                .font(LooplineTheme.text(17, weight: .bold))
+                                                .foregroundStyle(Color.looplineInk)
+                                                .lineLimit(1)
+                                            if isActive {
+                                                Text("ACTIVE")
+                                                    .font(LooplineTheme.text(9, mono: true))
+                                                    .foregroundStyle(Color.looplineInk)
+                                                    .padding(.horizontal, 7)
+                                                    .padding(.vertical, 3)
+                                                    .background(Color.looplinePastelBlue, in: Capsule())
+                                            }
+                                        }
+                                        let count = project.manifest.project.tracks.count
+                                        Text("\(count) \(count == 1 ? "part" : "parts") · Saved on this iPhone")
+                                            .font(LooplineTheme.text(12, mono: true))
+                                            .foregroundStyle(Color.looplineMuted)
+                                    }
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .contentShape(Rectangle())
+                                }
+                                .buttonStyle(.plain)
+                                .accessibilityIdentifier("session.open.\(project.id.uuidString)")
+
+                                Button {
+                                    if isEditing {
+                                        editingProjectID = nil
+                                    } else {
+                                        draftSessionTitle = project.title
+                                        editingProjectID = project.id
+                                    }
+                                } label: {
+                                    Image(systemName: "pencil")
+                                        .font(LooplineTheme.text(14, weight: .bold))
+                                        .foregroundStyle(Color.looplineInk)
+                                        .frame(width: 36, height: 36)
+                                        .background(
+                                            isEditing ? Color.looplinePastelBlue : Color.looplineBackground,
+                                            in: RoundedRectangle(cornerRadius: 10)
+                                        )
+                                }
+                                .buttonStyle(.plain)
+                                .accessibilityLabel("Rename \(project.title)")
+                                .accessibilityIdentifier("session.rename.\(project.title)")
+
+                                Button {
+                                    projectPendingDelete = project
+                                } label: {
+                                    Image(systemName: "trash")
+                                        .font(LooplineTheme.text(14, weight: .bold))
+                                        .foregroundStyle(Color.looplineCoral)
+                                        .frame(width: 36, height: 36)
+                                        .background(
+                                            Color.looplinePastelRed.opacity(0.65),
+                                            in: RoundedRectangle(cornerRadius: 10)
+                                        )
+                                }
+                                .buttonStyle(.plain)
+                                .accessibilityLabel("Delete \(project.title)")
+                                .accessibilityIdentifier("session.delete.\(project.title)")
+                            }
+
+                            if isEditing {
+                                HStack(spacing: 8) {
+                                    TextField("Session name", text: $draftSessionTitle)
+                                        .font(LooplineTheme.text(14, weight: .medium))
+                                        .textFieldStyle(.plain)
+                                        .submitLabel(.done)
+                                        .onSubmit {
+                                            commitRename(for: project.id)
+                                        }
+                                        .padding(.horizontal, 12)
+                                        .padding(.vertical, 9)
+                                        .background(Color.looplineBackground, in: RoundedRectangle(cornerRadius: 10))
+                                        .accessibilityIdentifier("session.titleInput.\(project.id.uuidString)")
+
+                                    Button("Save") {
+                                        commitRename(for: project.id)
+                                    }
+                                    .font(LooplineTheme.text(13, weight: .bold))
+                                    .foregroundStyle(Color.looplineInk)
+                                    .padding(.horizontal, 14)
+                                    .frame(minHeight: 38)
+                                    .background(Color.looplinePastelGreen, in: RoundedRectangle(cornerRadius: 10))
+                                    .buttonStyle(.plain)
+                                    .disabled(draftSessionTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                                    .accessibilityIdentifier("session.titleSave.\(project.id.uuidString)")
+
+                                    Button("Cancel") {
+                                        editingProjectID = nil
+                                    }
+                                    .font(LooplineTheme.text(12, weight: .medium))
+                                    .foregroundStyle(Color.looplineMuted)
+                                    .padding(.horizontal, 6)
+                                    .frame(minHeight: 38)
+                                    .buttonStyle(.plain)
+                                }
+                                .padding(.top, 2)
+                            }
+                        }
+                        .padding(.vertical, 6)
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button(role: .destructive) {
+                                projectPendingDelete = project
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+
+                            Button {
+                                draftSessionTitle = project.title
+                                editingProjectID = project.id
+                            } label: {
+                                Label("Rename", systemImage: "pencil")
+                            }
+                            .tint(.looplineBlue)
+                        }
+                        .contextMenu {
+                            Button {
+                                draftSessionTitle = project.title
+                                editingProjectID = project.id
+                            } label: {
+                                Label("Rename session", systemImage: "pencil")
+                            }
+                            Button(role: .destructive) {
+                                projectPendingDelete = project
+                            } label: {
+                                Label("Delete session & assets", systemImage: "trash")
+                            }
+                        }
+                    }
+                }
+            }
+            .tint(.looplineInk)
+            .navigationTitle("Your sessions")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                Button("Done") { isPresented = false }
+            }
+            .alert(
+                "Delete \"\(projectPendingDelete?.title ?? "session")\"?",
+                isPresented: Binding(
+                    get: { projectPendingDelete != nil },
+                    set: { if !$0 { projectPendingDelete = nil } }
+                )
+            ) {
+                Button("Delete session", role: .destructive) {
+                    if let target = projectPendingDelete {
+                        if editingProjectID == target.id {
+                            editingProjectID = nil
+                        }
+                        model.deleteProject(target.id)
+                    }
+                    projectPendingDelete = nil
+                }
+                Button("Cancel", role: .cancel) {
+                    projectPendingDelete = nil
+                }
+            } message: {
+                Text("This will permanently delete the session and all of its recorded takes and rendered videos from this iPhone.")
+            }
+        }
+    }
+
+    private func commitRename(for projectID: UUID) {
+        let trimmed = draftSessionTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+        model.renameProject(projectID, to: trimmed)
+        editingProjectID = nil
     }
 }

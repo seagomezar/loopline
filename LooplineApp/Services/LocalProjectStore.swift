@@ -10,6 +10,7 @@ struct SessionSettings: Codable, Equatable, Sendable {
     var subdivisions = 2
     var accentEnabled = true
     var columns = 2
+    var exportLayout: VideoLayoutStyle? = nil
     var exportFormat = "H.264 MP4"
     var exportResolution = "1080p"
 }
@@ -183,7 +184,16 @@ final class LocalProjectStore {
         return (updated, try mediaURL(for: path, in: updated))
     }
 
-    func commitTake(in project: StoredProject, duration: TimeInterval, offsetMilliseconds: Int = 0) throws -> StoredProject {
+    static func nextDefaultTrackName(for tracks: [Track]) -> String {
+        var index = tracks.count + 1
+        let existing = Set(tracks.map(\.name))
+        while existing.contains("Part \(index)") {
+            index += 1
+        }
+        return "Part \(index)"
+    }
+
+    func commitTake(in project: StoredProject, duration: TimeInterval, offsetMilliseconds: Int = 0, name: String? = nil) throws -> StoredProject {
         guard let pending = project.pendingTake, duration.isFinite, duration > 0, duration < 10_000_000,
               abs(offsetMilliseconds / 1000) < 10_000_000 else { throw ProjectStoreError.invalidTake }
         let url = try mediaURL(for: pending.relativePath, in: project)
@@ -194,7 +204,9 @@ final class LocalProjectStore {
         guard duration < Double(Int64.max / Int64(rate.hertz)) else { throw ProjectStoreError.invalidTake }
         let length = SampleDuration(Int64((duration * Double(rate.hertz)).rounded()))
         let take = TrackTake(media: MediaAssetReference(mediaPath: pending.relativePath, duration: length, sampleRate: rate))
-        let track = Track(name: "Part \(updated.manifest.project.tracks.count + 1)", takes: [take], activeTakeID: take.id,
+        let trimmedName = name?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let trackName = trimmedName.isEmpty ? Self.nextDefaultTrackName(for: updated.manifest.project.tracks) : trimmedName
+        let track = Track(name: trackName, takes: [take], activeTakeID: take.id,
             placement: TrackPlacement(sourceRange: SampleRange(start: .zero, duration: length),
                 syncOffset: updated.manifest.project.timebase.samples(forMilliseconds: Int64(offsetMilliseconds))),
             video: TrackVideoSettings(tileIndex: updated.manifest.project.tracks.count))
@@ -204,6 +216,96 @@ final class LocalProjectStore {
         updateDuration(&updated)
         try save(updated)
         return updated
+    }
+
+    func deleteTrack(_ trackID: UUID, in project: StoredProject) throws -> StoredProject {
+        var updated = project
+        guard let index = updated.manifest.project.tracks.firstIndex(where: { $0.id.rawValue == trackID }) else {
+            return project
+        }
+        let removed = updated.manifest.project.tracks.remove(at: index)
+        for idx in updated.manifest.project.tracks.indices {
+            updated.manifest.project.tracks[idx].video.tileIndex = idx
+        }
+        updateDuration(&updated)
+        try save(updated)
+        let remainingPaths = Set(updated.manifest.project.tracks.flatMap { $0.takes.map(\.media.mediaPath) })
+        for take in removed.takes where !remainingPaths.contains(take.media.mediaPath) && updated.pendingTake?.relativePath != take.media.mediaPath {
+            if let url = try? mediaURL(for: take.media.mediaPath, in: updated) {
+                try? FileManager.default.removeItem(at: url)
+            }
+        }
+        return updated
+    }
+
+    func renameTrack(_ trackID: UUID, to name: String, in project: StoredProject) throws -> StoredProject {
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { throw ProjectStoreError.invalidProject }
+        var updated = project
+        guard let index = updated.manifest.project.tracks.firstIndex(where: { $0.id.rawValue == trackID }) else {
+            return project
+        }
+        updated.manifest.project.tracks[index].name = trimmed
+        updateDuration(&updated)
+        try save(updated)
+        return updated
+    }
+
+    func moveTrack(_ trackID: UUID, toSlot slotIndex: Int, in project: StoredProject) throws -> StoredProject {
+        var updated = project
+        let count = updated.manifest.project.tracks.count
+        guard count > 1,
+              let currentIndex = updated.manifest.project.tracks.firstIndex(where: { $0.id.rawValue == trackID }) else {
+            return project
+        }
+        let clampedSlot = min(max(0, slotIndex), count - 1)
+        guard clampedSlot != currentIndex else { return project }
+        let track = updated.manifest.project.tracks.remove(at: currentIndex)
+        updated.manifest.project.tracks.insert(track, at: clampedSlot)
+        for idx in updated.manifest.project.tracks.indices {
+            updated.manifest.project.tracks[idx].video.tileIndex = idx
+        }
+        updateDuration(&updated)
+        try save(updated)
+        return updated
+    }
+
+    func moveTrack(_ trackID: UUID, by delta: Int, in project: StoredProject) throws -> StoredProject {
+        guard let currentIndex = project.manifest.project.tracks.firstIndex(where: { $0.id.rawValue == trackID }) else {
+            return project
+        }
+        return try moveTrack(trackID, toSlot: currentIndex + delta, in: project)
+    }
+
+    static func nextDefaultProjectTitle(for projects: [StoredProject]) -> String {
+        var index = projects.count + 1
+        let existing = Set(projects.map(\.title))
+        while existing.contains("Session \(index)") {
+            index += 1
+        }
+        return "Session \(index)"
+    }
+
+    func renameProject(_ project: StoredProject, to title: String) throws -> StoredProject {
+        let trimmed = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { throw ProjectStoreError.invalidProject }
+        var updated = project
+        updated.title = trimmed
+        updated.manifest.project.name = trimmed
+        updateDuration(&updated)
+        try save(updated)
+        return updated
+    }
+
+    func deleteProject(_ projectID: UUID) throws {
+        let root = rootURL.standardizedFileURL.resolvingSymlinksInPath()
+        let directory = projectDirectory(for: projectID).standardizedFileURL.resolvingSymlinksInPath()
+        guard directory.path.hasPrefix(root.path + "/") else {
+            throw ProjectStoreError.invalidPath
+        }
+        if FileManager.default.fileExists(atPath: directory.path) {
+            try FileManager.default.removeItem(at: directory)
+        }
     }
 
     func updateDuration(_ project: inout StoredProject) {
@@ -246,7 +348,7 @@ final class LocalProjectStore {
         let settings = project.settings
         guard (0...2).contains(settings.countInBars), settings.clickVolume.isFinite,
               (0...1).contains(settings.clickVolume), (1...4).contains(settings.subdivisions),
-              (1...3).contains(settings.columns),
+              (1...4).contains(settings.columns),
               ["H.264 MP4", "HEVC MP4", "HEVC MOV"].contains(settings.exportFormat),
               ["720p", "1080p", "4K"].contains(settings.exportResolution) else { throw ProjectStoreError.invalidProject }
         if let draft = project.pendingTake {

@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="es" data-lang="both">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Política de Privacidad / Privacy Policy — Loopline</title>
+  <meta name="description" content="Política de Privacidad oficial de Loopline (Español e Inglés). Loopline funciona 100% en tu dispositivo sin recolectar datos personales. / Official Privacy Policy for Loopline.">
+  <meta name="theme-color" content="#0D0E12">
+  <link rel="canonical" href="https://seagomezar.github.io/loopline/privacy-policy.html">
+  <style>
+    :root {
+      --bg: #0D0E12;
+      --surface: #161820;
+      --surface-elevated: #1E212B;
+      --border: rgba(255, 255, 255, 0.10);
+      --border-strong: rgba(255, 255, 255, 0.18);
+      --text: #F5F6FA;
+      --muted: #A3A8B8;
+      --coral: #FF5A3C;
+      --amber: #FFB833;
+      --teal: #1FD6A8;
+      --max-w: 920px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; color-scheme: dark; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    html[data-lang="es"] [data-i18n="en"] { display: none !important; }
+    html[data-lang="en"] [data-i18n="es"] { display: none !important; }
+    html[data-lang="both"] [data-i18n="en"] {
+      display: block;
+      margin-top: 0.45rem;
+      color: #D5D9E6;
+    }
+    html[data-lang="both"] span[data-i18n="en"] {
+      display: inline;
+      margin-top: 0;
+      margin-left: 0.35rem;
+    }
+
+    .container {
+      width: min(100% - 2.5rem, var(--max-w));
+      margin-inline: auto;
+    }
+
+    header.site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(13, 14, 18, 0.85);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.95rem 0;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .lang-switcher {
+      display: inline-flex;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-strong);
+      border-radius: 999px;
+      padding: 0.2rem;
+      gap: 0.2rem;
+    }
+
+    .lang-btn {
+      appearance: none;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    .lang-btn[aria-pressed="true"] {
+      background: linear-gradient(135deg, var(--coral), #FF7A45);
+      color: #0D0E12;
+    }
+
+    main {
+      padding: clamp(2.5rem, 5vw, 4rem) 0;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 1.3rem + 2.8vw, 3rem);
+      line-height: 1.15;
+      margin-bottom: 0.6rem;
+    }
+
+    .updated-date {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 2rem;
+    }
+
+    .policy-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: clamp(1.35rem, 3vw, 2rem);
+      margin-bottom: 1.35rem;
+    }
+
+    .policy-card.highlight {
+      border-color: rgba(31, 214, 168, 0.38);
+      background: linear-gradient(145deg, rgba(31, 214, 168, 0.08), rgba(22, 24, 32, 0.95));
+    }
+
+    h2 {
+      font-size: clamp(1.25rem, 1.05rem + 0.9vw, 1.55rem);
+      color: var(--amber);
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    ul {
+      padding-left: 1.25rem;
+      color: var(--muted);
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    a { color: var(--coral); }
+
+    footer.site-footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0 3rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-bar">
+      <a class="brand" href="index.html">← Loopline</a>
+      <div class="nav-controls">
+        <nav aria-label="Navegación legal / Legal navigation">
+          <ul class="nav-links">
+            <li><a href="index.html">Inicio / Home</a></li>
+            <li><a href="support.html">Soporte / Support</a></li>
+            <li><a href="terms-and-conditions.html">Términos / Terms</a></li>
+          </ul>
+        </nav>
+        <div class="lang-switcher" role="group" aria-label="Idioma / Language">
+          <button type="button" class="lang-btn" data-set-lang="es" aria-pressed="false">ES</button>
+          <button type="button" class="lang-btn" data-set-lang="en" aria-pressed="false">EN</button>
+          <button type="button" class="lang-btn" data-set-lang="both" aria-pressed="true">ES + EN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>
+      <span data-i18n="es">Política de Privacidad</span>
+      <span data-i18n="en">Privacy Policy</span>
+    </h1>
+    <p class="updated-date">
+      <span data-i18n="es">Última actualización: 24 de octubre de 2026 • Aplicable a Loopline para iOS e iPadOS (`com.seagomezar.loopline`)</span>
+      <span data-i18n="en">Last updated: October 24, 2026 • Applicable to Loopline for iOS &amp; iPadOS (`com.seagomezar.loopline`)</span>
+    </p>
+
+    <section class="policy-card highlight">
+      <h2>
+        <span data-i18n="es">1. Resumen Ejecutivo: Cero Recolección de Datos</span>
+        <span data-i18n="en">1. Executive Summary: Zero Data Collection</span>
+      </h2>
+      <p data-i18n="es">
+        <strong>Loopline no recopila, almacena, transmite, vende ni comparte ningún dato personal, grabación de audio, grabación de video, identificador de dispositivo ni telemetría de uso en servidores externos.</strong> Toda la actividad ocurre el 100% del tiempo de manera local en tu iPhone o iPad.
+      </p>
+      <p data-i18n="en">
+        <strong>Loopline does not collect, store, transmit, sell, or share any personal data, audio recordings, video recordings, device identifiers, or usage telemetry on external servers.</strong> All processing happens 100% locally on your iPhone or iPad.
+      </p>
+    </section>
+
+    <section class="policy-card">
+      <h2>
+        <span data-i18n="es">2. Permisos del Dispositivo (Cámara, Micrófono y Fototeca)</span>
+        <span data-i18n="en">2. Device Permissions (Camera, Microphone &amp; Photo Library)</span>
+      </h2>
+      <ul>
+        <li>
+          <span data-i18n="es"><strong>Cámara (`NSCameraUsageDescription`):</strong> Se utiliza exclusivamente cuando inicias una grabación de video multipista dentro de la app. El flujo de video se guarda únicamente en el contenedor privado local de la app en tu dispositivo.</span>
+          <span data-i18n="en"><strong>Camera (`NSCameraUsageDescription`):</strong> Used exclusively when you record a video part inside the app. Captured video streams are saved strictly inside the app's local private sandbox on your device.</span>
+        </li>
+        <li>
+          <span data-i18n="es"><strong>Micrófono (`NSMicrophoneUsageDescription`):</strong> Se utiliza exclusivamente para capturar tu interpretación vocal o instrumental y para analizar picos de sincronización local (Sync Assist). Ningún audio sale jamás de tu dispositivo.</span>
+          <span data-i18n="en"><strong>Microphone (`NSMicrophoneUsageDescription`):</strong> Used exclusively to capture your vocal or instrumental performance and to compute local waveform sync offsets (Sync Assist). No audio ever leaves your device.</span>
+        </li>
+        <li>
+          <span data-i18n="es"><strong>Fototeca y Archivos (`NSPhotoLibraryAddUsageDescription`):</strong> Solo cuando pulsas explícitamente «Guardar en Fotos» o «Compartir» en la pantalla de Exportación, Loopline guarda el archivo de video compuesto (`.mp4` o `.mov`) en tu carrete o en la ubicación que elijas.</span>
+          <span data-i18n="en"><strong>Photo Library &amp; Files (`NSPhotoLibraryAddUsageDescription`):</strong> Only when you explicitly tap "Save to Photos" or "Share" on the Export screen does Loopline write the rendered split-screen video (`.mp4` or `.mov`) to your Photo Library or chosen destination.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="policy-card">
+      <h2>
+        <span data-i18n="es">3. Almacenamiento Local y Eliminación Completa de Sesiones</span>
+        <span data-i18n="en">3. Local Storage &amp; Complete Session Deletion</span>
+      </h2>
+      <p data-i18n="es">
+        Tus sesiones, títulos personalizados de cada voz, configuraciones de diseño, encuadres Touch Crop y archivos `.mov` se guardan localmente en el almacenamiento interno de la app. Puedes eliminar tomas individuales o borrar sesiones completas (incluyendo todos sus archivos multimedia asociados) en cualquier momento desde la ventana <strong>«Your sessions»</strong> o desinstalando la aplicación.
+      </p>
+      <p data-i18n="en">
+        Your sessions, custom part headlines, layout selections, Touch Crop framing settings, and `.mov` media files are stored locally inside the app's on-device container. You can delete individual takes or permanently delete entire sessions (including all associated media files) at any time from the <strong>"Your sessions"</strong> sheet or by uninstalling the app.
+      </p>
+    </section>
+
+    <section class="policy-card">
+      <h2>
+        <span data-i18n="es">4. Sin Analíticas de Terceros ni Publicidad</span>
+        <span data-i18n="en">4. No Third-Party Analytics or Advertising</span>
+      </h2>
+      <p data-i18n="es">
+        Loopline no integra SDKs de publicidad, rastreadores entre aplicaciones (App Tracking Transparency), píxeles de seguimiento ni servicios de analítica de terceros. Tampoco requiere crear cuentas de usuario ni iniciar sesión.
+      </p>
+      <p data-i18n="en">
+        Loopline contains zero third-party advertising SDKs, cross-app trackers (App Tracking Transparency), tracking pixels, or external analytics frameworks. No user account or sign-in is required.
+      </p>
+    </section>
+
+    <section class="policy-card">
+      <h2>
+        <span data-i18n="es">5. Privacidad de Menores</span>
+        <span data-i18n="en">5. Children's Privacy</span>
+      </h2>
+      <p data-i18n="es">
+        Dado que Loopline no recopila información personal de ningún usuario de ninguna edad, cumple plenamente con la ley COPPA, el RGPD (GDPR) y las directrices de la App Store de Apple.
+      </p>
+      <p data-i18n="en">
+        Because Loopline collects no personal information from any user of any age, it fully complies with COPPA, GDPR, and Apple's App Store Review Guidelines.
+      </p>
+    </section>
+
+    <section class="policy-card">
+      <h2>
+        <span data-i18n="es">6. Contacto</span>
+        <span data-i18n="en">6. Contact Information</span>
+      </h2>
+      <p data-i18n="es">
+        Si tienes alguna pregunta sobre esta Política de Privacidad, puedes escribir directamente al desarrollador responsable:
+        <strong>Sebastian Gomez</strong> — <a href="mailto:seagomezar@gmail.com">seagomezar@gmail.com</a>.
+      </p>
+      <p data-i18n="en">
+        If you have any questions regarding this Privacy Policy, please contact the developer directly:
+        <strong>Sebastian Gomez</strong> — <a href="mailto:seagomezar@gmail.com">seagomezar@gmail.com</a>.
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 Sebastian Gomez (`seagomezar`). Loopline — <a href="index.html">Inicio / Home</a> • <a href="support.html">Soporte / Support</a> • <a href="terms-and-conditions.html">Términos / Terms</a></p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const buttons = document.querySelectorAll('[data-set-lang]');
+      const params = new URLSearchParams(window.location.search);
+
+      function applyLang(lang) {
+        const valid = (lang === 'en' || lang === 'es' || lang === 'both') ? lang : 'both';
+        root.setAttribute('data-lang', valid);
+        root.setAttribute('lang', valid === 'en' ? 'en' : 'es');
+        buttons.forEach(function (btn) {
+          btn.setAttribute('aria-pressed', btn.getAttribute('data-set-lang') === valid ? 'true' : 'false');
+        });
+      }
+
+      const urlLang = params.get('lang');
+      if (urlLang === 'en' || urlLang === 'es' || urlLang === 'both') {
+        applyLang(urlLang);
+      }
+
+      buttons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          applyLang(btn.getAttribute('data-set-lang'));
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
