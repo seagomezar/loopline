@@ -1,0 +1,127 @@
+{
+  "identifier" : "A84E32D0-9E12-4F55-9A30-88C21B571A01",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "14.99",
+      "familyShareable" : true,
+      "internalID" : "6826597726",
+      "localizations" : [
+        {
+          "description" : "Unlock 4 to 6+ voices, all 16 frame layouts, 4K UHD & HEVC export, Sync Assist, unlimited local sessions, and no watermark forever.",
+          "displayName" : "Loopline Pro — Lifetime Unlock",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Desbloquea de 4 a 6+ voces, los 16 diseños de marco, exportación 4K y HEVC, Sync Assist, sesiones ilimitadas y sin marca de agua para siempre.",
+          "displayName" : "Loopline Pro — De Por Vida",
+          "locale" : "es_MX"
+        }
+      ],
+      "productID" : "com.seagomezar.loopline.pro.lifetime",
+      "referenceName" : "Loopline Pro Lifetime Unlock",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "6826597725",
+    "_developerTeamID" : "QWY6U4KSA6",
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "21584920",
+      "localizations" : [
+
+      ],
+      "name" : "Loopline Pro",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "6.99",
+          "familyShareable" : true,
+          "groupNumber" : 1,
+          "internalID" : "6826597727",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Annual access to all Loopline Pro features on iPhone and iPad.",
+              "displayName" : "Loopline Pro — Annual Pass",
+              "locale" : "en_US"
+            },
+            {
+              "description" : "Acceso anual a todas las funciones de Loopline Pro en iPhone e iPad.",
+              "displayName" : "Loopline Pro — Pase Anual",
+              "locale" : "es_MX"
+            }
+          ],
+          "productID" : "com.seagomezar.loopline.pro.annual",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Loopline Pro Annual Pass",
+          "subscriptionGroupID" : "21584920",
+          "type" : "AutoRenewingSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

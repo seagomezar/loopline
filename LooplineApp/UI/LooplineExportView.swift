@@ -37,18 +37,24 @@ struct LooplineExportView: View {
                     LooplineSurface {
                         VStack(alignment: .leading, spacing: 18) {
                             Text("Your finishing touches").font(LooplineTheme.text(18, weight: .bold))
-                            LooplineFrameLayoutPicker(selection: $model.exportLayout, partCount: model.tracks.count)
+                            LooplineFrameLayoutPicker(
+                                selection: $model.exportLayout,
+                                partCount: model.tracks.count,
+                                isProUnlocked: model.isProUnlocked
+                            )
                             Divider()
                             picker("Video", selection: $model.exportFormat, choices: ["H.264 MP4", "HEVC MP4", "HEVC MOV"])
                             Divider()
                             picker("Resolution", selection: $model.exportResolution, choices: ["720p", "1080p", "4K"])
+                            Divider()
+                            watermarkRow
                             Text("Portrait · 30 fps · AAC audio\nYour timing, levels, and frame layout carry through to the finished video.")
                                 .font(LooplineTheme.text(11, mono: true)).foregroundStyle(Color.looplineMuted).lineSpacing(5)
                         }.font(LooplineTheme.text(14))
                     }.disabled(model.exportState.isRendering)
                     if case .idle = model.exportState {
                         LooplinePrimaryButton(title: "Create my video", icon: "arrow.down.to.line", tint: .looplineHalftoneBlue,
-                            isDisabled: model.tracks.isEmpty || model.transportBusy) { model.startExport() }
+                            isDisabled: model.tracks.isEmpty || model.transportBusy) { model.requestExport() }
                     }
                     Text("Your recording stays on your iPhone. Sharing is always your choice.")
                         .font(LooplineTheme.text(12)).foregroundStyle(Color.looplineMuted).frame(maxWidth: .infinity).multilineTextAlignment(.center)
@@ -142,6 +148,43 @@ struct LooplineExportView: View {
         HStack {
             Text(title); Spacer()
             Picker(title, selection: selection) { ForEach(choices, id: \.self) { Text($0).tag($0) } }.tint(.looplineInk)
+        }
+    }
+
+    @ViewBuilder
+    private var watermarkRow: some View {
+        HStack(spacing: 10) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Corner badge")
+                Text(model.effectiveIncludeWatermark ? "\"Made with Loopline\" enabled" : "Clean video (no watermark)")
+                    .font(LooplineTheme.text(11, mono: true))
+                    .foregroundStyle(Color.looplineMuted)
+            }
+            Spacer()
+            if model.isProUnlocked {
+                Toggle("Corner badge", isOn: $model.includeWatermark)
+                    .labelsHidden()
+                    .tint(.looplineBlue)
+                    .accessibilityIdentifier("export.watermark.toggle")
+            } else {
+                Button {
+                    model.presentPaywall(.removeWatermark)
+                } label: {
+                    HStack(spacing: 5) {
+                        Image(systemName: "sparkles")
+                            .font(LooplineTheme.text(10, weight: .bold))
+                        Text("Remove · PRO")
+                            .font(LooplineTheme.text(11, weight: .bold, mono: true))
+                    }
+                    .foregroundStyle(Color.looplineInk)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    .background(Color.looplinePastelYellow, in: Capsule())
+                    .overlay { Capsule().stroke(Color.looplineLine, lineWidth: 1) }
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("export.watermark.removePro")
+            }
         }
     }
 }

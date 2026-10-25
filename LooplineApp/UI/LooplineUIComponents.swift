@@ -805,6 +805,7 @@ struct LooplineFrameSchematicView: View {
 struct LooplineFrameLayoutPicker: View {
     @Binding var selection: VideoLayoutStyle
     var partCount: Int
+    var isProUnlocked: Bool = true
 
     private let gridColumns = [
         GridItem(.flexible(), spacing: 8),
@@ -854,12 +855,25 @@ struct LooplineFrameLayoutPicker: View {
             }
         } label: {
             VStack(spacing: 6) {
-                LooplineFrameSchematicView(
-                    layout: style,
-                    partCount: partCount,
-                    isSelected: isSelected
-                )
-                .frame(width: 48, height: 62)
+                ZStack(alignment: .topTrailing) {
+                    LooplineFrameSchematicView(
+                        layout: style,
+                        partCount: partCount,
+                        isSelected: isSelected
+                    )
+                    .frame(width: 48, height: 62)
+
+                    if !isProUnlocked && style.isProOnly {
+                        Text("PRO")
+                            .font(LooplineTheme.text(7, weight: .bold, mono: true))
+                            .foregroundStyle(Color.looplineInk)
+                            .padding(.horizontal, 4)
+                            .padding(.vertical, 2)
+                            .background(Color.looplinePastelYellow, in: Capsule())
+                            .overlay { Capsule().stroke(Color.looplineLine, lineWidth: 0.8) }
+                            .offset(x: 4, y: -4)
+                    }
+                }
 
                 VStack(spacing: 1) {
                     Text(style.title)

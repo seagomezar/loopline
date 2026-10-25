@@ -157,6 +157,15 @@ enum VideoLayoutStyle: String, Codable, CaseIterable, Identifiable, Sendable {
         }
     }
 
+    var isProOnly: Bool {
+        switch self {
+        case .grid1, .grid2, .horizontalStrip, .splitRows12:
+            false
+        default:
+            true
+        }
+    }
+
     static func from(columns: Int) -> VideoLayoutStyle {
         switch columns {
         case 1: .grid1
@@ -377,7 +386,14 @@ struct RenderOptions: Codable, Equatable, Sendable {
     var resolution = "1080p"
     var columns = 2
     var layout: VideoLayoutStyle? = nil
+    var includeWatermark = false
     var effectiveLayout: VideoLayoutStyle { layout ?? .from(columns: columns) }
+    var isProExportFormat: Bool {
+        resolution == "4K" || format.hasPrefix("HEVC")
+    }
+    func requiresPro(trackCount: Int) -> Bool {
+        effectiveLayout.isProOnly || isProExportFormat || !includeWatermark || trackCount > LooplineStoreService.freeMaxTracks
+    }
     var renderSize: CGSize {
         switch resolution {
         case "720p": CGSize(width: 720, height: 1280)
@@ -540,7 +556,8 @@ enum MediaCompositionBuilder {
         let overlay = makeTitleOverlayImage(
             titles: layers.map(\.title),
             normalizedRects: normalizedRects,
-            size: size
+            size: size,
+            includeWatermark: options.includeWatermark
         )
         return MediaComposition(
             asset: composition,
@@ -554,10 +571,11 @@ enum MediaCompositionBuilder {
     static func makeTitleOverlayImage(
         titles: [String?],
         normalizedRects: [CGRect],
-        size: CGSize
+        size: CGSize,
+        includeWatermark: Bool = false
     ) -> CGImage? {
         let trimmedTitles = titles.map { $0?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "" }
-        guard trimmedTitles.contains(where: { !$0.isEmpty }),
+        guard (trimmedTitles.contains(where: { !$0.isEmpty }) || includeWatermark),
               size.width > 0, size.height > 0 else {
             return nil
         }
@@ -693,6 +711,106 @@ enum MediaCompositionBuilder {
             context.restoreGState()
         }
 
+        if includeWatermark {
+            drawSubtleWatermark(in: context, size: size, scale: scale, colorSpace: colorSpace)
+        }
+
         return context.makeImage()
+    }
+
+    private static func drawSubtleWatermark(
+        in context: CGContext,
+        size: CGSize,
+        scale: CGFloat,
+        colorSpace: CGColorSpace
+    ) {
+        let watermarkText = "Made with Loopline" as CFString
+        let fontSize = max(14 * scale, min(22 * scale, size.width * 0.019))
+        let font = CTFontCreateUIFontForLanguage(.emphasizedSystem, fontSize, nil)
+            ?? CTFontCreateWithName("HelveticaNeue-Bold" as CFString, fontSize, nil)
+        let textColor = CGColor(colorSpace: colorSpace, components: [0.980, 0.973, 0.957, 0.92])!
+        let attributes: [CFString: Any] = [
+            kCTFontAttributeName: font,
+            kCTForegroundColorAttributeName: textColor
+        ]
+        guard let attrString = CFAttributedStringCreate(nil, watermarkText, attributes as CFDictionary) else {
+            return
+        }
+        let line = CTLineCreateWithAttributedString(attrString)
+        var ascent: CGFloat = 0
+        var descent: CGFloat = 0
+        var leading: CGFloat = 0
+        let textWidth = CGFloat(CTLineGetTypographicBounds(line, &ascent, &descent, &leading))
+
+        let pillHeight = round(fontSize * 1.82)
+        let hPad = round(fontSize * 0.72)
+        let barWidth = max(2.0, round(fontSize * 0.18))
+        let barSpacing = max(1.5, round(fontSize * 0.12))
+        let barHeights: [CGFloat] = [0.42, 0.78, 0.56, 0.92].map { round(fontSize * $0) }
+        let barsTotalWidth = CGFloat(barHeights.count) * barWidth + CGFloat(barHeights.count - 1) * barSpacing
+        let iconGap = round(fontSize * 0.44)
+        let pillWidth = ceil(hPad + barsTotalWidth + iconGap + textWidth + hPad)
+
+        let marginX = max(16 * scale, round(size.width * 0.024))
+        let marginY = max(16 * scale, round(size.height * 0.016))
+        // Place at top-right of the video canvas so it never collides with bottom-left tile headlines
+        let pillRect = CGRect(
+            x: max(marginX, size.width - marginX - pillWidth),
+            y: max(marginY, size.height - marginY - pillHeight),
+            width: pillWidth,
+            height: pillHeight
+        )
+        let pillPath = CGPath(
+            roundedRect: pillRect,
+            cornerWidth: pillHeight / 2,
+            cornerHeight: pillHeight / 2,
+            transform: nil
+        )
+
+        let badgeFill = CGColor(colorSpace: colorSpace, components: [0.094, 0.102, 0.122, 0.66])!
+        let badgeBorder = CGColor(colorSpace: colorSpace, components: [1.0, 1.0, 1.0, 0.20])!
+        let badgeShadow = CGColor(colorSpace: colorSpace, components: [0.0, 0.0, 0.0, 0.18])!
+
+        context.saveGState()
+        context.setShadow(offset: CGSize(width: 0, height: -1.5 * scale), blur: 4 * scale, color: badgeShadow)
+        context.setFillColor(badgeFill)
+        context.addPath(pillPath)
+        context.fillPath()
+        context.restoreGState()
+
+        context.saveGState()
+        context.setStrokeColor(badgeBorder)
+        context.setLineWidth(max(1, 1.0 * scale))
+        context.addPath(pillPath)
+        context.strokePath()
+        context.restoreGState()
+
+        let barPalette: [(CGFloat, CGFloat, CGFloat)] = [
+            (0.290, 0.482, 0.969), // Blue
+            (0.910, 0.416, 0.345), // Coral
+            (0.898, 0.663, 0.235), // Gold
+            (0.231, 0.698, 0.545)  // Mint
+        ]
+        for (idx, barHeight) in barHeights.enumerated() {
+            let rgb = barPalette[idx % barPalette.count]
+            guard let barColor = CGColor(colorSpace: colorSpace, components: [rgb.0, rgb.1, rgb.2, 0.95]) else { continue }
+            let barX = pillRect.minX + hPad + CGFloat(idx) * (barWidth + barSpacing)
+            let barY = pillRect.midY - barHeight / 2
+            let barRect = CGRect(x: barX, y: barY, width: barWidth, height: barHeight)
+            let barPath = CGPath(roundedRect: barRect, cornerWidth: barWidth / 2, cornerHeight: barWidth / 2, transform: nil)
+            context.saveGState()
+            context.setFillColor(barColor)
+            context.addPath(barPath)
+            context.fillPath()
+            context.restoreGState()
+        }
+
+        let textX = pillRect.minX + hPad + barsTotalWidth + iconGap
+        let textY = pillRect.midY - (ascent - descent) / 2
+        context.saveGState()
+        context.textMatrix = .identity
+        context.textPosition = CGPoint(x: textX, y: textY)
+        CTLineDraw(line, context)
+        context.restoreGState()
     }
 }

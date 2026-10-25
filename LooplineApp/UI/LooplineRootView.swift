@@ -27,6 +27,29 @@ struct LooplineRootView: View {
                         }
                     }
                     Text("loopline").font(LooplineTheme.text(22, weight: .bold)).tracking(-0.7)
+                    Button {
+                        model.presentPaywall(.general)
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: model.isProUnlocked ? "checkmark.seal.fill" : "sparkles")
+                                .font(LooplineTheme.text(10, weight: .bold))
+                            Text(model.isProUnlocked ? "PRO" : "PRO")
+                                .font(LooplineTheme.text(10, weight: .bold, mono: true))
+                        }
+                        .foregroundStyle(Color.looplineInk)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(
+                            model.isProUnlocked ? Color.looplinePastelGreen : Color.looplinePastelYellow,
+                            in: Capsule()
+                        )
+                        .overlay {
+                            Capsule().stroke(Color.looplineLine, lineWidth: 1)
+                        }
+                    }
+                    .buttonStyle(.plain)
+                    .disabled(model.transportBusy)
+                    .accessibilityIdentifier("pro.badge")
                     Spacer()
                     Button { showingProjects = true } label: {
                         Label(model.projectTitle, systemImage: "folder").font(LooplineTheme.text(12, weight: .medium)).lineLimit(1)
@@ -95,6 +118,10 @@ struct LooplineRootView: View {
             LooplineSessionsSheet(model: model, isPresented: $showingProjects)
                 .preferredColorScheme(.light)
         }
+        .sheet(item: $model.activePaywallTrigger) { trigger in
+            LooplinePaywallView(model: model, trigger: trigger)
+                .preferredColorScheme(.light)
+        }
         .alert("Loopline", isPresented: Binding(get: { model.errorMessage != nil }, set: { if !$0 { model.errorMessage = nil } })) {
             Button("OK") { model.errorMessage = nil }
         } message: { Text(model.errorMessage ?? "") }
@@ -114,8 +141,11 @@ struct LooplineSessionsSheet: View {
             List {
                 Section {
                     Button {
-                        model.newProject()
-                        isPresented = false
+                        if model.requestNewProject() {
+                            isPresented = false
+                        } else {
+                            isPresented = false
+                        }
                     } label: {
                         HStack(spacing: 10) {
                             Image(systemName: "plus.circle.fill")

@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Loopline — Estudio Multipista de Video y Audio para iPhone e iPad | Split-Screen Overdub Studio</title>
-  <meta name="description" content="Loopline es el estudio multipista de video y audio para iPhone e iPad. Graba voces e instrumentos con metrónomo visual, personaliza títulos por toma, elige entre 16 diseños de marco, ajusta el encuadre con Touch Crop y exporta en 4K 100% offline. / Loopline is the multi-track split-screen video & audio overdub studio for iPhone and iPad.">
+  <meta name="description" content="Loopline es el estudio multipista de video y audio 100% offline para iPhone e iPad. Gratis hasta 3 voces en 1080p; desbloqueo único de por vida para 4–6+ voces, 16 diseños, Sync Assist y 4K sin suscripciones. / Loopline is the 100% offline multi-track split-screen video & audio studio for iPhone and iPad.">
   <meta name="theme-color" content="#0D0E12">
   <link rel="canonical" href="https://seagomezar.github.io/loopline/">
   <link rel="alternate" hreflang="es" href="https://seagomezar.github.io/loopline/?lang=es">
   <link rel="alternate" hreflang="en" href="https://seagomezar.github.io/loopline/?lang=en">
   <link rel="alternate" hreflang="x-default" href="https://seagomezar.github.io/loopline/">
-  <meta property="og:title" content="Loopline — Multi-Track Split-Screen Video & Audio Studio">
-  <meta property="og:description" content="Record layered music performances with visual beat count-in, 16 frame layouts, interactive Touch Crop, voice slot reordering, real 9:16 preview, and 4K export — 100% offline on iPhone & iPad.">
+  <meta property="og:title" content="Loopline — Multi-Track Split-Screen Video & Audio Studio (No Subscriptions)">
+  <meta property="og:description" content="Record layered music performances with beat-synced count-in, 16 frame layouts, Touch Crop, Auto Sync Assist, and 4K export — 100% offline on iPhone & iPad. Free up to 3 voices; one-time Pro unlock.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://seagomezar.github.io/loopline/">
   <style>
@@ -19,7 +19,7 @@
       --bg: #0D0E12;
       --surface: #161820;
       --surface-elevated: #1E212B;
-      --card: rgba(25, 28, 38, 0.86);
+      --card: rgba(25, 28, 38, 0.88);
       --border: rgba(255, 255, 255, 0.10);
       --border-strong: rgba(255, 255, 255, 0.18);
       --text: #F5F6FA;
@@ -28,10 +28,29 @@
       --amber: #FFB833;
       --teal: #1FD6A8;
       --indigo: #6E7BFF;
-      --max-w: 1140px;
+      --max-w: 1160px;
       --radius-lg: 24px;
       --radius-md: 16px;
       --radius-sm: 12px;
+      /* Disable default full-page root snapshot so component view transitions stay interactive */
+      view-transition-name: none;
+    }
+
+    ::view-transition {
+      pointer-events: none;
+    }
+
+    ::view-transition-group(.studio-tile) {
+      animation-duration: 0.34s;
+      animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      ::view-transition-group(*),
+      ::view-transition-old(*),
+      ::view-transition-new(*) {
+        animation: none !important;
+      }
     }
 
     * {
@@ -66,7 +85,7 @@
     }
     html[data-lang="both"] [data-i18n="en"] {
       display: block;
-      margin-top: 0.45rem;
+      margin-top: 0.4rem;
       opacity: 0.88;
     }
     html[data-lang="both"] span[data-i18n="en"] {
@@ -76,7 +95,7 @@
     }
 
     .skip-link {
-      position: absolute;
+      position: fixed;
       left: -9999px;
       top: 0.75rem;
       background: var(--coral);
@@ -101,7 +120,7 @@
       z-index: 50;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      background: rgba(13, 14, 18, 0.82);
+      background: rgba(13, 14, 18, 0.84);
       border-bottom: 1px solid var(--border);
     }
 
@@ -110,7 +129,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      padding: 0.95rem 0;
+      padding: 0.9rem 0;
       flex-wrap: wrap;
     }
 
@@ -156,7 +175,7 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 1.15rem;
+      gap: 1.1rem;
       flex-wrap: wrap;
       list-style: none;
     }
@@ -164,8 +183,8 @@
     .nav-links a {
       color: var(--muted);
       text-decoration: none;
-      font-size: 0.94rem;
-      font-weight: 500;
+      font-size: 0.92rem;
+      font-weight: 600;
       transition: color 0.18s ease;
     }
 
@@ -189,7 +208,7 @@
       border: none;
       background: transparent;
       color: var(--muted);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
       padding: 0.32rem 0.68rem;
       border-radius: 999px;
@@ -204,10 +223,10 @@
 
     /* Hero Section */
     .hero {
-      padding: clamp(3rem, 6vw, 5.2rem) 0 clamp(2.5rem, 4vw, 3.8rem);
+      padding: clamp(2.8rem, 5.5vw, 4.8rem) 0 clamp(2.5rem, 4vw, 3.8rem);
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
-      gap: clamp(2rem, 4vw, 3.5rem);
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 430px), 1fr));
+      gap: clamp(2rem, 4vw, 3.2rem);
       align-items: center;
     }
 
@@ -220,16 +239,16 @@
       background: rgba(255, 90, 60, 0.14);
       border: 1px solid rgba(255, 90, 60, 0.35);
       color: #FF8B73;
-      font-size: 0.84rem;
-      font-weight: 600;
-      margin-bottom: 1.25rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 1.15rem;
     }
 
     h1 {
-      font-size: clamp(2.25rem, 1.3rem + 3.8vw, 3.75rem);
-      line-height: 1.08;
+      font-size: clamp(2.2rem, 1.3rem + 3.6vw, 3.65rem);
+      line-height: 1.07;
       letter-spacing: -0.03em;
-      margin-bottom: 1.15rem;
+      margin-bottom: 1.1rem;
     }
 
     .gradient-text {
@@ -240,8 +259,8 @@
 
     .lead {
       color: var(--muted);
-      font-size: clamp(1.02rem, 0.94rem + 0.45vw, 1.18rem);
-      margin-bottom: 1.75rem;
+      font-size: clamp(1rem, 0.94rem + 0.4vw, 1.14rem);
+      margin-bottom: 1.65rem;
       max-width: 60ch;
     }
 
@@ -250,7 +269,7 @@
       flex-wrap: wrap;
       gap: 0.85rem;
       align-items: center;
-      margin-bottom: 1.65rem;
+      margin-bottom: 1.55rem;
     }
 
     .btn-primary,
@@ -258,19 +277,19 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
-      padding: 0.85rem 1.45rem;
+      gap: 0.55rem;
+      padding: 0.88rem 1.4rem;
       border-radius: 14px;
       font-weight: 700;
-      font-size: 0.96rem;
+      font-size: 0.95rem;
       text-decoration: none;
-      transition: transform 0.15s ease, border-color 0.15s ease;
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
     .btn-primary {
       background: linear-gradient(135deg, var(--coral), #FF7A45);
       color: #0D0E12;
-      box-shadow: 0 10px 26px rgba(255, 90, 60, 0.28);
+      box-shadow: 0 10px 28px rgba(255, 90, 60, 0.32);
     }
 
     .btn-secondary {
@@ -287,130 +306,316 @@
     .meta-pills {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.6rem;
+      gap: 0.55rem;
       list-style: none;
     }
 
     .meta-pills li {
-      font-size: 0.82rem;
-      color: var(--muted);
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border);
-      padding: 0.35rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #D7DCE8;
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid var(--border-strong);
+      padding: 0.36rem 0.78rem;
       border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
     }
 
-    /* Interactive Studio Mockup Card */
+    .pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    /* Interactive Mini-Studio Showcase Card */
     .studio-showcase {
       background: var(--card);
       border: 1px solid var(--border-strong);
       border-radius: var(--radius-lg);
-      padding: 1.35rem;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      padding: 1.25rem;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
     }
 
     .showcase-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.9rem;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.75rem;
       font-size: 0.82rem;
       color: var(--muted);
     }
 
-    .status-pill {
+    .studio-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .studio-ctrl-btn {
+      appearance: none;
+      border: 1px solid var(--border-strong);
+      background: var(--surface-elevated);
+      color: var(--text);
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 0.38rem 0.72rem;
+      border-radius: 999px;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      padding: 0.22rem 0.65rem;
-      border-radius: 999px;
-      background: rgba(31, 214, 168, 0.14);
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.12s ease;
+    }
+
+    .studio-ctrl-btn:hover,
+    .studio-ctrl-btn:focus-visible {
+      border-color: var(--amber);
+      background: rgba(255, 184, 51, 0.12);
+    }
+
+    .studio-ctrl-btn[aria-pressed="true"] {
+      background: rgba(31, 214, 168, 0.18);
+      border-color: var(--teal);
       color: var(--teal);
-      font-weight: 600;
-      font-size: 0.76rem;
+    }
+
+    .pulse-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--teal);
+      display: inline-block;
+      transition: transform 0.1s ease, background-color 0.1s ease, box-shadow 0.1s ease;
+    }
+
+    .pulse-indicator.is-downbeat {
+      background: var(--coral);
+      transform: scale(1.55);
+      box-shadow: 0 0 12px var(--coral);
+    }
+
+    .pulse-indicator.is-beat {
+      background: var(--amber);
+      transform: scale(1.35);
+      box-shadow: 0 0 10px var(--amber);
     }
 
     .frame-preview-grid {
-      aspect-ratio: 9 / 12;
-      max-height: 410px;
+      position: relative;
+      aspect-ratio: 9 / 12.5;
+      max-height: 415px;
       margin-inline: auto;
       background: #090A0D;
       border-radius: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.14);
       padding: 8px;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1.15fr 1fr;
+      grid-template-rows: 1.18fr 1fr;
       gap: 8px;
+      transition: box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .frame-preview-grid.pulse-downbeat {
+      border-color: var(--coral);
+      box-shadow: 0 0 0 2px rgba(255, 90, 60, 0.35), 0 0 28px rgba(255, 90, 60, 0.25);
+    }
+
+    .frame-preview-grid.pulse-subbeat {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 2px rgba(31, 214, 168, 0.28);
+    }
+
+    .countin-toast {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      pointer-events: none;
+      background: rgba(13, 14, 18, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 18px;
+      padding: 0.65rem 1.15rem;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    .countin-toast.is-visible {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.03);
+    }
+
+    .countin-number {
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--amber);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .countin-sub {
+      font-size: 0.68rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 0.2rem;
     }
 
     .frame-tile {
       position: relative;
       border-radius: 12px;
       overflow: hidden;
-      padding: 0.75rem;
+      padding: 0.7rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      border: 1px solid rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      view-transition-class: studio-tile;
+      isolation: isolate;
     }
 
-    .frame-tile.hero-span {
+    .frame-tile[data-slot="0"] {
       grid-column: 1 / -1;
-      background: linear-gradient(135deg, rgba(255, 90, 60, 0.28), rgba(22, 24, 32, 0.95));
     }
-    .frame-tile.slot-2 {
-      background: linear-gradient(135deg, rgba(255, 184, 51, 0.24), rgba(22, 24, 32, 0.95));
+
+    .tile-backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      transform-origin: center center;
+      transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .frame-tile.slot-3 {
-      background: linear-gradient(135deg, rgba(31, 214, 168, 0.24), rgba(22, 24, 32, 0.95));
+
+    .tile-theme-coral .tile-backdrop {
+      background:
+        radial-gradient(circle at 50% 42%, rgba(255, 90, 60, 0.42), rgba(22, 24, 32, 0.96) 72%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 18px);
+    }
+    .tile-theme-amber .tile-backdrop {
+      background:
+        radial-gradient(circle at 50% 42%, rgba(255, 184, 51, 0.36), rgba(22, 24, 32, 0.96) 72%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 18px);
+    }
+    .tile-theme-teal .tile-backdrop {
+      background:
+        radial-gradient(circle at 50% 42%, rgba(31, 214, 168, 0.36), rgba(22, 24, 32, 0.96) 72%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 18px);
+    }
+
+    .tile-performer-silhouette {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(255, 255, 255, 0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: rgba(255, 255, 255, 0.65);
+      background: rgba(13, 14, 18, 0.35);
+      pointer-events: none;
     }
 
     .tile-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.35rem;
+      z-index: 2;
     }
 
     .slot-badge {
-      background: rgba(13, 14, 18, 0.78);
+      background: rgba(13, 14, 18, 0.82);
       border: 1px solid rgba(255, 255, 255, 0.18);
       color: #fff;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      padding: 0.18rem 0.5rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      padding: 0.16rem 0.48rem;
       border-radius: 999px;
     }
 
-    .zoom-badge {
-      background: rgba(13, 14, 18, 0.78);
+    .zoom-stepper {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+      background: rgba(13, 14, 18, 0.86);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 0.12rem 0.25rem;
+      border-radius: 999px;
+    }
+
+    .zoom-btn {
+      appearance: none;
+      border: none;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      font-weight: 800;
+      font-size: 0.78rem;
+      line-height: 1;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .zoom-btn:hover,
+    .zoom-btn:focus-visible {
+      background: var(--coral);
+      color: #0D0E12;
+    }
+
+    .zoom-readout {
       color: var(--amber);
-      font-size: 0.7rem;
+      font-size: 0.69rem;
       font-weight: 700;
-      padding: 0.16rem 0.48rem;
-      border-radius: 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      min-width: 3.1ch;
+      text-align: center;
     }
 
     .burned-title-pill {
       align-self: flex-start;
-      background: rgba(13, 14, 18, 0.84);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      color: #fff;
-      font-size: 0.8rem;
-      font-weight: 700;
-      padding: 0.25rem 0.65rem;
-      border-radius: 8px;
+      background: rgba(250, 248, 244, 0.94);
+      border: 1px solid rgba(13, 14, 18, 0.2);
+      color: #161820;
+      font-size: 0.76rem;
+      font-weight: 800;
+      padding: 0.22rem 0.6rem;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.38rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
     }
 
     .showcase-footer {
-      margin-top: 0.95rem;
+      margin-top: 0.85rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 0.5rem;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--muted);
     }
 
@@ -421,14 +626,14 @@
     }
 
     .section-header {
-      max-width: 68ch;
-      margin-bottom: 2.2rem;
+      max-width: 70ch;
+      margin-bottom: 2.1rem;
     }
 
     h2 {
       font-size: clamp(1.6rem, 1.15rem + 1.8vw, 2.35rem);
       letter-spacing: -0.02em;
-      margin-bottom: 0.65rem;
+      margin-bottom: 0.6rem;
     }
 
     .section-subtitle {
@@ -436,9 +641,27 @@
       font-size: 1.02rem;
     }
 
+    /* Non-Destructive Moat Banner */
+    .moat-banner {
+      background: linear-gradient(135deg, rgba(255, 90, 60, 0.12), rgba(31, 214, 168, 0.08));
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .moat-banner strong {
+      color: var(--amber);
+    }
+
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 310px), 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
       gap: 1.25rem;
     }
 
@@ -446,16 +669,27 @@
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 1.5rem;
+      padding: 1.45rem;
       display: flex;
       flex-direction: column;
       gap: 0.6rem;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .feature-card.bento-wide {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+      gap: 1.5rem;
+      align-items: center;
+      border-color: rgba(110, 123, 255, 0.35);
+      background: linear-gradient(145deg, rgba(25, 28, 38, 0.95), rgba(18, 21, 32, 0.95));
     }
 
     .feature-tag {
       display: inline-flex;
       align-self: flex-start;
-      font-size: 0.75rem;
+      font-size: 0.73rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
@@ -466,55 +700,455 @@
     }
 
     .feature-card h3 {
-      font-size: 1.16rem;
+      font-size: 1.15rem;
       color: var(--text);
     }
 
     .feature-card p {
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.94rem;
     }
 
-    /* Layout Catalog Section */
+    /* Interactive Sync Assist Bento Mockup */
+    .sync-demo-box {
+      background: #101218;
+      border: 1px solid var(--border-strong);
+      border-radius: 14px;
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .sync-demo-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .sync-status-badge {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      background: rgba(110, 123, 255, 0.16);
+      color: #9BA5FF;
+      border: 1px solid rgba(110, 123, 255, 0.35);
+    }
+
+    .sync-status-badge.is-applied {
+      background: rgba(31, 214, 168, 0.16);
+      color: var(--teal);
+      border-color: rgba(31, 214, 168, 0.4);
+    }
+
+    .sync-waveforms {
+      display: grid;
+      gap: 0.45rem;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.7rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .wave-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.74rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: var(--muted);
+    }
+
+    .wave-bars {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 22px;
+      transition: transform 0.22s ease;
+    }
+
+    .wave-bars span {
+      flex: 1;
+      background: var(--coral);
+      border-radius: 2px;
+      opacity: 0.85;
+    }
+
+    .wave-row.target-wave .wave-bars span {
+      background: var(--teal);
+    }
+
+    .sync-controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .sync-action-btn {
+      appearance: none;
+      border: none;
+      background: linear-gradient(135deg, var(--indigo), #4E5DF8);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 0.5rem 0.95rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.12s ease, opacity 0.15s ease;
+    }
+
+    .sync-action-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .sync-slider-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.76rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: var(--muted);
+      flex: 1;
+      min-width: 190px;
+    }
+
+    .sync-slider-wrap input[type="range"] {
+      flex: 1;
+      accent-color: var(--amber);
+      cursor: pointer;
+    }
+
+    /* Interactive 16-Layout Geometry Switcher */
+    .layouts-workbench {
+      display: grid;
+      grid-template-columns: 1.35fr 0.85fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 860px) {
+      .layouts-workbench {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .layout-categories {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-      gap: 1.25rem;
+      gap: 1.15rem;
     }
 
     .category-box {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 1.4rem;
+      padding: 1.25rem;
     }
 
     .category-box h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.02rem;
+      margin-bottom: 0.25rem;
       color: var(--amber);
     }
 
-    .category-box ul {
-      list-style: none;
-      display: grid;
-      gap: 0.45rem;
-      margin-top: 0.85rem;
+    .category-box > p {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 0.85rem;
     }
 
-    .category-box li {
-      font-size: 0.92rem;
+    .layout-buttons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+      gap: 0.55rem;
+    }
+
+    .layout-item-btn {
+      appearance: none;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      padding: 0.55rem 0.65rem;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-align: left;
+      transition: border-color 0.15s ease, background 0.15s ease, transform 0.12s ease;
+    }
+
+    .layout-item-btn:hover,
+    .layout-item-btn:focus-visible {
+      border-color: var(--border-strong);
+      transform: translateY(-1px);
+    }
+
+    .layout-item-btn[aria-pressed="true"] {
+      background: rgba(255, 90, 60, 0.15);
+      border-color: var(--coral);
+      box-shadow: 0 0 0 1px rgba(255, 90, 60, 0.35);
+    }
+
+    .mini-wireframe {
+      width: 28px;
+      height: 38px;
+      border-radius: 5px;
+      background: #0B0C10;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .mini-wireframe span {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.26);
+      border: 0.5px solid #0B0C10;
+      border-radius: 1.5px;
+    }
+
+    .layout-item-btn[aria-pressed="true"] .mini-wireframe span {
+      background: var(--amber);
+    }
+
+    .layout-meta {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .layout-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.3rem;
+    }
+
+    .layout-name {
+      font-size: 0.8rem;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .layout-sub {
+      font-size: 0.7rem;
       color: var(--muted);
-      padding-left: 1.1rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      display: block;
+    }
+
+    .tier-pill {
+      font-size: 0.62rem;
+      font-weight: 800;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      padding: 0.1rem 0.38rem;
+      border-radius: 999px;
+      letter-spacing: 0.03em;
+      flex-shrink: 0;
+    }
+
+    .tier-pill.is-free {
+      background: rgba(31, 214, 168, 0.16);
+      color: var(--teal);
+      border: 1px solid rgba(31, 214, 168, 0.38);
+    }
+
+    .tier-pill.is-pro {
+      background: rgba(255, 184, 51, 0.16);
+      color: var(--amber);
+      border: 1px solid rgba(255, 184, 51, 0.38);
+    }
+
+    /* Sticky Live Layout Inspector */
+    .layout-inspector-card {
+      position: sticky;
+      top: 5.2rem;
+      background: var(--card);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    }
+
+    .inspector-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .voice-count-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
+      margin-bottom: 0.9rem;
+      background: var(--surface);
+      padding: 0.35rem 0.55rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+
+    .voice-count-btns {
+      display: inline-flex;
+      gap: 0.25rem;
+    }
+
+    .voice-count-btn {
+      appearance: none;
+      border: 1px solid transparent;
+      background: var(--surface-elevated);
+      color: var(--muted);
+      font-size: 0.74rem;
+      font-weight: 800;
+      width: 28px;
+      height: 26px;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    .voice-count-btn[aria-pressed="true"] {
+      background: var(--coral);
+      color: #0D0E12;
+    }
+
+    .inspector-stage {
+      position: relative;
+      aspect-ratio: 9 / 16;
+      max-height: 390px;
+      margin-inline: auto;
+      background: #08090C;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      overflow: hidden;
+    }
+
+    .inspector-tile {
+      position: absolute;
+      padding: 4px;
+      transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .inspector-tile-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 9px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 0.45rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      font-weight: 700;
+      overflow: hidden;
+    }
+
+    /* Pricing & Comparison Section */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    .pricing-card {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      padding: clamp(1.5rem, 3vw, 2.1rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.4rem;
+    }
+
+    .pricing-card.pro-highlight {
+      background: linear-gradient(155deg, rgba(30, 33, 45, 0.96), rgba(18, 20, 28, 0.98));
+      border: 2px solid var(--amber);
+      box-shadow: 0 24px 60px rgba(255, 184, 51, 0.14);
       position: relative;
     }
 
-    .category-box li::before {
-      content: "•";
-      position: absolute;
-      left: 0;
-      color: var(--coral);
+    .price-headline {
+      display: flex;
+      align-items: baseline;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+      margin: 0.6rem 0 0.35rem;
+    }
+
+    .price-amount {
+      font-size: clamp(2rem, 1.5rem + 1.5vw, 2.75rem);
       font-weight: 900;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .price-strike {
+      font-size: 1.1rem;
+      color: var(--muted);
+      text-decoration: line-through;
+      font-weight: 600;
+    }
+
+    .price-period {
+      font-size: 0.84rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: var(--teal);
+      font-weight: 700;
+    }
+
+    .pricing-list {
+      list-style: none;
+      display: grid;
+      gap: 0.65rem;
+      margin-top: 1rem;
+    }
+
+    .pricing-list li {
+      font-size: 0.92rem;
+      color: #DCE0EC;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+
+    .check-icon {
+      color: var(--teal);
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .pro-check-icon {
+      color: var(--amber);
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .value-anchor-callout {
+      margin-top: 1.5rem;
+      background: rgba(255, 184, 51, 0.08);
+      border: 1px solid rgba(255, 184, 51, 0.32);
+      border-radius: var(--radius-md);
+      padding: 1.15rem 1.4rem;
+      font-size: 0.94rem;
+      color: #EAECEF;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
     }
 
     /* Specs & Compliance Table */
@@ -540,7 +1174,7 @@
     }
 
     .spec-value {
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       font-weight: 700;
       color: var(--text);
     }
@@ -595,7 +1229,7 @@
       </a>
 
       <div class="nav-controls">
-        <nav aria-label="Navegación principal / Primary navigation">
+        <nav aria-label="Principal / Primary">
           <ul class="nav-links">
             <li>
               <a href="#features">
@@ -607,6 +1241,12 @@
               <a href="#layouts">
                 <span data-i18n="es">16 Diseños</span>
                 <span data-i18n="en">16 Layouts</span>
+              </a>
+            </li>
+            <li>
+              <a href="#pricing">
+                <span data-i18n="es">Gratis vs. Pro</span>
+                <span data-i18n="en">Free vs. Pro</span>
               </a>
             </li>
             <li>
@@ -631,99 +1271,154 @@
         </nav>
 
         <div class="lang-switcher" role="group" aria-label="Selector de idioma / Language selector">
-          <button type="button" class="lang-btn" data-set-lang="es" aria-pressed="true">ES</button>
-          <button type="button" class="lang-btn" data-set-lang="en" aria-pressed="false">EN</button>
+          <button type="button" class="lang-btn" data-set-lang="es" aria-pressed="false">ES</button>
+          <button type="button" class="lang-btn" data-set-lang="en" aria-pressed="true">EN</button>
           <button type="button" class="lang-btn" data-set-lang="both" aria-pressed="false">ES + EN</button>
         </div>
       </div>
     </div>
   </header>
 
-  <main id="main" class="container">
+  <main id="main" class="container" tabindex="-1">
     <section class="hero">
       <div>
         <div class="badge">
-          <span data-i18n="es">Versión 1.0 • iPhone &amp; iPad • 100% Offline</span>
-          <span data-i18n="en">Version 1.0 • iPhone &amp; iPad • 100% Offline</span>
+          <span data-i18n="es">Versión 1.0 • iPhone &amp; iPad • 100% En Tu Dispositivo</span>
+          <span data-i18n="en">Version 1.0 • iPhone &amp; iPad • 100% On-Device Studio</span>
         </div>
 
         <h1>
-          <span data-i18n="es">Graba arreglos multipista en <span class="gradient-text">pantalla dividida</span> con precisión de estudio.</span>
-          <span data-i18n="en">Record multi-track <span class="gradient-text">split-screen</span> arrangements with studio precision.</span>
+          <span data-i18n="es">Graba arreglos multipista en <span class="gradient-text">pantalla dividida</span> sin suscripciones.</span>
+          <span data-i18n="en">Record multi-track <span class="gradient-text">split-screen</span> arrangements without subscriptions.</span>
         </h1>
 
         <p class="lead" data-i18n="es">
-          Loopline transforma tu iPhone o iPad en un estudio de grabación multipista de video y audio. Graba voz por voz con cuenta regresiva sincronizada al pulso, titula cada instrumento, elige entre 16 diseños tipo collage, ajusta el encuadre con Touch Crop, reordena las voces y previsualiza el video 9:16 real antes de exportar hasta en 4K.
+          Loopline transforma tu iPhone o iPad en un estudio multipista de video y audio 100% local. Graba primero sin atarte a un marco, alinea tomas al milisegundo con Sync Assist, ajusta el encuadre con Touch Crop (1×–3×), elige entre 16 diseños de collage y exporta hasta en 4K.
         </p>
         <p class="lead" data-i18n="en">
-          Loopline turns your iPhone or iPad into a multi-track split-screen video and audio overdub studio. Record part by part with a beat-synced visual count-in, add custom burned-in part headlines, choose from 16 frame layouts, fine-tune framing with Touch Crop, reorder voice slots, and preview the real 9:16 composition before exporting in up to 4K.
+          Loopline turns your iPhone or iPad into a 100% local multi-track split-screen video and audio studio. Record freely before choosing a frame, align takes to the millisecond with Sync Assist, fine-tune framing with Touch Crop (1×–3×), switch across 16 collage layouts, and export in up to 4K.
         </p>
 
         <div class="cta-row">
-          <a class="btn-primary" href="#features">
-            <span data-i18n="es">Explorar funciones de v1.0</span>
-            <span data-i18n="en">Explore v1.0 Features</span>
+          <a class="btn-primary" href="https://apps.apple.com/app/id6826597725">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.96 6.33c.67-.81 1.12-1.94 1-3.08-.96.04-2.13.64-2.82 1.45-.61.7-.115 1.86-.99 2.97 1.08.08 2.14-.53 2.81-1.34z"/>
+            </svg>
+            <span data-i18n="es">Descargar Gratis en el App Store</span>
+            <span data-i18n="en">Download Free on the App Store</span>
           </a>
-          <a class="btn-secondary" href="support.html">
-            <span data-i18n="es">Centro de Soporte y Ayuda</span>
-            <span data-i18n="en">Support &amp; Help Center</span>
+          <a class="btn-secondary" href="#layouts">
+            <span data-i18n="es">Probar Estudio y 16 Diseños en Vivo</span>
+            <span data-i18n="en">Try the Interactive Studio &amp; 16 Layouts</span>
           </a>
         </div>
 
-        <ul class="meta-pills">
+        <ul class="meta-pills" role="list">
           <li>
-            <span data-i18n="es">Sin cuentas ni suscripciones</span>
-            <span data-i18n="en">No accounts or subscriptions</span>
+            <span class="pill-dot" style="background: var(--coral);" aria-hidden="true"></span>
+            <span data-i18n="es">Cero cuentas • Sin suscripciones — Jamás</span>
+            <span data-i18n="en">Zero accounts • No subscriptions — Ever</span>
           </li>
           <li>
-            <span data-i18n="es">Cero rastreo • 100% en tu dispositivo</span>
-            <span data-i18n="en">Zero tracking • 100% on-device</span>
+            <span class="pill-dot" style="background: var(--teal);" aria-hidden="true"></span>
+            <span data-i18n="es">Privacidad 100% en tu dispositivo • Funciona en Modo Avión</span>
+            <span data-i18n="en">100% On-Device Privacy • Works in Airplane Mode</span>
           </li>
           <li>
-            <span data-i18n="es">Exportación H.264 (.mp4) y HEVC (.mov) hasta 4K</span>
-            <span data-i18n="en">H.264 (.mp4) &amp; HEVC (.mov) export up to 4K</span>
+            <span class="pill-dot" style="background: var(--amber);" aria-hidden="true"></span>
+            <span data-i18n="es">Gratis hasta 3 voces (1080p) • Pago único Pro para 4K y 6+ voces</span>
+            <span data-i18n="en">Free up to 3 voices (1080p) • One-time Pro Unlock for 4K &amp; 6+ voices</span>
           </li>
         </ul>
       </div>
 
-      <aside class="studio-showcase" aria-label="Vista previa interactiva del estudio Loopline / Loopline Studio Preview">
+      <aside class="studio-showcase" aria-label="Mini estudio interactivo de Loopline / Interactive Loopline Mini-Studio">
         <div class="showcase-header">
           <span>
-            <strong data-i18n="es">Vista Previa Real 9:16 + Touch Crop</strong>
-            <strong data-i18n="en">Real 9:16 Preview + Touch Crop</strong>
+            <strong data-i18n="es">Mini-Estudio Interactivo • 9:16 + Touch Crop</strong>
+            <strong data-i18n="en">Interactive Mini-Studio • 9:16 + Touch Crop</strong>
           </span>
-          <span class="status-pill">120 BPM • 4/4</span>
+          <span class="tier-pill is-free" id="heroBeatReadout">120 BPM • 4/4</span>
         </div>
 
-        <div class="frame-preview-grid">
-          <div class="frame-tile hero-span">
-            <div class="tile-top">
-              <span class="slot-badge">#1 • Hero Top</span>
-              <span class="zoom-badge">− 1.35× +</span>
-            </div>
-            <span class="burned-title-pill">Flute 1 — Lead Melody</span>
+        <div class="studio-toolbar" role="toolbar" aria-label="Controles de demostración del mini estudio / Mini-studio demo controls">
+          <button type="button" class="studio-ctrl-btn" id="btnSimulateCountIn" aria-pressed="false">
+            <span class="pulse-indicator" id="heroPulseDot" aria-hidden="true"></span>
+            <span data-i18n="es">Simular Cuenta Regresiva (120 BPM • 4/4)</span>
+            <span data-i18n="en">Simulate Count-In (120 BPM • 4/4)</span>
+          </button>
+
+          <button type="button" class="studio-ctrl-btn" id="btnSwapHeroSlots">
+            <span aria-hidden="true">↑↓</span>
+            <span data-i18n="es">Rotar Posición de Voces</span>
+            <span data-i18n="en">Swap Voice Slot ↑↓</span>
+          </button>
+        </div>
+
+        <div class="frame-preview-grid" id="heroStageGrid">
+          <div class="countin-toast" id="heroCountInToast" aria-live="polite">
+            <div class="countin-number" id="heroCountInNumber">1</div>
+            <div class="countin-sub">AudioClockService • 120 BPM</div>
           </div>
 
-          <div class="frame-tile slot-2">
-            <div class="tile-top">
-              <span class="slot-badge">#2</span>
-              <span class="zoom-badge">1.15×</span>
+          <div class="frame-tile tile-theme-coral" data-slot="0" data-voice-id="flute1" style="view-transition-name: hero-tile-flute1;">
+            <div class="tile-backdrop" id="backdrop-flute1" style="transform: scale(1.35);">
+              <span class="tile-performer-silhouette">1.35×</span>
             </div>
-            <span class="burned-title-pill">Flute 2 — Harmony</span>
+            <div class="tile-top">
+              <span class="slot-badge" data-slot-label>#1 • Hero Top</span>
+              <div class="zoom-stepper" role="group" aria-label="Touch Crop Zoom Flute 1">
+                <button type="button" class="zoom-btn" data-zoom-target="flute1" data-zoom-delta="-0.15" aria-label="Zoom out Flute 1">−</button>
+                <span class="zoom-readout" id="zoom-readout-flute1">1.35×</span>
+                <button type="button" class="zoom-btn" data-zoom-target="flute1" data-zoom-delta="0.15" aria-label="Zoom in Flute 1">+</button>
+              </div>
+            </div>
+            <span class="burned-title-pill">
+              <span class="pill-dot" style="background: var(--coral);" aria-hidden="true"></span>
+              Flute 1 — Lead Melody
+            </span>
           </div>
 
-          <div class="frame-tile slot-3">
-            <div class="tile-top">
-              <span class="slot-badge">#3</span>
-              <span class="zoom-badge">1.00×</span>
+          <div class="frame-tile tile-theme-amber" data-slot="1" data-voice-id="flute2" style="view-transition-name: hero-tile-flute2;">
+            <div class="tile-backdrop" id="backdrop-flute2" style="transform: scale(1.15);">
+              <span class="tile-performer-silhouette">1.15×</span>
             </div>
-            <span class="burned-title-pill">Cello — Bassline</span>
+            <div class="tile-top">
+              <span class="slot-badge" data-slot-label>#2</span>
+              <div class="zoom-stepper" role="group" aria-label="Touch Crop Zoom Flute 2">
+                <button type="button" class="zoom-btn" data-zoom-target="flute2" data-zoom-delta="-0.15" aria-label="Zoom out Flute 2">−</button>
+                <span class="zoom-readout" id="zoom-readout-flute2">1.15×</span>
+                <button type="button" class="zoom-btn" data-zoom-target="flute2" data-zoom-delta="0.15" aria-label="Zoom in Flute 2">+</button>
+              </div>
+            </div>
+            <span class="burned-title-pill">
+              <span class="pill-dot" style="background: var(--amber);" aria-hidden="true"></span>
+              Flute 2 — Harmony
+            </span>
+          </div>
+
+          <div class="frame-tile tile-theme-teal" data-slot="2" data-voice-id="cello" style="view-transition-name: hero-tile-cello;">
+            <div class="tile-backdrop" id="backdrop-cello" style="transform: scale(1.00);">
+              <span class="tile-performer-silhouette">1.00×</span>
+            </div>
+            <div class="tile-top">
+              <span class="slot-badge" data-slot-label>#3</span>
+              <div class="zoom-stepper" role="group" aria-label="Touch Crop Zoom Cello">
+                <button type="button" class="zoom-btn" data-zoom-target="cello" data-zoom-delta="-0.15" aria-label="Zoom out Cello">−</button>
+                <span class="zoom-readout" id="zoom-readout-cello">1.00×</span>
+                <button type="button" class="zoom-btn" data-zoom-target="cello" data-zoom-delta="0.15" aria-label="Zoom in Cello">+</button>
+              </div>
+            </div>
+            <span class="burned-title-pill">
+              <span class="pill-dot" style="background: var(--teal);" aria-hidden="true"></span>
+              Cello — Bassline
+            </span>
           </div>
         </div>
 
         <div class="showcase-footer">
-          <span data-i18n="es">Diseño: <strong>1 Arriba + 2 Abajo</strong> • Títulos integrados en el video</span>
-          <span data-i18n="en">Layout: <strong>1 Top + 2 Bottom</strong> • Burned-in video headlines</span>
+          <span data-i18n="es">Prueba los botones <strong>− / +</strong> (Touch Crop), el pulso a 120 BPM o rotar voces.</span>
+          <span data-i18n="en">Click <strong>− / +</strong> (Touch Crop), trigger the 120 BPM pulse, or swap voice slots.</span>
           <span>1080p / 4K • 9:16</span>
         </div>
       </aside>
@@ -732,100 +1427,150 @@
     <section id="features" class="section-block">
       <div class="section-header">
         <h2>
-          <span data-i18n="es">Diseñado para músicos, ensambles y creadores</span>
-          <span data-i18n="en">Built for musicians, ensembles, and creators</span>
+          <span data-i18n="es">Por qué los músicos cambian a Loopline</span>
+          <span data-i18n="en">Why musicians switch to Loopline</span>
         </h2>
         <p class="section-subtitle" data-i18n="es">
-          Cada herramienta de Loopline está pensada para que puedas concentrarte en tu interpretación musical sin lidiar con editores de video complejos.
+          Diseñado desde cero sobre AVFoundation y StoreKit 2 para eliminar las dos mayores frustraciones de las apps sociales de collage musical.
         </p>
         <p class="section-subtitle" data-i18n="en">
-          Every tool in Loopline is crafted so you can focus on your musical performance without fighting complicated desktop video timelines.
+          Engineered from the ground up on AVFoundation and StoreKit 2 to eliminate the two biggest frustrations of social music-grid apps.
         </p>
+      </div>
+
+      <div class="moat-banner">
+        <div>
+          <p data-i18n="es">
+            <strong>Graba primero, elige el diseño después (Edición No Destructiva):</strong> A diferencia de <em>Acapella</em> —que te obliga a comprometerte con una cuadrícula fija antes de tocar la primera nota—, en Loopline grabas con libertad y cambias entre los <strong>16 diseños de marco</strong>, el orden de las voces y el zoom de cada toma en cualquier momento sin perder tus grabaciones.
+          </p>
+          <p data-i18n="en">
+            <strong>Record First, Choose Your Layout Later (Non-Destructive Post-Capture):</strong> Unlike <em>Acapella</em>—which locks you into a rigid grid before you play a single note—Loopline lets you record freely and switch across all <strong>16 frame layouts</strong>, reorder voice slots, and adjust per-tile zoom anytime after recording.
+          </p>
+        </div>
       </div>
 
       <div class="features-grid">
         <article class="feature-card">
-          <span class="feature-tag">Capture &amp; Tempo</span>
+          <span class="feature-tag">AudioClockService</span>
           <h3>
-            <span data-i18n="es">1. Cuenta regresiva y pulso visual sincronizado</span>
-            <span data-i18n="en">1. Beat-Synced Count-In &amp; Visual Metronome</span>
+            <span data-i18n="es">1. Cuenta regresiva y metrónomo anclados al reloj de audio</span>
+            <span data-i18n="en">1. Sample-Accurate Count-In &amp; Visual Metronome</span>
           </h3>
           <p data-i18n="es">
-            Configura el BPM, compás (4/4, 3/4, 6/8) y compases de entrada. Antes de grabar cada parte, Loopline muestra una cuenta regresiva a pantalla completa sincronizada exactamente con el metrónomo y un indicador visual de pulso en vivo.
+            Configura BPM, compás (4/4, 3/4, 6/8), subdivisiones y compases de entrada. El conteo regresivo se programa sobre el reloj de muestras de hardware (`CMClock`), nunca con temporizadores de interfaz inestables.
           </p>
           <p data-i18n="en">
-            Set your BPM, time signature (4/4, 3/4, 6/8), and count-in bars. Before every take, Loopline displays a full-screen beat-synchronized countdown overlay and live visual pulse indicator so you always enter on the downbeat.
+            Set BPM, time signature (4/4, 3/4, 6/8), subdivisions, and count-in bars. Countdowns are scheduled against the hardware audio sample clock (`CMClock`), never jittery UI timers.
           </p>
         </article>
 
         <article class="feature-card">
           <span class="feature-tag">Part Headlines</span>
           <h3>
-            <span data-i18n="es">2. Títulos personalizados integrados en el video</span>
+            <span data-i18n="es">2. Títulos por instrumento integrados en el video</span>
             <span data-i18n="en">2. Custom Part Headlines Burned Into Video</span>
           </h3>
           <p data-i18n="es">
-            Nombra cada toma antes o después de grabar (por ejemplo, «Flauta 1», «Primera Voz», «Guitarra Rítmica»). Los títulos se muestran en vivo y se renderizan directamente dentro de cada marco al exportar el video final.
+            Etiqueta cada voz antes o después de grabar («Flauta 1», «Primera Voz», «Cello»). Los títulos se renderizan con tipografía nítida directamente dentro de cada marco al exportar.
           </p>
           <p data-i18n="en">
-            Name each part before or after recording (e.g., "Flute 1", "First Voice", "Rhythm Guitar"). Part headlines appear on live tiles and are crisply rendered directly into each frame in the exported video.
+            Label each part before or after recording ("Flute 1", "First Voice", "Cello"). Headlines appear live and are crisply rendered inside each frame in the exported video.
           </p>
         </article>
 
         <article class="feature-card">
           <span class="feature-tag">Touch Crop 520pt</span>
           <h3>
-            <span data-i18n="es">3. Encuadre interactivo Touch Crop y Zoom por marco</span>
-            <span data-i18n="en">3. Enlarged Interactive Touch Crop &amp; Per-Frame Zoom</span>
+            <span data-i18n="es">3. Encuadre interactivo Touch Crop (1.0× a 3.0×)</span>
+            <span data-i18n="en">3. Interactive 520pt Touch Crop (1.0× to 3.0×)</span>
           </h3>
           <p data-i18n="es">
-            En la pantalla de exportación, abre el lienzo amplio de 520 pt de Touch Crop para arrastrar y hacer pellizco (pinch-to-zoom de 1.0× a 3.0×) o usar los botones rápidos «− / +» en cada marco individualmente.
+            Abre el lienzo táctil de 520 pt en Exportación para arrastrar (Pan X/Y) y hacer pellizco de zoom en cada marco independientemente, centrando a cada músico sin regrabar.
           </p>
           <p data-i18n="en">
-            Switch to the enlarged 520 pt Touch Crop workspace in Export to drag and pinch-to-zoom (1.0× to 3.0×) or tap the on-tile "− / +" controls to center every performer inside their custom frame aspect ratio.
+            Open the 520 pt Touch Crop workspace in Export to pan (X/Y) and pinch-to-zoom inside each individual frame, centering every instrument cleanly without re-recording.
           </p>
         </article>
 
         <article class="feature-card">
           <span class="feature-tag">Slot Reordering</span>
           <h3>
-            <span data-i18n="es">4. Reordenamiento libre de voces en el marco</span>
-            <span data-i18n="en">4. Flexible Voice &amp; Frame Slot Reordering</span>
+            <span data-i18n="es">4. Reordenamiento instantáneo de posiciones (#1, #2…)</span>
+            <span data-i18n="en">4. Instant Voice &amp; Frame Slot Reordering</span>
           </h3>
           <p data-i18n="es">
-            Cambia la posición de cualquier voz («Subir» / «Bajar» en la lista de posiciones #1, #2, #3…) para decidir al instante qué toma ocupa el cuadro principal superior, el centro o las esquinas sin volver a grabar.
+            Mueve cualquier parte hacia antes o después en la cuadrícula (#1, #2, #3…) para decidir al instante quién ocupa el cuadro principal (*Hero*) o el centro del arreglo.
           </p>
           <p data-i18n="en">
-            Move any recorded part earlier or later across layout slots (#1, #2, #3…) to immediately swap which voice takes the hero frame, center split, or corner tile without re-recording a single note.
+            Move any recorded part earlier or later across layout slots (#1, #2, #3…) to swap which voice takes the Hero spotlight or center stage in one tap.
           </p>
         </article>
 
         <article class="feature-card">
-          <span class="feature-tag">Real &amp; Full Preview</span>
+          <span class="feature-tag">Real 9:16 Preview</span>
           <h3>
-            <span data-i18n="es">5. Vista previa real 9:16 y pantalla completa</span>
-            <span data-i18n="en">5. Real 9:16 Composition &amp; Full-Screen Preview</span>
+            <span data-i18n="es">5. Vista previa real 9:16 y exportación verificada</span>
+            <span data-i18n="en">5. Real 9:16 Composition &amp; Verified Export</span>
           </h3>
           <p data-i18n="es">
-            Reproduce la composición multicámara real con mezcla de audio, barra de tiempo interactiva, repetición automática y modo de Pantalla Completa para verificar exactamente cómo se verá y escuchará tu video antes de exportar.
+            Previsualiza la composición multicámara real con barra de progreso y modo Pantalla Completa. Cada archivo H.264 (.mp4) o HEVC (.mov) se verifica cuadro por cuadro antes de guardarse.
           </p>
           <p data-i18n="en">
-            Play back the true multi-track AVComposition with live audio mix, interactive scrubber, loop toggle, and Full-Screen modal preview to verify the exact visual and sonic result before rendering your file.
+            Play back the true multi-track composition with interactive scrubber and Full-Screen modal. Every H.264 (.mp4) or HEVC (.mov) render is frame-verified on-device before saving.
           </p>
         </article>
 
-        <article class="feature-card">
-          <span class="feature-tag">Mix, Sync &amp; Sessions</span>
-          <h3>
-            <span data-i18n="es">6. Mezcla, Sync Assist y Gestor de Sesiones</span>
-            <span data-i18n="en">6. Audio Mix, Sync Assist &amp; Session Manager</span>
-          </h3>
-          <p data-i18n="es">
-            Ajusta volumen, paneo estéreo, Mute/Solo y compensación en milisegundos (±250 ms) por toma. Renombra sesiones, elimina tomas individuales o borra sesiones completas junto con todos sus archivos `.mov` locales.
-          </p>
-          <p data-i18n="en">
-            Fine-tune per-part volume, stereo pan, Mute/Solo, and millisecond timing offsets (±250 ms). Rename sessions, delete individual takes, or permanently remove entire sessions along with all local `.mov` media files.
-          </p>
+        <article class="feature-card bento-wide">
+          <div>
+            <span class="feature-tag" style="background: rgba(110, 123, 255, 0.18); color: #A6B0FF;">OfflineSyncAnalyzer • Secret Weapon</span>
+            <h3>
+              <span data-i18n="es">6. Sync Assist Automático por Correlación Cruzada + Slider Manual (±250 ms)</span>
+              <span data-i18n="en">6. Automatic Cross-Correlation Sync Assist + Manual (±250 ms) Slider</span>
+            </h3>
+            <p data-i18n="es">
+              ¿La latencia de tus audífonos desfasó una toma? Nuestro motor `OfflineSyncAnalyzer` analiza la envolvente acústica a 8 kHz de tus pistas en el dispositivo, calcula la correlación cruzada y sugiere el ajuste exacto en milisegundos con porcentaje de confianza — sin estirar ni degradar tu audio. Y siempre cuentas con el ajuste manual de ±250 ms gratis.
+            </p>
+            <p data-i18n="en">
+              Did headphone monitoring latency shift a take? Our on-device `OfflineSyncAnalyzer` reads 8 kHz acoustic envelopes, runs cross-correlation against your reference track, and recommends the exact millisecond offset with a confidence score—never time-stretching your pitch or tone. Plus, manual ±250 ms nudging is always free.
+            </p>
+          </div>
+
+          <div class="sync-demo-box" aria-label="Demostración interactiva de Sync Assist / Interactive Sync Assist Demo">
+            <div class="sync-demo-top">
+              <strong>Sync Assist • Flute 2 vs. Flute 1</strong>
+              <span class="sync-status-badge" id="syncDemoBadge">Suggested placement: -18 ms · 94% confidence</span>
+            </div>
+
+            <div class="sync-waveforms">
+              <div class="wave-row">
+                <span>Flute 1 (Ref)</span>
+                <div class="wave-bars" aria-hidden="true">
+                  <span style="height:30%"></span><span style="height:85%"></span><span style="height:55%"></span><span style="height:40%"></span><span style="height:95%"></span><span style="height:60%"></span><span style="height:35%"></span><span style="height:80%"></span><span style="height:45%"></span><span style="height:90%"></span><span style="height:50%"></span><span style="height:30%"></span>
+                </div>
+                <span>0 ms</span>
+              </div>
+              <div class="wave-row target-wave">
+                <span>Flute 2 (Take)</span>
+                <div class="wave-bars" id="syncTargetWave" style="transform: translateX(8px);" aria-hidden="true">
+                  <span style="height:30%"></span><span style="height:85%"></span><span style="height:55%"></span><span style="height:40%"></span><span style="height:95%"></span><span style="height:60%"></span><span style="height:35%"></span><span style="height:80%"></span><span style="height:45%"></span><span style="height:90%"></span><span style="height:50%"></span><span style="height:30%"></span>
+                </div>
+                <span id="syncOffsetReadout">+18 ms lag</span>
+              </div>
+            </div>
+
+            <div class="sync-controls-row">
+              <button type="button" class="sync-action-btn" id="btnRunSyncDemo">
+                <span data-i18n="es">Aplicar -18 ms (94% confianza)</span>
+                <span data-i18n="en">Apply -18 ms (94% confidence)</span>
+              </button>
+
+              <label class="sync-slider-wrap" for="syncManualRange">
+                <span>Manual:</span>
+                <input type="range" id="syncManualRange" min="-250" max="250" value="18">
+                <span id="syncSliderValue">+18 ms</span>
+              </label>
+            </div>
+          </div>
         </article>
       </div>
     </section>
@@ -833,65 +1578,268 @@
     <section id="layouts" class="section-block">
       <div class="section-header">
         <h2>
-          <span data-i18n="es">16 Diseños de Marco (Estilo Frames &amp; Collage)</span>
-          <span data-i18n="en">16 Multi-Frame Layouts (Frames &amp; Collage Style)</span>
+          <span data-i18n="es">Explorador Interactivo de los 16 Diseños de Marco</span>
+          <span data-i18n="en">Interactive 16 Multi-Frame Layout Explorer</span>
         </h2>
         <p class="section-subtitle" data-i18n="es">
-          Organizados en tres familias visuales dentro de la pantalla de Exportación para adaptarse desde dúos hasta sextetos vocales o instrumentales.
+          Haz clic en cualquiera de los 16 diseños (`VideoLayoutStyle`) y cambia el número de voces (de 2 a 6) para previsualizar en vivo cómo se distribuye tu ensamble en formato 9:16. Los <strong>4 diseños simétricos clásicos son 100% Gratis</strong>; los <strong>12 diseños asimétricos y combinaciones se desbloquean con Loopline Pro</strong>.
         </p>
         <p class="section-subtitle" data-i18n="en">
-          Organized into three intuitive visual categories in the Export screen to fit everything from duets to 6-part vocal or instrumental ensembles.
+          Click any of the 16 layouts (`VideoLayoutStyle`) and switch the voice count (2 to 6 parts) to preview how your arrangement maps onto the 9:16 canvas. The <strong>4 classic symmetric layouts are 100% Free</strong>; the <strong>12 asymmetric &amp; combination layouts unlock with Loopline Pro</strong>.
         </p>
       </div>
 
-      <div class="layout-categories">
-        <div class="category-box">
-          <h3>
-            <span data-i18n="es">Combinaciones • Marcos y Dípticos</span>
-            <span data-i18n="en">Combinations • Frames &amp; Diptychs</span>
-          </h3>
-          <p data-i18n="es">Diseños asimétricos ideales para destacar un solista acompañado por armonías.</p>
-          <p data-i18n="en">Asymmetric combinations ideal for highlighting a lead soloist backed by harmonies.</p>
-          <ul>
-            <li><strong>1 Top + 2 Bottom</strong> (3 parts — Hero top, 2 bottom columns)</li>
-            <li><strong>2 Top + 1 Bottom</strong> (3 parts — 2 top columns, Hero bottom)</li>
-            <li><strong>1 Left + 2 Right</strong> (3 parts — Full left column, 2 stacked right)</li>
-            <li><strong>2 Left + 1 Right</strong> (3 parts — 2 stacked left, Full right column)</li>
-            <li><strong>1 Top + 3 Bottom</strong> (4 parts — Hero top, 3 bottom columns)</li>
-            <li><strong>1 Top + 2 Mid + 1 Bot</strong> (4 parts — Diamond / Story frame)</li>
-            <li><strong>2 Top + 3 Bottom</strong> (5 parts — Quintet showcase)</li>
-            <li><strong>1 Top + 2 Mid + 2 Bot</strong> (5 parts — Lead + 2×2 ensemble)</li>
-          </ul>
+      <div class="layouts-workbench">
+        <div class="layout-categories" id="layoutCatalogContainer">
+          <!-- Populated and enhanced by Vanilla JS with fallback static content -->
+          <div class="category-box">
+            <h3>
+              <span data-i18n="es">Combinaciones Asimétricas • Frames &amp; Dípticos (7 Diseños)</span>
+              <span data-i18n="en">Asymmetric Combinations • Frames &amp; Diptychs (7 Layouts)</span>
+            </h3>
+            <p data-i18n="es">Ideales para destacar un solista principal acompañado por sección armónica.</p>
+            <p data-i18n="en">Ideal for spotlighting a lead soloist backed by a harmony section.</p>
+            <div class="layout-buttons-grid" data-category-grid="combinations"></div>
+          </div>
+
+          <div class="category-box">
+            <h3>
+              <span data-i18n="es">Filas • Divisiones Horizontales (5 Diseños)</span>
+              <span data-i18n="en">Rows • Horizontal Splits (5 Layouts)</span>
+            </h3>
+            <p data-i18n="es">Franjas horizontales panorámicas y divisiones escalonadas para dúos, tríos y quintetos.</p>
+            <p data-i18n="en">Panoramic horizontal bands and tiered row splits for duets, trios, and quintets.</p>
+            <div class="layout-buttons-grid" data-category-grid="rows"></div>
+          </div>
+
+          <div class="category-box">
+            <h3>
+              <span data-i18n="es">Columnas y Cuadrículas Clásicas (4 Diseños)</span>
+              <span data-i18n="en">Columns &amp; Classic Grids (4 Layouts)</span>
+            </h3>
+            <p data-i18n="es">Columnas verticales y mosaicos equilibrados desde 2 hasta 6+ voces.</p>
+            <p data-i18n="en">Vertical strips and balanced multi-column grids from 2 up to 6+ voices.</p>
+            <div class="layout-buttons-grid" data-category-grid="columns"></div>
+          </div>
         </div>
 
-        <div class="category-box">
-          <h3>
-            <span data-i18n="es">Filas • Divisiones Horizontales</span>
-            <span data-i18n="en">Rows • Horizontal Splits</span>
-          </h3>
-          <p data-i18n="es">Franjas horizontales panorámicas que aprovechan todo el ancho del formato vertical 9:16.</p>
-          <p data-i18n="en">Panoramic horizontal bands spanning the full width of the 9:16 vertical canvas.</p>
-          <ul>
-            <li><strong>2 Rows</strong> (Top / Bottom horizontal diptych)</li>
-            <li><strong>3 Rows</strong> (Stacked horizontal triptych)</li>
-            <li><strong>4 Rows</strong> (Quad horizontal stack)</li>
-          </ul>
-        </div>
+        <aside class="layout-inspector-card" aria-label="Previsualizador geométrico 9:16 en vivo / Live 9:16 layout geometry preview">
+          <div class="inspector-top">
+            <div>
+              <strong id="inspectorLayoutTitle">1 + 2 Rows</strong>
+              <div style="font-size: 0.75rem; color: var(--muted);" id="inspectorLayoutSub">1 over 2 rows • rows_1_2</div>
+            </div>
+            <span class="tier-pill is-free" id="inspectorTierBadge">FREE</span>
+          </div>
 
-        <div class="category-box">
-          <h3>
-            <span data-i18n="es">Columnas y Cuadrículas</span>
-            <span data-i18n="en">Columns &amp; Grids</span>
-          </h3>
-          <p data-i18n="es">Columnas verticales clásicas y mosaicos simétricos para coros y grupos.</p>
-          <p data-i18n="en">Classic vertical columns and symmetric grids for choirs and ensembles.</p>
-          <ul>
-            <li><strong>Auto Grid</strong> (Smart automatic layout for any part count)</li>
-            <li><strong>2 Columns</strong> (Side-by-side vertical split)</li>
-            <li><strong>3 Columns</strong> (Classic 3-column vertical triptych)</li>
-            <li><strong>2×2 Grid</strong> (Balanced 4-part mosaic)</li>
-            <li><strong>2×3 Grid</strong> (Full 6-part ensemble grid)</li>
-          </ul>
+          <div class="voice-count-bar" role="group" aria-label="Número de voces en la vista previa / Preview voice count">
+            <span>
+              <strong data-i18n="es">Voces en escena:</strong>
+              <strong data-i18n="en">Voices on stage:</strong>
+            </span>
+            <div class="voice-count-btns">
+              <button type="button" class="voice-count-btn" data-voice-count="2" aria-pressed="false">2</button>
+              <button type="button" class="voice-count-btn" data-voice-count="3" aria-pressed="true">3</button>
+              <button type="button" class="voice-count-btn" data-voice-count="4" aria-pressed="false">4</button>
+              <button type="button" class="voice-count-btn" data-voice-count="5" aria-pressed="false">5</button>
+              <button type="button" class="voice-count-btn" data-voice-count="6" aria-pressed="false">6</button>
+            </div>
+          </div>
+
+          <div class="inspector-stage" id="inspectorStageCanvas" aria-live="polite"></div>
+
+          <div class="showcase-footer" style="margin-top: 0.85rem;">
+            <span id="inspectorFooterNote" data-i18n="es">Previsualiza los 16 diseños gratis dentro de la app antes de exportar.</span>
+            <span data-i18n="en">Preview all 16 layouts free inside the app before exporting.</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="pricing" class="section-block">
+      <div class="section-header">
+        <h2>
+          <span data-i18n="es">Precios Transparentes: Gratis para Empezar, Un Solo Pago para Siempre</span>
+          <span data-i18n="en">Transparent Pricing: Free to Start, One-Time Unlock Forever</span>
+        </h2>
+        <p class="section-subtitle" data-i18n="es">
+          Como Loopline procesa todo en tu iPhone o iPad sin servidores en la nube, no tenemos que cobrarte alquileres mensuales por usar tu propio micrófono y cámara.
+        </p>
+        <p class="section-subtitle" data-i18n="en">
+          Because Loopline renders everything on your iPhone or iPad with zero cloud servers, we never charge you monthly rent to use your own camera and microphone.
+        </p>
+      </div>
+
+      <div class="pricing-grid">
+        <article class="pricing-card">
+          <div>
+            <span class="tier-pill is-free">LOOPLINE FREE</span>
+            <div class="price-headline">
+              <span class="price-amount">$0</span>
+              <span class="price-period">
+                <span data-i18n="es">Gratis para siempre • Sin registro</span>
+                <span data-i18n="en">Free forever • No sign-up required</span>
+              </span>
+            </div>
+            <p style="color: var(--muted); font-size: 0.9rem;" data-i18n="es">
+              Todo lo que necesitas para grabar y publicar solos, dúos y tríos completos en Full HD.
+            </p>
+            <p style="color: var(--muted); font-size: 0.9rem;" data-i18n="en">
+              Everything you need to record, align, and share complete solos, duets, and trios in Full HD.
+            </p>
+
+            <ul class="pricing-list" role="list">
+              <li>
+                <span class="check-icon" aria-hidden="true">✓</span>
+                <span>
+                  <span data-i18n="es"><strong>Hasta 3 voces por sesión</strong> (Solistas, Dúos y Tríos)</span>
+                  <span data-i18n="en"><strong>Up to 3 voices per session</strong> (Solos, Duets &amp; Trios)</span>
+                </span>
+              </li>
+              <li>
+                <span class="check-icon" aria-hidden="true">✓</span>
+                <span>
+                  <span data-i18n="es">Metrónomo visual completo y cuenta regresiva al pulso (4/4, 3/4, 6/8)</span>
+                  <span data-i18n="en">Full Beat-Synced Count-In &amp; Visual Metronome (4/4, 3/4, 6/8)</span>
+                </span>
+              </li>
+              <li>
+                <span class="check-icon" aria-hidden="true">✓</span>
+                <span>
+                  <span data-i18n="es">Títulos personalizados quemados en cada marco («Flauta 1», «Cello»)</span>
+                  <span data-i18n="en">Custom burned-in Part Headlines ("Flute 1", "Cello")</span>
+                </span>
+              </li>
+              <li>
+                <span class="check-icon" aria-hidden="true">✓</span>
+                <span>
+                  <span data-i18n="es">Encuadre interactivo <strong>Touch Crop (1×–3×)</strong> y reordenamiento de voces</span>
+                  <span data-i18n="en">Full interactive <strong>Touch Crop (1×–3×)</strong> &amp; Voice Slot Reordering</span>
+                </span>
+              </li>
+              <li>
+                <span class="check-icon" aria-hidden="true">✓</span>
+                <span>
+                  <span data-i18n="es">Slider de sincronización manual (±250 ms) y mezclador (Volumen, Mute/Solo)</span>
+                  <span data-i18n="en">Manual ±250 ms Sync Slider &amp; Per-Track Mixer (Volume, Mute/Solo)</span>
+                </span>
+              </li>
+              <li>
+                <span class="check-icon" aria-hidden="true">✓</span>
+                <span>
+                  <span data-i18n="es"><strong>4 Diseños Simétricos Clásicos</strong> (`Rows Stack`, `2×N Grid`, `Columns Strip`, `1 + 2 Rows`)</span>
+                  <span data-i18n="en"><strong>4 Classic Symmetric Layouts</strong> (`Rows Stack`, `2×N Grid`, `Columns Strip`, `1 + 2 Rows`)</span>
+                </span>
+              </li>
+              <li>
+                <span class="check-icon" aria-hidden="true">✓</span>
+                <span>
+                  <span data-i18n="es">Exportación en <strong>720p y 1080p Full HD H.264 (.mp4)</strong> con insignia sutil <em>«Made with Loopline»</em></span>
+                  <span data-i18n="en"><strong>720p &amp; 1080p Full HD H.264 (.mp4)</strong> export with subtle <em>"Made with Loopline"</em> corner badge</span>
+                </span>
+              </li>
+              <li>
+                <span class="check-icon" aria-hidden="true">✓</span>
+                <span>
+                  <span data-i18n="es">Hasta 2 sesiones locales activas simultáneamente</span>
+                  <span data-i18n="en">Up to 2 active local sessions at a time</span>
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <a class="btn-secondary" href="https://apps.apple.com/app/id6826597725" style="width: 100%;">
+            <span data-i18n="es">Descargar Gratis para iPhone e iPad</span>
+            <span data-i18n="en">Download Free for iPhone &amp; iPad</span>
+          </a>
+        </article>
+
+        <article class="pricing-card pro-highlight">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+              <span class="tier-pill is-pro">LOOPLINE PRO • LIFETIME UNLOCK</span>
+              <span class="tier-pill is-free">
+                <span data-i18n="es">OFERTA DE LANZAMIENTO</span>
+                <span data-i18n="en">LAUNCH OFFER</span>
+              </span>
+            </div>
+
+            <div class="price-headline">
+              <span class="price-amount">$9.99</span>
+              <span class="price-strike">$14.99</span>
+              <span class="price-period">
+                <span data-i18n="es">USD • Pago Único • Tuyo para siempre</span>
+                <span data-i18n="en">USD • One-Time Payment • Own it forever</span>
+              </span>
+            </div>
+            <p style="color: var(--muted); font-size: 0.9rem;" data-i18n="es">
+              Paga una sola vez vía Apple StoreKit 2. Cero cargos mensuales o semanales. Incluye <strong>Compartir en Familia (Apple Family Sharing)</strong> en iOS y iPadOS.
+            </p>
+            <p style="color: var(--muted); font-size: 0.9rem;" data-i18n="en">
+              Pay once via Apple StoreKit 2. Zero monthly or weekly fees. Includes <strong>Apple Family Sharing</strong> across iPhone and iPad.
+            </p>
+
+            <ul class="pricing-list" role="list">
+              <li>
+                <span class="pro-check-icon" aria-hidden="true">★</span>
+                <span>
+                  <span data-i18n="es"><strong>De 4 a 6+ Voces por Arreglo</strong> (Cuartetos, Quintetos, Sextetos y Coros)</span>
+                  <span data-i18n="en"><strong>4 to 6+ Voices per Arrangement</strong> (Quartets, Quintets, Sextets &amp; Choirs)</span>
+                </span>
+              </li>
+              <li>
+                <span class="pro-check-icon" aria-hidden="true">★</span>
+                <span>
+                  <span data-i18n="es"><strong>Los 16 Diseños de Marco Completos</strong> (incluyendo <em>Frames 40/60</em>, <em>Diptic 60/40</em>, <em>Center Stage</em> y <em>Hero</em>)</span>
+                  <span data-i18n="en"><strong>All 16 Multi-Frame Layouts</strong> (including asymmetric <em>Frames 40/60</em>, <em>Diptic 60/40</em>, <em>Center Stage</em> &amp; <em>Hero</em> spotlights)</span>
+                </span>
+              </li>
+              <li>
+                <span class="pro-check-icon" aria-hidden="true">★</span>
+                <span>
+                  <span data-i18n="es"><strong>Sync Assist Automático en 1 Toque</strong> (Alineación por correlación cruzada con puntaje de confianza)</span>
+                  <span data-i18n="en"><strong>1-Tap Auto Sync Assist</strong> (Cross-correlation millisecond alignment with confidence score)</span>
+                </span>
+              </li>
+              <li>
+                <span class="pro-check-icon" aria-hidden="true">★</span>
+                <span>
+                  <span data-i18n="es"><strong>Exportación en 4K UHD y HEVC (.mov / .mp4)</strong> de alta eficiencia</span>
+                  <span data-i18n="en"><strong>4K UHD Resolution &amp; HEVC (.mov / .mp4)</strong> high-efficiency master export</span>
+                </span>
+              </li>
+              <li>
+                <span class="pro-check-icon" aria-hidden="true">★</span>
+                <span>
+                  <span data-i18n="es"><strong>Sin Marca de Agua</strong> (Videos 100% limpios listos para publicar)</span>
+                  <span data-i18n="en"><strong>No Watermark</strong> (100% clean studio output without corner badge)</span>
+                </span>
+              </li>
+              <li>
+                <span class="pro-check-icon" aria-hidden="true">★</span>
+                <span>
+                  <span data-i18n="es"><strong>Sesiones y Proyectos Locales Ilimitados</strong> (limitados solo por la memoria de tu dispositivo)</span>
+                  <span data-i18n="en"><strong>Unlimited Local Projects &amp; Sessions</strong> (bounded only by your device storage)</span>
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <a class="btn-primary" href="https://apps.apple.com/app/id6826597725" style="width: 100%;">
+            <span data-i18n="es">Descargar Gratis y Desbloquear Pro en la App</span>
+            <span data-i18n="en">Download Free &amp; Unlock Pro Inside the App</span>
+          </a>
+        </article>
+      </div>
+
+      <div class="value-anchor-callout">
+        <div>
+          <p data-i18n="es">
+            💡 <strong>Haz cuentas:</strong> Otras apps de pantalla dividida cobran <strong>$7.99/semana ($69.99/año)</strong>, exigen iniciar sesión en la nube y bloquean tu diseño antes de tocar una sola nota. <strong>Loopline Pro cuesta menos que un juego de cuerdas — una sola vez, para siempre.</strong>
+          </p>
+          <p data-i18n="en">
+            💡 <strong>Do the math:</strong> Other split-screen apps charge <strong>$7.99/week ($69.99/year)</strong>, force cloud logins, and lock your layout before you play a note. <strong>Loopline Pro costs less than a set of strings—once, forever.</strong>
+          </p>
         </div>
       </div>
     </section>
@@ -899,8 +1847,8 @@
     <section class="section-block">
       <div class="section-header">
         <h2>
-          <span data-i18n="es">Especificaciones Técnicas y Privacidad</span>
-          <span data-i18n="en">Technical Specifications &amp; Privacy</span>
+          <span data-i18n="es">Especificaciones Técnicas y Cumplimiento App Store</span>
+          <span data-i18n="en">Technical Specifications &amp; App Store Compliance</span>
         </h2>
       </div>
 
@@ -918,15 +1866,18 @@
             <span data-i18n="es">Resoluciones de Exportación</span>
             <span data-i18n="en">Export Resolutions</span>
           </div>
-          <div class="spec-value">720p HD • 1080p FHD • 4K UHD (9:16)</div>
+          <div class="spec-value">720p HD • 1080p FHD (Free) • 4K UHD (Pro)</div>
         </div>
 
         <div class="spec-item">
           <div class="spec-label">
-            <span data-i18n="es">Formatos de Video</span>
-            <span data-i18n="en">Video Codecs</span>
+            <span data-i18n="es">Compras y Restauración</span>
+            <span data-i18n="en">Purchases &amp; Restore</span>
           </div>
-          <div class="spec-value">H.264 (.mp4) &amp; HEVC (.mov)</div>
+          <div class="spec-value">
+            <span data-i18n="es">StoreKit 2 Local • Botón «Restore Purchases» incluido</span>
+            <span data-i18n="en">On-Device StoreKit 2 • Built-in "Restore Purchases"</span>
+          </div>
         </div>
 
         <div class="spec-item">
@@ -953,9 +1904,10 @@
 
       <ul class="footer-links">
         <li><a href="index.html"><span data-i18n="es">Inicio</span><span data-i18n="en">Home</span></a></li>
+        <li><a href="#pricing"><span data-i18n="es">Precios</span><span data-i18n="en">Pricing</span></a></li>
         <li><a href="support.html"><span data-i18n="es">Soporte</span><span data-i18n="en">Support</span></a></li>
         <li><a href="privacy-policy.html"><span data-i18n="es">Política de Privacidad</span><span data-i18n="en">Privacy Policy</span></a></li>
-        <li><a href="terms-and-conditions.html"><span data-i18n="es">Términos y Condiciones</span><span data-i18n="en">Terms &amp; Conditions</span></a></li>
+        <li><a href="terms-and-conditions.html"><span data-i18n="es">Términos y Condiciones (EULA)</span><span data-i18n="en">Terms &amp; Conditions (EULA)</span></a></li>
         <li><a href="mailto:seagomezar@gmail.com">seagomezar@gmail.com</a></li>
       </ul>
     </div>
@@ -987,7 +1939,6 @@
         } catch (e) {}
       }
       if (!initial) {
-        const navLang = (navigator.language || '').toLowerCase();
         initial = 'en';
       }
       applyLang(initial);
@@ -997,6 +1948,409 @@
           applyLang(btn.getAttribute('data-set-lang'));
         });
       });
+
+      /* -------------------------------------------------------------
+       * 1. HERO MINI-STUDIO INTERACTIONS (Touch Crop, Count-In, Swap)
+       * ------------------------------------------------------------- */
+      const zoomState = { flute1: 1.35, flute2: 1.15, cello: 1.00 };
+      document.querySelectorAll('[data-zoom-target]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const id = btn.getAttribute('data-zoom-target');
+          const delta = parseFloat(btn.getAttribute('data-zoom-delta') || '0');
+          const next = Math.min(3.0, Math.max(1.0, Math.round((zoomState[id] + delta) * 100) / 100));
+          zoomState[id] = next;
+          const readout = document.getElementById('zoom-readout-' + id);
+          const backdrop = document.getElementById('backdrop-' + id);
+          if (readout) readout.textContent = next.toFixed(2) + '×';
+          if (backdrop) {
+            backdrop.style.transform = 'scale(' + next + ')';
+            const sil = backdrop.querySelector('.tile-performer-silhouette');
+            if (sil) sil.textContent = next.toFixed(2) + '×';
+          }
+        });
+      });
+
+      // Simulate 120 BPM (500ms/beat) 4/4 Count-In
+      const btnCountIn = document.getElementById('btnSimulateCountIn');
+      const heroStageGrid = document.getElementById('heroStageGrid');
+      const heroPulseDot = document.getElementById('heroPulseDot');
+      const heroToast = document.getElementById('heroCountInToast');
+      const heroCountInNum = document.getElementById('heroCountInNumber');
+      const heroBeatReadout = document.getElementById('heroBeatReadout');
+      let countInTimer = null;
+      let currentBeat = 0;
+
+      function stopCountIn() {
+        if (countInTimer) {
+          clearInterval(countInTimer);
+          countInTimer = null;
+        }
+        if (btnCountIn) btnCountIn.setAttribute('aria-pressed', 'false');
+        if (heroStageGrid) heroStageGrid.classList.remove('pulse-downbeat', 'pulse-subbeat');
+        if (heroPulseDot) heroPulseDot.className = 'pulse-indicator';
+        if (heroToast) heroToast.classList.remove('is-visible');
+        if (heroBeatReadout) heroBeatReadout.textContent = '120 BPM • 4/4';
+      }
+
+      function tickCountIn() {
+        currentBeat = (currentBeat % 4) + 1;
+        const isDownbeat = currentBeat === 1;
+        if (heroCountInNum) {
+          heroCountInNum.textContent = String(currentBeat);
+          heroCountInNum.style.color = isDownbeat ? 'var(--coral)' : 'var(--amber)';
+        }
+        if (heroBeatReadout) {
+          heroBeatReadout.textContent = 'BEAT ' + currentBeat + '/4 • 120 BPM';
+        }
+        if (heroToast) heroToast.classList.add('is-visible');
+        if (heroPulseDot) {
+          heroPulseDot.className = 'pulse-indicator ' + (isDownbeat ? 'is-downbeat' : 'is-beat');
+        }
+        if (heroStageGrid) {
+          heroStageGrid.classList.remove('pulse-downbeat', 'pulse-subbeat');
+          heroStageGrid.classList.add(isDownbeat ? 'pulse-downbeat' : 'pulse-subbeat');
+        }
+        setTimeout(function () {
+          if (heroStageGrid) heroStageGrid.classList.remove('pulse-downbeat', 'pulse-subbeat');
+          if (heroPulseDot) heroPulseDot.className = 'pulse-indicator';
+        }, 210);
+      }
+
+      if (btnCountIn) {
+        btnCountIn.addEventListener('click', function () {
+          if (countInTimer) {
+            stopCountIn();
+          } else {
+            currentBeat = 0;
+            btnCountIn.setAttribute('aria-pressed', 'true');
+            tickCountIn();
+            countInTimer = setInterval(tickCountIn, 500);
+          }
+        });
+      }
+
+      // Swap Voice Slots with View Transitions API progressive enhancement
+      const btnSwapHero = document.getElementById('btnSwapHeroSlots');
+      if (btnSwapHero && heroStageGrid) {
+        btnSwapHero.addEventListener('click', function () {
+          const performSwap = function () {
+            const tiles = Array.from(heroStageGrid.querySelectorAll('.frame-tile'));
+            if (tiles.length < 2) return;
+            const last = tiles[tiles.length - 1];
+            heroStageGrid.insertBefore(last, tiles[0]);
+            const updated = Array.from(heroStageGrid.querySelectorAll('.frame-tile'));
+            updated.forEach(function (tile, idx) {
+              tile.setAttribute('data-slot', String(idx));
+              const badge = tile.querySelector('[data-slot-label]');
+              if (badge) {
+                badge.textContent = idx === 0 ? '#1 • Hero Top' : '#' + (idx + 1);
+              }
+            });
+          };
+          if (document.startViewTransition) {
+            document.startViewTransition(performSwap);
+          } else {
+            performSwap();
+          }
+        });
+      }
+
+      /* -------------------------------------------------------------
+       * 2. INTERACTIVE SYNC ASSIST BENTO DEMO
+       * ------------------------------------------------------------- */
+      const btnSyncDemo = document.getElementById('btnRunSyncDemo');
+      const syncSlider = document.getElementById('syncManualRange');
+      const syncSliderVal = document.getElementById('syncSliderValue');
+      const syncWave = document.getElementById('syncTargetWave');
+      const syncBadge = document.getElementById('syncDemoBadge');
+      const syncReadout = document.getElementById('syncOffsetReadout');
+
+      function applySyncOffset(ms, fromAuto) {
+        const px = Math.max(-24, Math.min(24, Math.round(ms * 0.42)));
+        if (syncWave) syncWave.style.transform = 'translateX(' + px + 'px)';
+        const formatted = (ms > 0 ? '+' : '') + ms + ' ms';
+        if (syncSliderVal) syncSliderVal.textContent = formatted;
+        if (syncSlider) syncSlider.value = String(ms);
+        if (syncReadout) syncReadout.textContent = ms === 0 ? '0 ms (Aligned ✓)' : formatted;
+        if (syncBadge) {
+          if (ms === 0) {
+            syncBadge.textContent = fromAuto
+              ? 'Alignment applied: -18 ms · 94% confidence ✓'
+              : 'Manual alignment: 0 ms ✓';
+            syncBadge.classList.add('is-applied');
+          } else {
+            syncBadge.textContent = 'Offset: ' + formatted + ' · Ready to align';
+            syncBadge.classList.remove('is-applied');
+          }
+        }
+      }
+
+      if (btnSyncDemo) {
+        btnSyncDemo.addEventListener('click', function () {
+          const current = parseInt(syncSlider ? syncSlider.value : '18', 10);
+          if (current !== 0) {
+            applySyncOffset(0, true);
+          } else {
+            applySyncOffset(18, false);
+          }
+        });
+      }
+
+      if (syncSlider) {
+        syncSlider.addEventListener('input', function () {
+          applySyncOffset(parseInt(syncSlider.value, 10) || 0, false);
+        });
+      }
+
+      /* -------------------------------------------------------------
+       * 3. 16 MULTI-FRAME LAYOUTS GEOMETRY SWITCHER (Exact Swift Rects)
+       * ------------------------------------------------------------- */
+      const LAYOUT_STYLES = [
+        // Combinations (7) — all Pro
+        { id: 'bento_split', title: 'Frames 40/60', sub: '40% col + rows', category: 'combinations', isPro: true },
+        { id: 'diptic_alt', title: 'Diptic 60/40', sub: '60/40 & 40/60', category: 'combinations', isPro: true },
+        { id: 'hero_top', title: 'Hero Top', sub: '1 row + cols', category: 'combinations', isPro: true },
+        { id: 'hero_bottom', title: 'Hero Bottom', sub: 'Cols + 1 row', category: 'combinations', isPro: true },
+        { id: 'hero_left', title: 'Hero Left', sub: '1 col + rows', category: 'combinations', isPro: true },
+        { id: 'hero_right', title: 'Hero Right', sub: 'Rows + 1 col', category: 'combinations', isPro: true },
+        { id: 'center_stage', title: 'Center Stage', sub: 'Row + hero + row', category: 'combinations', isPro: true },
+        // Rows (5) — grid_1 & rows_1_2 are Free
+        { id: 'grid_1', title: 'Rows Stack', sub: 'Horizontal rows', category: 'rows', isPro: false },
+        { id: 'rows_1_2', title: '1 + 2 Rows', sub: '1 over 2 rows', category: 'rows', isPro: false },
+        { id: 'rows_2_1', title: '2 + 1 Rows', sub: '2 over 1 rows', category: 'rows', isPro: true },
+        { id: 'rows_2_3', title: '2 + 3 Rows', sub: '2 over 3 rows', category: 'rows', isPro: true },
+        { id: 'rows_3_2', title: '3 + 2 Rows', sub: '3 over 2 rows', category: 'rows', isPro: true },
+        // Columns & Grids (4) — strip_h & grid_2 are Free
+        { id: 'strip_h', title: 'Columns Strip', sub: 'Vertical strips', category: 'columns', isPro: false },
+        { id: 'grid_2', title: '2×N Grid', sub: '2 columns', category: 'columns', isPro: false },
+        { id: 'grid_3', title: '3×N Grid', sub: '3 columns', category: 'columns', isPro: true },
+        { id: 'grid_4', title: '4×N Grid', sub: '4 columns', category: 'columns', isPro: true }
+      ];
+
+      function patternRects(count, pattern, bounds) {
+        if (count <= 0) return [];
+        const safe = pattern.length ? pattern : [1];
+        const rowCounts = [];
+        let rem = count;
+        let rIdx = 0;
+        while (rem > 0) {
+          const take = Math.min(rem, Math.max(1, safe[rIdx % safe.length]));
+          rowCounts.push(take);
+          rem -= take;
+          rIdx++;
+        }
+        const rowH = bounds.h / rowCounts.length;
+        const out = [];
+        for (let r = 0; r < rowCounts.length; r++) {
+          const items = rowCounts[r];
+          const itemW = bounds.w / items;
+          const y = bounds.y + r * rowH;
+          for (let c = 0; c < items; c++) {
+            out.push({ x: bounds.x + c * itemW, y: y, w: itemW, h: rowH });
+          }
+        }
+        return out;
+      }
+
+      function computeNormalizedRects(styleId, count) {
+        const unit = { x: 0, y: 0, w: 1, h: 1 };
+        if (count <= 1) return [unit];
+        if (styleId === 'grid_1' || styleId === 'grid_2' || styleId === 'grid_3' || styleId === 'grid_4') {
+          const maxCols = styleId === 'grid_1' ? 1 : (styleId === 'grid_2' ? 2 : (styleId === 'grid_3' ? 3 : 4));
+          const cols = Math.min(Math.max(1, maxCols), count);
+          const rows = Math.ceil(count / cols);
+          const w = 1 / cols;
+          const h = 1 / rows;
+          const rects = [];
+          for (let i = 0; i < count; i++) {
+            rects.push({ x: (i % cols) * w, y: Math.floor(i / cols) * h, w: w, h: h });
+          }
+          return rects;
+        }
+        if (styleId === 'strip_h') {
+          const w = 1 / count;
+          return Array.from({ length: count }, function (_, i) { return { x: i * w, y: 0, w: w, h: 1 }; });
+        }
+        if (styleId === 'bento_split') {
+          const leftW = 0.40;
+          const rightB = { x: leftW, y: 0, w: 0.60, h: 1 };
+          const leftRect = { x: 0, y: 0, w: leftW, h: 1 };
+          const rest = count - 1;
+          const pat = rest <= 2 ? [1] : (rest === 3 ? [2, 1] : (rest === 4 ? [2, 1, 1] : [2, 1, 2]));
+          return [leftRect].concat(patternRects(rest, pat, rightB));
+        }
+        if (styleId === 'diptic_alt') {
+          if (count === 2) {
+            return [{ x: 0, y: 0, w: 1, h: 0.62 }, { x: 0, y: 0.62, w: 1, h: 0.38 }];
+          }
+          const rowCounts = [];
+          let rem = count;
+          while (rem > 0) {
+            const take = rem === 3 ? 2 : Math.min(2, rem);
+            rowCounts.push(take);
+            rem -= take;
+          }
+          const rowH = 1 / rowCounts.length;
+          const rects = [];
+          rowCounts.forEach(function (items, r) {
+            const y = r * rowH;
+            if (items === 1) {
+              rects.push({ x: 0, y: y, w: 1, h: rowH });
+            } else {
+              const firstW = (r % 2 === 0) ? 0.62 : 0.38;
+              rects.push({ x: 0, y: y, w: firstW, h: rowH });
+              rects.push({ x: firstW, y: y, w: 1 - firstW, h: rowH });
+            }
+          });
+          return rects;
+        }
+        if (styleId === 'hero_top') {
+          const heroH = count === 2 ? 0.62 : 0.54;
+          const rest = count - 1;
+          const pat = rest <= 3 ? [rest] : (rest === 4 ? [2, 2] : [3, 2]);
+          return [{ x: 0, y: 0, w: 1, h: heroH }].concat(patternRects(rest, pat, { x: 0, y: heroH, w: 1, h: 1 - heroH }));
+        }
+        if (styleId === 'hero_bottom') {
+          const heroH = count === 2 ? 0.62 : 0.54;
+          const rest = count - 1;
+          const pat = rest <= 3 ? [rest] : (rest === 4 ? [2, 2] : [3, 2]);
+          return patternRects(rest, pat, { x: 0, y: 0, w: 1, h: 1 - heroH }).concat([{ x: 0, y: 1 - heroH, w: 1, h: heroH }]);
+        }
+        if (styleId === 'hero_left') {
+          const heroW = count === 2 ? 0.62 : 0.50;
+          const rest = count - 1;
+          const pat = rest <= 4 ? [1] : [2];
+          return [{ x: 0, y: 0, w: heroW, h: 1 }].concat(patternRects(rest, pat, { x: heroW, y: 0, w: 1 - heroW, h: 1 }));
+        }
+        if (styleId === 'hero_right') {
+          const heroW = count === 2 ? 0.62 : 0.50;
+          const rest = count - 1;
+          const pat = rest <= 4 ? [1] : [2];
+          return patternRects(rest, pat, { x: 0, y: 0, w: 1 - heroW, h: 1 }).concat([{ x: 1 - heroW, y: 0, w: heroW, h: 1 }]);
+        }
+        if (styleId === 'center_stage') {
+          if (count === 2) return patternRects(2, [1], unit);
+          const topCount = Math.max(1, Math.floor((count - 1) / 2));
+          const botCount = Math.max(1, count - 1 - topCount);
+          const topRects = patternRects(topCount, [Math.min(3, topCount)], { x: 0, y: 0, w: 1, h: 0.27 });
+          const midRect = { x: 0, y: 0.27, w: 1, h: 0.46 };
+          const botRects = patternRects(botCount, [Math.min(3, botCount)], { x: 0, y: 0.73, w: 1, h: 0.27 });
+          return topRects.concat([midRect], botRects);
+        }
+        if (styleId === 'rows_1_2') return patternRects(count, [1, 2], unit);
+        if (styleId === 'rows_2_1') {
+          if (count === 2) return [{ x: 0, y: 0, w: 1, h: 0.38 }, { x: 0, y: 0.38, w: 1, h: 0.62 }];
+          return patternRects(count, [2, 1], unit);
+        }
+        if (styleId === 'rows_2_3') {
+          if (count === 2) return [{ x: 0, y: 0, w: 0.40, h: 1 }, { x: 0.40, y: 0, w: 0.60, h: 1 }];
+          return patternRects(count, [2, 3], unit);
+        }
+        if (styleId === 'rows_3_2') {
+          if (count === 2) return [{ x: 0, y: 0, w: 0.60, h: 1 }, { x: 0.60, y: 0, w: 0.40, h: 1 }];
+          return patternRects(count, [3, 2], unit);
+        }
+        return patternRects(count, [2], unit);
+      }
+
+      const VOICE_LABELS = [
+        { name: 'Flute 1', color: 'rgba(255, 90, 60, 0.34)', dot: '#FF5A3C' },
+        { name: 'Flute 2', color: 'rgba(255, 184, 51, 0.30)', dot: '#FFB833' },
+        { name: 'Cello', color: 'rgba(31, 214, 168, 0.30)', dot: '#1FD6A8' },
+        { name: 'Violin', color: 'rgba(110, 123, 255, 0.32)', dot: '#6E7BFF' },
+        { name: 'Clarinet', color: 'rgba(255, 90, 60, 0.26)', dot: '#FF8B73' },
+        { name: 'Bassoon', color: 'rgba(31, 214, 168, 0.24)', dot: '#1FD6A8' }
+      ];
+
+      let activeLayoutId = 'rows_1_2';
+      let activeVoiceCount = 3;
+
+      const stageCanvas = document.getElementById('inspectorStageCanvas');
+      const inspectorTitle = document.getElementById('inspectorLayoutTitle');
+      const inspectorSub = document.getElementById('inspectorLayoutSub');
+      const inspectorBadge = document.getElementById('inspectorTierBadge');
+
+      function renderInspectorStage() {
+        const styleObj = LAYOUT_STYLES.find(function (s) { return s.id === activeLayoutId; }) || LAYOUT_STYLES[0];
+        if (inspectorTitle) inspectorTitle.textContent = styleObj.title;
+        if (inspectorSub) inspectorSub.textContent = styleObj.sub + ' • ' + styleObj.id;
+        if (inspectorBadge) {
+          inspectorBadge.textContent = styleObj.isPro ? 'PRO' : 'FREE';
+          inspectorBadge.className = 'tier-pill ' + (styleObj.isPro ? 'is-pro' : 'is-free');
+        }
+        if (!stageCanvas) return;
+        const rects = computeNormalizedRects(styleObj.id, activeVoiceCount);
+        stageCanvas.innerHTML = '';
+        rects.forEach(function (r, idx) {
+          const voice = VOICE_LABELS[idx % VOICE_LABELS.length];
+          const tile = document.createElement('div');
+          tile.className = 'inspector-tile';
+          tile.style.left = (r.x * 100).toFixed(2) + '%';
+          tile.style.top = (r.y * 100).toFixed(2) + '%';
+          tile.style.width = (r.w * 100).toFixed(2) + '%';
+          tile.style.height = (r.h * 100).toFixed(2) + '%';
+          tile.innerHTML =
+            '<div class="inspector-tile-inner" style="background: linear-gradient(145deg, ' + voice.color + ', rgba(16,18,24,0.95));">' +
+              '<span class="slot-badge" style="align-self:flex-start;">#' + (idx + 1) + '</span>' +
+              '<span class="burned-title-pill" style="font-size:0.68rem; padding:0.15rem 0.45rem;">' +
+                '<span class="pill-dot" style="background:' + voice.dot + '"></span>' +
+                voice.name +
+              '</span>' +
+            '</div>';
+          stageCanvas.appendChild(tile);
+        });
+      }
+
+      // Render the 16 layout buttons with miniature wireframes
+      ['combinations', 'rows', 'columns'].forEach(function (cat) {
+        const grid = document.querySelector('[data-category-grid="' + cat + '"]');
+        if (!grid) return;
+        LAYOUT_STYLES.filter(function (s) { return s.category === cat; }).forEach(function (styleObj) {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'layout-item-btn';
+          btn.setAttribute('data-layout-id', styleObj.id);
+          btn.setAttribute('aria-pressed', styleObj.id === activeLayoutId ? 'true' : 'false');
+
+          const sampleCount = styleObj.id === 'bento_split' ? 5 : (styleObj.id === 'center_stage' || styleObj.id === 'rows_2_3' || styleObj.id === 'rows_3_2' ? 5 : 4);
+          const miniRects = computeNormalizedRects(styleObj.id, sampleCount);
+          const spansHtml = miniRects.map(function (r) {
+            return '<span style="left:' + (r.x * 100).toFixed(1) + '%;top:' + (r.y * 100).toFixed(1) + '%;width:' + (r.w * 100).toFixed(1) + '%;height:' + (r.h * 100).toFixed(1) + '%;"></span>';
+          }).join('');
+
+          btn.innerHTML =
+            '<div class="mini-wireframe" aria-hidden="true">' + spansHtml + '</div>' +
+            '<div class="layout-meta">' +
+              '<div class="layout-title-row">' +
+                '<span class="layout-name">' + styleObj.title + '</span>' +
+                '<span class="tier-pill ' + (styleObj.isPro ? 'is-pro' : 'is-free') + '">' + (styleObj.isPro ? 'PRO' : 'FREE') + '</span>' +
+              '</div>' +
+              '<span class="layout-sub">' + styleObj.sub + '</span>' +
+            '</div>';
+
+          btn.addEventListener('click', function () {
+            activeLayoutId = styleObj.id;
+            document.querySelectorAll('.layout-item-btn').forEach(function (b) {
+              b.setAttribute('aria-pressed', b.getAttribute('data-layout-id') === activeLayoutId ? 'true' : 'false');
+            });
+            renderInspectorStage();
+          });
+
+          grid.appendChild(btn);
+        });
+      });
+
+      document.querySelectorAll('[data-voice-count]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          activeVoiceCount = parseInt(btn.getAttribute('data-voice-count') || '3', 10);
+          document.querySelectorAll('[data-voice-count]').forEach(function (b) {
+            b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+          });
+          renderInspectorStage();
+        });
+      });
+
+      renderInspectorStage();
     })();
   </script>
 </body>

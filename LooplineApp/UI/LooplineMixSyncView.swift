@@ -89,7 +89,7 @@ struct LooplineMixSyncView: View {
                 Text(model.syncState.detail).font(LooplineTheme.text(13)).foregroundStyle(Color.looplineMuted)
                 HStack(spacing: 10) {
                     if case .ready = model.syncState {
-                        LooplinePrimaryButton(title: "Apply timing", icon: "checkmark", tint: .looplinePastelGreen) { model.applyRecommendedSync() }
+                        LooplinePrimaryButton(title: "Apply timing", icon: "checkmark", tint: .looplinePastelGreen) { model.requestApplyRecommendedSync() }
                     } else {
                         LooplinePrimaryButton(title: model.syncState.isAnalyzing ? "Comparing…" : "Find a match", icon: "wand.and.stars", tint: .looplinePastelBlue,
                             isDisabled: model.syncState.isAnalyzing || model.tracks.count < 2) { model.runSyncAssist() }

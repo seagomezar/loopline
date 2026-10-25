@@ -159,6 +159,18 @@ final class LooplineViewModel: ObservableObject {
     @Published private(set) var previewDuration: Double = 0
     @Published var isExportPreviewLooping = true
     @Published var isScrubbingPreview = false
+    @Published var activePaywallTrigger: LooplinePaywallTrigger?
+    @Published var includeWatermark = false {
+        didSet {
+            if !restoring {
+                invalidateExport()
+                if selectedTab == .export && !tracks.isEmpty {
+                    prepareExportPreview(autoPlay: isExportPreviewPlaying, preserveTime: true, debounceMilliseconds: 25)
+                }
+            }
+        }
+    }
+    let storeService = LooplineStoreService()
     let captureCoordinator = CaptureCoordinator()
     let audioClock = AudioClockService()
     let renderCoordinator = RenderCoordinator()
@@ -212,6 +224,13 @@ final class LooplineViewModel: ObservableObject {
             do { try store.save(project); self.project = project }
             catch { errorMessage = error.localizedDescription; finishTake() }
         }.store(in: &cancellables)
+        storeService.objectWillChange.sink { [weak self] _ in
+            guard let self else { return }
+            self.objectWillChange.send()
+            if self.selectedTab == .export && !self.tracks.isEmpty && !self.exportState.isRendering {
+                self.prepareExportPreview(autoPlay: self.isExportPreviewPlaying, preserveTime: true, debounceMilliseconds: 25)
+            }
+        }.store(in: &cancellables)
     }
 
     deinit {
@@ -245,8 +264,61 @@ final class LooplineViewModel: ObservableObject {
     var formattedPreviewDuration: String { LooplineTrack.time(effectivePreviewDuration) }
     var transportBusy: Bool { isRecording || isFinalizing || isPreparing || exportState.isRendering }
     var trackCountLabel: String { "\(tracks.count) \(tracks.count == 1 ? "part" : "parts")" }
+    var isProUnlocked: Bool { storeService.isProUnlocked }
+    var effectiveIncludeWatermark: Bool { isProUnlocked ? includeWatermark : true }
     var renderOptions: RenderOptions {
-        RenderOptions(format: exportFormat, resolution: exportResolution, columns: columns, layout: exportLayout)
+        RenderOptions(
+            format: exportFormat,
+            resolution: exportResolution,
+            columns: columns,
+            layout: exportLayout,
+            includeWatermark: effectiveIncludeWatermark
+        )
+    }
+
+    func presentPaywall(_ trigger: LooplinePaywallTrigger = .general) {
+        activePaywallTrigger = trigger
+    }
+
+    func dismissPaywall() {
+        activePaywallTrigger = nil
+    }
+
+    func requestWatermarkToggle(_ enabled: Bool) {
+        guard isProUnlocked else {
+            presentPaywall(.removeWatermark)
+            return
+        }
+        includeWatermark = enabled
+    }
+
+    func completePendingProActionAfterUnlock(for trigger: LooplinePaywallTrigger) {
+        activePaywallTrigger = nil
+        switch trigger {
+        case .proLayout, .proExportFormat, .removeWatermark:
+            includeWatermark = false
+            startExport()
+        case .syncAssist:
+            applyRecommendedSync()
+        case .unlimitedSessions:
+            newProject()
+        case .fourthVoice, .general:
+            break
+        }
+    }
+
+    func exportWithFreeDefaults() {
+        activePaywallTrigger = nil
+        restoring = true
+        exportFormat = "H.264 MP4"
+        exportResolution = "1080p"
+        if exportLayout.isProOnly {
+            exportLayout = tracks.count == 3 ? .splitRows12 : .grid2
+            columns = exportLayout.preferredColumns
+        }
+        restoring = false
+        persistSettings()
+        startExport()
     }
 
     func select(_ tab: LooplineTab) {
@@ -293,6 +365,16 @@ final class LooplineViewModel: ObservableObject {
     private func updateProjectList(_ project: StoredProject) {
         projects.removeAll { $0.id == project.id }
         projects.insert(project, at: 0)
+    }
+
+    @discardableResult
+    func requestNewProject() -> Bool {
+        if !isProUnlocked && projects.count >= LooplineStoreService.freeMaxProjects {
+            presentPaywall(.unlimitedSessions)
+            return false
+        }
+        newProject()
+        return true
     }
 
     func newProject() {
@@ -596,7 +678,15 @@ final class LooplineViewModel: ObservableObject {
         Task { do { try await captureCoordinator.switchCamera() } catch { errorMessage = error.localizedDescription } }
     }
 
-    func toggleRecording() { isRecording ? finishTake() : startRecording() }
+    func toggleRecording() {
+        if isRecording {
+            finishTake()
+        } else if !isProUnlocked && tracks.count >= LooplineStoreService.freeMaxTracks {
+            presentPaywall(.fourthVoice)
+        } else {
+            startRecording()
+        }
+    }
 
     func startRecording() {
         guard !transportBusy, !hasRecoverableDraft, let store = projectStore, let project else { return }
@@ -1033,6 +1123,13 @@ final class LooplineViewModel: ObservableObject {
     }
 
     func cancelSync() { syncTask?.cancel(); syncTask = nil; syncTarget = nil; syncState = .manual }
+    func requestApplyRecommendedSync() {
+        guard isProUnlocked else {
+            presentPaywall(.syncAssist)
+            return
+        }
+        applyRecommendedSync()
+    }
     func applyRecommendedSync() {
         guard case let .ready(_, recommendation) = syncState, let track = selectedTrack, syncTarget == track.id else { return }
         undoSync = (track.id, track.offsetMilliseconds)
@@ -1054,6 +1151,25 @@ final class LooplineViewModel: ObservableObject {
         nativeExportURL = nil
         hasSavedExport = false
         hasSavedToPhotos = false
+    }
+
+    func requestExport() {
+        guard !transportBusy else { return }
+        if !isProUnlocked {
+            if tracks.count > LooplineStoreService.freeMaxTracks {
+                presentPaywall(.fourthVoice)
+                return
+            }
+            if exportLayout.isProOnly {
+                presentPaywall(.proLayout(exportLayout.title))
+                return
+            }
+            if exportResolution == "4K" || exportFormat.hasPrefix("HEVC") {
+                presentPaywall(.proExportFormat(resolution: exportResolution, format: exportFormat))
+                return
+            }
+        }
+        startExport()
     }
 
     func startExport() {

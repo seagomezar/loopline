@@ -726,4 +726,67 @@ extension MediaTests {
         try await export.export(to: movie, as: .mov)
         return movie
     }
+
+    @MainActor
+    func testStoreServiceProductIDsOfflineEntitlementAndProFeatureGating() throws {
+        let suiteName = "LooplineStoreTests-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+
+        let store = LooplineStoreService(userDefaults: defaults, startStoreKitListeners: false)
+        store.setDebugProUnlocked(false)
+        XCTAssertFalse(store.isProUnlocked)
+        XCTAssertEqual(LooplineStoreService.lifetimeProductID, "com.seagomezar.loopline.pro.lifetime")
+        XCTAssertEqual(LooplineStoreService.annualProductID, "com.seagomezar.loopline.pro.annual")
+        XCTAssertEqual(LooplineStoreService.freeMaxTracks, 3)
+        XCTAssertEqual(LooplineStoreService.freeMaxProjects, 2)
+
+        // Verify 4 free layouts vs 12 Pro layouts
+        let freeStyles = VideoLayoutStyle.allCases.filter { !$0.isProOnly }
+        let proStyles = VideoLayoutStyle.allCases.filter { $0.isProOnly }
+        XCTAssertEqual(Set(freeStyles), Set([.grid1, .grid2, .horizontalStrip, .splitRows12]))
+        XCTAssertEqual(proStyles.count, 12)
+
+        // Verify RenderOptions Pro gating
+        let freeOptions = RenderOptions(format: "H.264 MP4", resolution: "1080p", columns: 2, layout: .grid2, includeWatermark: true)
+        XCTAssertFalse(freeOptions.requiresPro(trackCount: 3))
+        XCTAssertTrue(freeOptions.requiresPro(trackCount: 4))
+
+        let proLayoutOptions = RenderOptions(format: "H.264 MP4", resolution: "1080p", columns: 2, layout: .bentoSplit, includeWatermark: true)
+        XCTAssertTrue(proLayoutOptions.requiresPro(trackCount: 2))
+
+        let pro4KOptions = RenderOptions(format: "HEVC MOV", resolution: "4K", columns: 2, layout: .grid2, includeWatermark: true)
+        XCTAssertTrue(pro4KOptions.requiresPro(trackCount: 2))
+
+        let noWatermarkOptions = RenderOptions(format: "H.264 MP4", resolution: "1080p", columns: 2, layout: .grid2, includeWatermark: false)
+        XCTAssertTrue(noWatermarkOptions.requiresPro(trackCount: 2))
+
+        store.setDebugProUnlocked(true)
+        XCTAssertTrue(store.isProUnlocked)
+    }
+
+    @MainActor
+    func testSubtleWatermarkRendersOnOverlayCanvas() throws {
+        let rects = VideoLayoutStyle.grid2.normalizedRects(for: 2)
+        let size = CGSize(width: 720, height: 1280)
+
+        // Empty titles and no watermark -> nil overlay
+        let emptyOverlay = MediaCompositionBuilder.makeTitleOverlayImage(
+            titles: [nil, ""],
+            normalizedRects: rects,
+            size: size,
+            includeWatermark: false
+        )
+        XCTAssertNil(emptyOverlay)
+
+        // Empty titles with watermark enabled -> renders subtle "Made with Loopline" badge in top-right
+        let watermarkOverlay = try XCTUnwrap(MediaCompositionBuilder.makeTitleOverlayImage(
+            titles: [nil, ""],
+            normalizedRects: rects,
+            size: size,
+            includeWatermark: true
+        ))
+        XCTAssertEqual(watermarkOverlay.width, 720)
+        XCTAssertEqual(watermarkOverlay.height, 1280)
+    }
 }
