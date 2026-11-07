@@ -65,7 +65,7 @@ public enum LooplinePaywallTrigger: Identifiable, Equatable, Sendable {
         case .proExportFormat:
             "1080p is always free. Go Pro for 4K and smaller files."
         case .removeWatermark:
-            "Remove the \"Made with Overdubly\" badge so your video is all yours."
+            "Remove the \"Made with overdubly.com\" badge so your video is all yours."
         case .syncAssist:
             "Adjusting timing by hand is always free. Go Pro to line up parts automatically."
         case .unlimitedSessions:
@@ -91,9 +91,9 @@ public final class LooplineStoreService: ObservableObject {
     nonisolated public static let freeMaxTracks = 3
     nonisolated public static let freeMaxProjects = 2
 
-    nonisolated public static let termsOfUseURL = URL(string: "https://seagomezar.github.io/loopline/terms-and-conditions.html")!
-    nonisolated public static let privacyPolicyURL = URL(string: "https://seagomezar.github.io/loopline/privacy-policy.html")!
-    nonisolated public static let supportURL = URL(string: "https://seagomezar.github.io/loopline/support.html")!
+    nonisolated public static let termsOfUseURL = URL(string: "https://overdubly.com/terms-and-conditions.html")!
+    nonisolated public static let privacyPolicyURL = URL(string: "https://overdubly.com/privacy-policy.html")!
+    nonisolated public static let supportURL = URL(string: "https://overdubly.com/support.html")!
 
     nonisolated private static let cachedEntitlementDefaultsKey = "com.seagomezar.loopline.pro.entitlementCache"
 

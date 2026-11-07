@@ -24,7 +24,7 @@ ES_INFO_LOC_ID = "a9b92c0f-07bc-459d-ad85-9700dc50a772"
 EN_INFO_LOC_ID = "1a1f3449-3d5f-445e-8776-6929fe6a700b"
 IAP_ID = "6826871438"
 
-BUILD_VERSION = "17"
+BUILD_VERSION = "18"
 
 ES_DESCRIPTION = """Overdubly te ayuda a grabar cada parte de una canción en video y unirlas en una sola pantalla. Graba tu voz o tu instrumento una parte a la vez, escucha las anteriores mientras grabas y crea un video listo para compartir.
 
@@ -56,7 +56,7 @@ Guarda tu video en Fotos o Archivos, o compártelo directamente.
 Sin cuentas ni registros.
 
 GRATIS Y PRO
-• Gratis: hasta 3 partes, 4 diseños clásicos, videos en 720p y 1080p con la insignia «Made with Overdubly» y hasta 2 sesiones.
+• Gratis: hasta 3 partes, 4 diseños clásicos, videos en 720p y 1080p con la insignia «Made with overdubly.com» y hasta 2 sesiones.
 • Overdubly Pro (un solo pago, sin suscripciones): 4 o más partes, los 16 diseños, Sync Assist automático, videos en 4K, sin insignia y sesiones ilimitadas. Incluye Compartir en familia."""
 
 EN_DESCRIPTION = """Overdubly helps you record every part of a song on video and bring them together on one screen. Record your voice or instrument one part at a time, hear the earlier parts while you play, and create a video that's ready to share.
@@ -89,7 +89,7 @@ Save your video to Photos or Files, or share it directly.
 No accounts or sign-ups.
 
 FREE AND PRO
-• Free: up to 3 parts, 4 classic layouts, 720p and 1080p videos with a "Made with Overdubly" badge, and up to 2 sessions.
+• Free: up to 3 parts, 4 classic layouts, 720p and 1080p videos with a "Made with overdubly.com" badge, and up to 2 sessions.
 • Overdubly Pro (one payment, no subscriptions): 4 or more parts, all 16 layouts, automatic Sync Assist, 4K videos, no badge, and unlimited sessions. Includes Family Sharing."""
 
 ES_PROMO = "Graba cada parte de tu canción y únelas en un solo video. Gratis hasta 3 partes; Overdubly Pro con un solo pago, sin suscripciones."
@@ -100,7 +100,7 @@ EN_KEYWORDS = "multitrack,acappella,overdub,split screen,video looper,metronome,
 
 REVIEW_NOTES = """Overdubly is a multi-track video and audio recording app for musicians. No sign-in or demo account is required.
 
-What's new in Build 17: the camera preview and recordings now follow the device orientation on iPad (including iPad Pro models with the front camera on the landscape edge), simplified in-app text, a single Overdubly Pro purchase (no subscriptions), and the app is now named Overdubly.
+What's new in Build 18: the camera preview and recordings now follow the device orientation on iPad (including iPad Pro models with the front camera on the landscape edge), simplified in-app text, a single Overdubly Pro purchase (no subscriptions), and the app is now named Overdubly.
 
 How to test:
 1. Free features:
@@ -213,7 +213,8 @@ def main():
                 id: p.esInfoLocId,
                 attributes: {{
                     name: "Overdubly",
-                    privacyPolicyUrl: "https://seagomezar.github.io/loopline/privacy-policy.html?lang=es"
+                    subtitle: "Graba cada parte en video",
+                    privacyPolicyUrl: "https://overdubly.com/privacy-policy.html?lang=es"
                 }}
             }}
         }});
@@ -225,7 +226,8 @@ def main():
                 id: p.enInfoLocId,
                 attributes: {{
                     name: "Overdubly",
-                    privacyPolicyUrl: "https://seagomezar.github.io/loopline/en/privacy-policy.html"
+                    subtitle: "Record every part on video",
+                    privacyPolicyUrl: "https://overdubly.com/en/privacy-policy.html"
                 }}
             }}
         }});
@@ -240,8 +242,8 @@ def main():
                     description: p.esDesc,
                     promotionalText: p.esPromo,
                     keywords: p.esKeywords,
-                    marketingUrl: "https://seagomezar.github.io/loopline/?lang=es",
-                    supportUrl: "https://seagomezar.github.io/loopline/support.html?lang=es"
+                    marketingUrl: "https://overdubly.com/?lang=es",
+                    supportUrl: "https://overdubly.com/support.html?lang=es"
                 }}
             }}
         }});
@@ -255,8 +257,8 @@ def main():
                     description: p.enDesc,
                     promotionalText: p.enPromo,
                     keywords: p.enKeywords,
-                    marketingUrl: "https://seagomezar.github.io/loopline/en/index.html",
-                    supportUrl: "https://seagomezar.github.io/loopline/en/support.html"
+                    marketingUrl: "https://overdubly.com/en/index.html",
+                    supportUrl: "https://overdubly.com/en/support.html"
                 }}
             }}
         }});

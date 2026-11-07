@@ -6,10 +6,10 @@ Todas las páginas requeridas por Apple están publicadas en **Español (`es-MX`
 
 | Recurso Requerido por Apple | URL en Español (`es-MX`) | URL en Inglés (`en-US`) |
 | :--- | :--- | :--- |
-| **Landing Page / Marketing URL** | `https://seagomezar.github.io/loopline/?lang=es` | `https://seagomezar.github.io/loopline/en/index.html` |
-| **Política de Privacidad (Privacy Policy URL)** | `https://seagomezar.github.io/loopline/privacy-policy.html?lang=es` | `https://seagomezar.github.io/loopline/en/privacy-policy.html` |
-| **Centro de Soporte (Support URL)** | `https://seagomezar.github.io/loopline/support.html?lang=es` | `https://seagomezar.github.io/loopline/en/support.html` |
-| **Términos y Condiciones (EULA)** | `https://seagomezar.github.io/loopline/terms-and-conditions.html?lang=es` | `https://seagomezar.github.io/loopline/en/terms-and-conditions.html` |
+| **Landing Page / Marketing URL** | `https://overdubly.com/?lang=es` | `https://overdubly.com/en/index.html` |
+| **Política de Privacidad (Privacy Policy URL)** | `https://overdubly.com/privacy-policy.html?lang=es` | `https://overdubly.com/en/privacy-policy.html` |
+| **Centro de Soporte (Support URL)** | `https://overdubly.com/support.html?lang=es` | `https://overdubly.com/en/support.html` |
+| **Términos y Condiciones (EULA)** | `https://overdubly.com/terms-and-conditions.html?lang=es` | `https://overdubly.com/en/terms-and-conditions.html` |
 
 ---
 
@@ -115,6 +115,12 @@ How to test core features & StoreKit 2 In-App Purchase in Build 15:
 
 - La app pasa a llamarse **Overdubly** (dominio `overdubly.com` libre al 7 nov 2026; aún hay que registrarlo).
 - Cambia el nombre visible (`CFBundleDisplayName`), los textos de la app, la insignia «Made with Overdubly», la compra «Overdubly Pro», la ficha de la App Store y las páginas de GitHub Pages.
-- No cambian: Bundle ID `com.seagomezar.loopline`, Product ID `com.seagomezar.loopline.pro.lifetime`, App Apple ID `6826597725` ni las URLs de GitHub Pages (`seagomezar.github.io/loopline`).
+- No cambian: Bundle ID `com.seagomezar.loopline`, Product ID `com.seagomezar.loopline.pro.lifetime`, App Apple ID `6826597725` .
 - Las secciones anteriores de esta guía conservan el nombre «Loopline» como registro histórico.
+
+## 8. Dominio propio: overdubly.com
+
+- GitHub Pages (repo `seagomezar/loopline`) sirve el sitio en `https://overdubly.com`; las URLs antiguas de `seagomezar.github.io/loopline` redirigen solas.
+- DNS en Namecheap: cuatro registros `A @` → `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` y `CNAME www` → `seagomezar.github.io.`
+- La app, App Store Connect (marketing, soporte y privacidad) y la insignia de los videos («Made with overdubly.com») usan el nuevo dominio.
 

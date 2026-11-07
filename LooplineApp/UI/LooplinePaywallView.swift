@@ -115,7 +115,7 @@ struct LooplinePaywallView: View {
                     icon: "sparkles.rectangle.stack.fill",
                     tint: .looplineMint,
                     title: "Clean Video — No Watermark",
-                    detail: "Remove the \"Made with Overdubly\" badge from your videos."
+                    detail: "Remove the \"Made with overdubly.com\" badge from your videos."
                 )
                 Divider()
                 featureRow(
@@ -197,7 +197,7 @@ struct LooplinePaywallView: View {
             .accessibilityIdentifier("paywall.purchase")
 
             #if DEBUG && targetEnvironment(simulator)
-            if store.products.isEmpty {
+            if store.products.isEmpty, !ProcessInfo.processInfo.arguments.contains("-LooplineScreenshotScene") {
                 Button {
                     store.setDebugProUnlocked(true)
                     model.completePendingProActionAfterUnlock(for: trigger)
@@ -224,7 +224,7 @@ struct LooplinePaywallView: View {
                 Text("Continue with Free Export")
                     .font(LooplineTheme.text(14, weight: .bold))
                     .foregroundStyle(Color.looplineInk)
-                Text("1080p · Classic layout · \"Made with Overdubly\" badge")
+                Text("1080p · Classic layout · \"Made with overdubly.com\" badge")
                     .font(LooplineTheme.text(11, mono: true))
                     .foregroundStyle(Color.looplineMuted)
             }

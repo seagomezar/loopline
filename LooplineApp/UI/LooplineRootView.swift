@@ -107,6 +107,8 @@ struct LooplineRootView: View {
                             model.open(first)
                         }
                         showingProjects = true
+                    case "6":
+                        model.presentPaywall(.general)
                     default:
                         break
                     }
