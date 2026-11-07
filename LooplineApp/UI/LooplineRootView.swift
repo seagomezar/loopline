@@ -177,7 +177,7 @@ struct LooplineSessionsSheet: View {
                                                 .foregroundStyle(Color.looplineInk)
                                                 .lineLimit(1)
                                             if isActive {
-                                                Text("ACTIVE")
+                                                Text("OPEN")
                                                     .font(LooplineTheme.text(9, mono: true))
                                                     .foregroundStyle(Color.looplineInk)
                                                     .padding(.horizontal, 7)
@@ -186,7 +186,7 @@ struct LooplineSessionsSheet: View {
                                             }
                                         }
                                         let count = project.manifest.project.tracks.count
-                                        Text("\(count) \(count == 1 ? "part" : "parts") · Saved on this iPhone")
+                                        Text("\(count) \(count == 1 ? "part" : "parts")")
                                             .font(LooplineTheme.text(12, mono: true))
                                             .foregroundStyle(Color.looplineMuted)
                                     }
@@ -298,7 +298,7 @@ struct LooplineSessionsSheet: View {
                             Button(role: .destructive) {
                                 projectPendingDelete = project
                             } label: {
-                                Label("Delete session & assets", systemImage: "trash")
+                                Label("Delete session", systemImage: "trash")
                             }
                         }
                     }
@@ -330,7 +330,7 @@ struct LooplineSessionsSheet: View {
                     projectPendingDelete = nil
                 }
             } message: {
-                Text("This will permanently delete the session and all of its recorded takes and rendered videos from this iPhone.")
+                Text("This permanently deletes the session, its recordings, and its videos.")
             }
         }
     }

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Automates the final App Store Connect v1.0 (Build 15) submission update via the active
+Automates the App Store Connect v1.0 (Build 16) submission update via the active
 Google Chrome tab logged into https://appstoreconnect.apple.com.
 
 Updates:
-1. attaches Build 15 (version "15") to App Store Version 1.0 (71c97f5b-50ec-4d1f-9568-081b90e98995)
+1. attaches Build 16 (version "16") to App Store Version 1.0 (71c97f5b-50ec-4d1f-9568-081b90e98995)
 2. updates es-MX and en-US appInfoLocalizations (Privacy Policy URLs in ES & EN)
 3. updates es-MX and en-US appStoreVersionLocalizations (Descriptions, Promotional Text, Keywords,
    Marketing URLs, and Support URLs in ES & EN)
@@ -24,78 +24,98 @@ ES_INFO_LOC_ID = "a9b92c0f-07bc-459d-ad85-9700dc50a772"
 EN_INFO_LOC_ID = "1a1f3449-3d5f-445e-8776-6929fe6a700b"
 IAP_ID = "6826871438"
 
-ES_DESCRIPTION = """Loopline es tu estudio multipista de video y audio 100% offline para iPhone e iPad, diseñado para grabar arreglos vocales o instrumentales en pantalla dividida y exportar videos listos para compartir hasta en 4K.
+BUILD_VERSION = "16"
 
-A diferencia de otras apps que te obligan a elegir el marco antes de grabar o cobran suscripciones semanales, en Loopline grabas primero con total libertad y eliges o cambias entre los 16 diseños de marco, el encuadre Touch Crop (1.0× a 3.0×) y el orden de las voces después de grabar.
+ES_DESCRIPTION = """Loopline te ayuda a grabar cada parte de una canción en video y unirlas en una sola pantalla. Graba tu voz o tu instrumento una parte a la vez, escucha las anteriores mientras grabas y crea un video listo para compartir.
 
-FUNCIONES PRINCIPALES DE LOOPLINE V1.0:
+Graba primero y decide después: elige el diseño, el orden de las partes y el encuadre de cada una cuando ya terminaste de grabar.
 
-• Grabación Multipista con Cuenta Regresiva Sincronizada:
-Configura BPM, compás (4/4, 3/4, 6/8) y compases de entrada con pulso visual en vivo.
+LO QUE PUEDES HACER
 
-• Títulos Personalizados Integrados en el Video:
-Nombra cada toma («Flauta 1», «Primera Voz», «Cello») y expórtalos renderizados dentro de cada marco.
+• Grabar con metrónomo y cuenta regresiva:
+Elige el tempo, el compás (4/4, 3/4 o 6/8) y cuántos compases de entrada quieres.
 
-• 16 Diseños de Marco (Combinaciones, Filas y Columnas):
-Incluye 4 diseños simétricos clásicos gratis y 12 combinaciones asimétricas Pro (Frames 40/60, Diptic 60/40, Center Stage, Hero).
+• Ponerle nombre a cada parte:
+«Flauta 1», «Voz principal», «Cello»… El nombre aparece dentro de su cuadro en el video.
 
-• Touch Crop Interactivo (520 pt) y Reordenamiento de Voces:
-Arrastra y haz zoom (1.0× a 3.0×) en cada marco y reordena las posiciones (#1, #2, #3…) sin volver a grabar.
+• Elegir entre 16 diseños:
+Acomoda tus partes en filas, columnas, cuadrículas o con una parte destacada.
 
-• Vista Previa Real 9:16 y Pantalla Completa:
-Reproduce la composición real con barra de tiempo y modo pantalla completa antes de exportar en H.264 (.mp4) o HEVC (.mov) a 720p, 1080p o 4K.
+• Ajustar cada cuadro sin volver a grabar:
+Arrastra, acerca y cambia el orden de las partes cuando quieras.
 
-• Mezcla, Sync Assist y Privacidad 100% Local:
-Ajusta volumen, paneo estéreo, Mute/Solo y alineación en milisegundos sin cuentas ni servidores externos.
+• Ver el resultado antes de crearlo:
+Reproduce el video completo, también en pantalla completa.
 
-LOOPLINE GRATIS VS. LOOPLINE PRO (PAGO ÚNICO DE POR VIDA):
-• Loopline Gratis ($0 para siempre): Hasta 3 voces, metrónomo completo, Touch Crop, mezclador manual ±250 ms, 4 diseños simétricos clásicos, exportación 720p/1080p H.264 (.mp4) con insignia discreta y hasta 2 sesiones locales.
-• Loopline Pro (Desbloqueo único de por vida — Sin suscripciones): De 4 a 6+ voces, los 16 diseños completos, Sync Assist automático en 1 toque, exportación 4K UHD y HEVC (.mov), sin marca de agua y sesiones locales ilimitadas. Incluye Compartir en Familia."""
+• Mezclar y sincronizar:
+Ajusta el volumen de cada parte, silénciala o escúchala sola, y corrige la sincronización a mano o con Sync Assist.
 
-EN_DESCRIPTION = """Loopline is a 100% offline multi-track video and audio overdub studio for iPhone and iPad, built for recording layered vocal or instrumental performances and exporting polished split-screen videos in up to 4K.
+• Compartir:
+Guarda tu video en Fotos o Archivos, o compártelo directamente.
 
-Unlike split-screen apps that lock your grid before you play a single note or charge recurring weekly subscriptions, Loopline lets you record first and freely switch across 16 frame layouts, pan/zoom each performer with Touch Crop (1.0× to 3.0×), and reorder voice slots after recording.
+Sin cuentas ni registros.
 
-KEY FEATURES IN LOOPLINE V1.0:
+GRATIS Y PRO
+• Gratis: hasta 3 partes, 4 diseños clásicos, videos en 720p y 1080p con la insignia «Made with Loopline» y hasta 2 sesiones.
+• Loopline Pro (un solo pago, sin suscripciones): 4 o más partes, los 16 diseños, Sync Assist automático, videos en 4K, sin insignia y sesiones ilimitadas. Incluye Compartir en familia."""
 
-• Beat-Synced Count-In & Visual Metronome:
-Set BPM, time signature (4/4, 3/4, 6/8), and count-in bars with a full-screen countdown and live beat pulse.
+EN_DESCRIPTION = """Loopline helps you record every part of a song on video and bring them together on one screen. Record your voice or instrument one part at a time, hear the earlier parts while you play, and create a video that's ready to share.
 
-• Custom Part Headlines Burned Into Video:
-Label each part ("Flute 1", "First Voice", "Cello") and render titles directly inside each video frame.
+Record first, decide later: pick the layout, the order of the parts, and how each one is framed after you're done recording.
 
-• 16 Multi-Frame Layouts (Combinations, Rows & Grids):
-4 classic symmetric layouts included free, plus 12 Pro asymmetric and spotlight layouts (Frames 40/60, Diptic 60/40, Center Stage, Hero).
+WHAT YOU CAN DO
 
-• Interactive 520pt Touch Crop & Voice Slot Reordering:
-Pan and pinch-to-zoom (1.0× to 3.0×) per tile and reorder voice slots (#1, #2, #3…) anytime.
+• Record with a metronome and count-in:
+Choose the tempo, time signature (4/4, 3/4, or 6/8), and how many bars of count-in you want.
 
-• Real 9:16 Composition & Full-Screen Preview:
-Play back the true multi-track composition with interactive scrubber and full-screen modal before exporting in H.264 (.mp4) or HEVC (.mov) at 720p, 1080p, or 4K.
+• Name each part:
+"Flute 1", "Lead vocal", "Cello"… The name shows inside its frame in the video.
 
-• Sync Assist, Audio Mixing & 100% On-Device Privacy:
-Per-part volume, stereo pan, mute, solo, millisecond timing offsets, and local session management with zero cloud uploads or tracking.
+• Choose from 16 layouts:
+Arrange your parts in rows, columns, grids, or with one part in the spotlight.
 
-LOOPLINE FREE VS. LOOPLINE PRO (ONE-TIME LIFETIME UNLOCK):
-• Loopline Free ($0 Forever): Up to 3 voices, beat-synced count-in, Touch Crop, manual ±250ms sync slider, 4 classic symmetric layouts, 720p & 1080p H.264 (.mp4) export with a subtle corner badge, and up to 2 local sessions.
-• Loopline Pro (One-Time Lifetime Purchase — No Subscriptions): 4 to 6+ voices, all 16 layouts, 1-tap Auto Sync Assist, 4K UHD & HEVC (.mov) export, no watermark, and unlimited local sessions. Supports Apple Family Sharing."""
+• Adjust every frame without re-recording:
+Drag, zoom, and reorder parts whenever you like.
 
-ES_PROMO = "Estudio multipista de video y audio offline: cuenta regresiva al pulso, 16 diseños, Touch Crop, Sync Assist y 4K. Gratis hasta 3 voces; Pro en pago único."
-EN_PROMO = "Offline multi-track split-screen video & audio studio: beat-synced count-in, 16 layouts, Touch Crop, Auto Sync Assist & 4K. Free up to 3 voices; 1-time Pro."
+• See it before you create it:
+Play the whole video back, including in full screen.
+
+• Mix and sync:
+Set each part's volume, mute or solo it, and fix the timing by hand or with Sync Assist.
+
+• Share:
+Save your video to Photos or Files, or share it directly.
+
+No accounts or sign-ups.
+
+FREE AND PRO
+• Free: up to 3 parts, 4 classic layouts, 720p and 1080p videos with a "Made with Loopline" badge, and up to 2 sessions.
+• Loopline Pro (one payment, no subscriptions): 4 or more parts, all 16 layouts, automatic Sync Assist, 4K videos, no badge, and unlimited sessions. Includes Family Sharing."""
+
+ES_PROMO = "Graba cada parte de tu canción y únelas en un solo video. Gratis hasta 3 partes; Loopline Pro con un solo pago, sin suscripciones."
+EN_PROMO = "Record every part of your song and bring them together in one video. Free for up to 3 parts; Loopline Pro is a single payment, no subscriptions."
 
 ES_KEYWORDS = "multipista,acappella,overdub,pantalla dividida,looper,metronomo,musica,video,collage,coro,flauta"
 EN_KEYWORDS = "multitrack,acappella,overdub,split screen,video looper,metronome,music studio,collage,harmony,choir"
 
-REVIEW_NOTES = """Loopline is a 100% offline multi-track audio/video recording and split-screen composition studio for musicians. No sign-in or demo account is required.
+REVIEW_NOTES = """Loopline is a multi-track video and audio recording app for musicians. No sign-in or demo account is required.
 
-How to test core features & StoreKit 2 In-App Purchase in Build 15:
-1. Free Tier (Immediate Access):
-   - Capture Tab: Set tempo/count-in, enter a custom part title ("Flute 1", "Voice 1"), and record up to 3 parts (grant Camera & Microphone permissions).
-   - Mix & Sync Tab: Adjust per-track volume, stereo pan, Mute/Solo, and the manual ±250 ms offset slider.
-   - Export Tab: Preview in 9:16 ("Real preview" or 520pt "Touch crop"), reorder voice slots (#1, #2, #3), choose any of the 4 classic layouts, and export in 720p or 1080p H.264 (.mp4).
-2. Loopline Pro — Lifetime Unlock (`com.seagomezar.loopline.pro.lifetime`, Non-Consumable StoreKit 2 IAP):
-   - Tap the "Loopline Pro" pill in the top header, or select any Pro feature (recording a 4th+ voice, choosing one of the 12 PRO asymmetric layouts, tapping "Find a match" Auto Sync Assist, or selecting 4K / HEVC / Remove watermark on Export) to open the Loopline Pro sheet.
-   - The paywall clearly displays the one-time price, "Restore Purchases" button, and direct links to Terms of Use (EULA) and Privacy Policy."""
+What's new in Build 16: the camera preview and recordings now follow the device orientation on iPad (including iPad Pro models with the front camera on the landscape edge), simplified in-app text, and a single Loopline Pro purchase (no subscriptions).
+
+How to test:
+1. Free features:
+   - Capture tab: set tempo and count-in, name the part ("Flute 1"), and record up to 3 parts (allow Camera and Microphone).
+   - Mix & Sync tab: adjust volume, Mute/Solo, and timing with the "Manual" panel.
+   - Export tab: switch between "Preview" and "Adjust frames", reorder frames, choose one of the 4 classic layouts, and create a 720p or 1080p video.
+2. Loopline Pro (com.seagomezar.loopline.pro.lifetime, non-consumable, one-time purchase):
+   - Open it from the "Loopline Pro" button in the header, or by using any Pro feature (recording a 4th part, choosing a PRO layout, tapping "Find a match", or choosing 4K / Smaller file / removing the badge on Export).
+   - The Pro screen shows the one-time price, "Restore Purchases", and links to the Terms of Use (EULA) and Privacy Policy."""
+
+IAP_ES_NAME = "Loopline Pro"
+IAP_ES_DESC = "Desbloquea 4+ partes, 16 diseños, Sync Assist y 4K."
+IAP_EN_NAME = "Loopline Pro"
+IAP_EN_DESC = "Unlock 4+ parts, 16 layouts, Sync Assist and 4K."
+IAP_REVIEW_NOTE = "One-time non-consumable unlock for Loopline Pro: 4 or more parts, all 16 layouts, automatic Sync Assist, 4K export, no badge, and unlimited sessions. No subscriptions."
 
 
 def run_chrome_js(js_code: str, wait_var: str = "__ascStepResult"):
@@ -157,6 +177,7 @@ def main():
         "esKeywords": ES_KEYWORDS,
         "enKeywords": EN_KEYWORDS,
         "reviewNotes": REVIEW_NOTES,
+        "buildVersion": BUILD_VERSION,
     }
     js = f"""
     async () => {{
@@ -172,17 +193,17 @@ def main():
             return {{status: r.status, ok: r.ok, data: j, raw: txt.substring(0, 400)}};
         }}
 
-        // 1. Find Build 15 (or latest valid build)
+        // 1. Find the release build
         const buildsRes = await req("/iris/v1/builds?filter[app]=" + p.appId + "&limit=30", "GET");
         const builds = buildsRes.data?.data || [];
-        const build15 = builds.find(b => b.attributes?.version === "15") || builds[0];
-        log.push({{step: "findBuild15", foundVersion: build15?.attributes?.version, buildId: build15?.id, state: build15?.attributes?.processingState}});
+        const releaseBuild = builds.find(b => b.attributes?.version === p.buildVersion);
+        log.push({{step: "findBuild", foundVersion: releaseBuild?.attributes?.version, buildId: releaseBuild?.id, state: releaseBuild?.attributes?.processingState}});
 
-        if (build15?.id && build15?.attributes?.processingState === "VALID") {{
+        if (releaseBuild?.id && releaseBuild?.attributes?.processingState === "VALID") {{
             const rAttach = await req("/iris/v1/appStoreVersions/" + p.verId + "/relationships/build", "PATCH", {{
-                data: {{ type: "builds", id: build15.id }}
+                data: {{ type: "builds", id: releaseBuild.id }}
             }});
-            log.push({{step: "attachBuild15", status: rAttach.status, err: rAttach.ok ? null : rAttach.raw}});
+            log.push({{step: "attachBuild", status: rAttach.status, err: rAttach.ok ? null : rAttach.raw}});
         }}
 
         // 2. Update es-MX & en-US appInfoLocalizations (Privacy Policy URLs)

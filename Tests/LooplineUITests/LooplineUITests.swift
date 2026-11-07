@@ -69,7 +69,7 @@ final class LooplineUITests: XCTestCase {
         scrollTo(app.buttons["Find a match"], in: app, down: true)
         app.buttons["Find a match"].tap()
         XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@",
-            "Suggested placement -120 ms")).firstMatch.waitForExistence(timeout: 15))
+            "Suggested shift: -120 ms")).firstMatch.waitForExistence(timeout: 15))
         scrollTo(app.buttons["Apply timing"], in: app)
         app.buttons["Apply timing"].tap()
         XCTAssertTrue(app.staticTexts["Alignment applied"].waitForExistence(timeout: 5))

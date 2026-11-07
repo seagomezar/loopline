@@ -737,7 +737,7 @@ extension MediaTests {
         store.setDebugProUnlocked(false)
         XCTAssertFalse(store.isProUnlocked)
         XCTAssertEqual(LooplineStoreService.lifetimeProductID, "com.seagomezar.loopline.pro.lifetime")
-        XCTAssertEqual(LooplineStoreService.annualProductID, "com.seagomezar.loopline.pro.annual")
+        XCTAssertEqual(LooplineStoreService.allProductIDs, ["com.seagomezar.loopline.pro.lifetime"])
         XCTAssertEqual(LooplineStoreService.freeMaxTracks, 3)
         XCTAssertEqual(LooplineStoreService.freeMaxProjects, 2)
 

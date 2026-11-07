@@ -435,9 +435,9 @@ struct LooplineFrameCropControls: View {
         VStack(alignment: .leading, spacing: 14) {
             HStack {
                 VStack(alignment: .leading, spacing: 3) {
-                    Text("Frame order, position & crop")
+                    Text("Arrange your frames")
                         .font(LooplineTheme.text(15, weight: .bold))
-                    Text("Change each voice's frame slot (#1, #2…), or drag and pinch inside any frame.")
+                    Text("Change the order, or drag and pinch inside a frame.")
                         .font(LooplineTheme.text(11))
                         .foregroundStyle(Color.looplineMuted)
                 }
@@ -951,7 +951,7 @@ struct LooplineTrackLane: View {
                                 .font(LooplineTheme.text(18, weight: .bold))
                                 .lineLimit(1)
                                 .accessibilityIdentifier("track.headline.\(track.id.uuidString)")
-                            Text("\(track.formattedDuration) · \(track.role)")
+                            Text(track.role.isEmpty ? track.formattedDuration : "\(track.formattedDuration) · \(track.role)")
                                 .font(LooplineTheme.text(11, mono: true))
                                 .foregroundStyle(Color.looplineMuted)
                                 .lineLimit(1)
@@ -997,7 +997,7 @@ struct LooplineTrackLane: View {
             if isEditingTitle, let onRename {
                 VStack(alignment: .leading, spacing: 10) {
                     HStack(spacing: 8) {
-                        TextField("Part headline (e.g. Flute 1, First voice)", text: $draftTitle)
+                        TextField("Part name (e.g. Flute 1, Lead)", text: $draftTitle)
                             .font(LooplineTheme.text(14, weight: .medium))
                             .textFieldStyle(.plain)
                             .submitLabel(.done)

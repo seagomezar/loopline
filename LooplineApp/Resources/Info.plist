@@ -21,7 +21,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Loopline uses the camera to record each performance tile.</string>
+	<string>Loopline uses the camera to record each part of your video.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Loopline uses the microphone to record your voice or instrument.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>

@@ -1,22 +1,20 @@
 {
   "identifier" : "A84E32D0-9E12-4F55-9A30-88C21B571A01",
-  "nonRenewingSubscriptions" : [
-
-  ],
+  "nonRenewingSubscriptions" : [],
   "products" : [
     {
-      "displayPrice" : "14.99",
+      "displayPrice" : "0.99",
       "familyShareable" : true,
       "internalID" : "6826597726",
       "localizations" : [
         {
-          "description" : "Unlock 4 to 6+ voices, all 16 frame layouts, 4K UHD & HEVC export, Sync Assist, unlimited local sessions, and no watermark forever.",
-          "displayName" : "Loopline Pro — Lifetime Unlock",
+          "description" : "Unlock 4 or more voices, all 16 layouts, 4K export, Sync Assist, unlimited sessions, and no badge. Pay once.",
+          "displayName" : "Loopline Pro",
           "locale" : "en_US"
         },
         {
-          "description" : "Desbloquea de 4 a 6+ voces, los 16 diseños de marco, exportación 4K y HEVC, Sync Assist, sesiones ilimitadas y sin marca de agua para siempre.",
-          "displayName" : "Loopline Pro — De Por Vida",
+          "description" : "Desbloquea 4 o más voces, los 16 diseños, exportación 4K, Sync Assist, sesiones ilimitadas y sin insignia. Pago único.",
+          "displayName" : "Loopline Pro",
           "locale" : "es_MX"
         }
       ],
@@ -79,47 +77,7 @@
       }
     ]
   },
-  "subscriptionGroups" : [
-    {
-      "id" : "21584920",
-      "localizations" : [
-
-      ],
-      "name" : "Loopline Pro",
-      "subscriptions" : [
-        {
-          "adHocOffers" : [
-
-          ],
-          "codeOffers" : [
-
-          ],
-          "displayPrice" : "6.99",
-          "familyShareable" : true,
-          "groupNumber" : 1,
-          "internalID" : "6826597727",
-          "introductoryOffer" : null,
-          "localizations" : [
-            {
-              "description" : "Annual access to all Loopline Pro features on iPhone and iPad.",
-              "displayName" : "Loopline Pro — Annual Pass",
-              "locale" : "en_US"
-            },
-            {
-              "description" : "Acceso anual a todas las funciones de Loopline Pro en iPhone e iPad.",
-              "displayName" : "Loopline Pro — Pase Anual",
-              "locale" : "es_MX"
-            }
-          ],
-          "productID" : "com.seagomezar.loopline.pro.annual",
-          "recurringSubscriptionPeriod" : "P1Y",
-          "referenceName" : "Loopline Pro Annual Pass",
-          "subscriptionGroupID" : "21584920",
-          "type" : "AutoRenewingSubscription"
-        }
-      ]
-    }
-  ],
+  "subscriptionGroups" : [],
   "version" : {
     "major" : 4,
     "minor" : 0

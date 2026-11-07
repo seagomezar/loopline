@@ -65,7 +65,7 @@ struct LooplineMixSyncView: View {
                 trackPendingDeletion = nil
             }
         } message: { track in
-            Text("This removes \(track.name) and its recorded video and audio from this session.")
+            Text("This removes \(track.name) from this session.")
         }
     }
     // Keep the transport at the same scroll position when the player replaces the grid.
@@ -91,7 +91,7 @@ struct LooplineMixSyncView: View {
                     if case .ready = model.syncState {
                         LooplinePrimaryButton(title: "Apply timing", icon: "checkmark", tint: .looplinePastelGreen) { model.requestApplyRecommendedSync() }
                     } else {
-                        LooplinePrimaryButton(title: model.syncState.isAnalyzing ? "Comparing…" : "Find a match", icon: "wand.and.stars", tint: .looplinePastelBlue,
+                        LooplinePrimaryButton(title: model.syncState.isAnalyzing ? "Listening…" : "Find a match", icon: "wand.and.stars", tint: .looplinePastelBlue,
                             isDisabled: model.syncState.isAnalyzing || model.tracks.count < 2) { model.runSyncAssist() }
                     }
                     Button {
@@ -156,10 +156,10 @@ struct LooplineMixSyncView: View {
                 }
             }
             HStack {
-                Text("Offset: \(selected.offsetMilliseconds > 0 ? "+" : "")\(selected.offsetMilliseconds) ms")
+                Text("Timing: \(selected.offsetMilliseconds > 0 ? "+" : "")\(selected.offsetMilliseconds) ms")
                     .font(LooplineTheme.text(13, weight: .bold, mono: true))
                 Spacer()
-                Button("Reset 0 ms") {
+                Button("Reset") {
                     model.setTrackOffset(selected.id, milliseconds: 0)
                 }
                 .font(LooplineTheme.text(12, weight: .medium))

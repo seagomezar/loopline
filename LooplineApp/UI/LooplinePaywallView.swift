@@ -5,7 +5,6 @@ import SwiftUI
 struct LooplinePaywallView: View {
     @ObservedObject var model: LooplineViewModel
     let trigger: LooplinePaywallTrigger
-    @State private var selectedProductID: String = LooplineStoreService.lifetimeProductID
 
     private var store: LooplineStoreService { model.storeService }
 
@@ -44,7 +43,6 @@ struct LooplinePaywallView: View {
             Text("loopline pro")
                 .font(LooplineTheme.text(20, weight: .bold))
                 .tracking(-0.6)
-            LooplinePill(text: "100% On-Device", tint: .looplineMint, icon: "internaldrive")
             Spacer()
             Button {
                 model.dismissPaywall()
@@ -95,43 +93,43 @@ struct LooplinePaywallView: View {
                 featureRow(
                     icon: "person.3.sequence.fill",
                     tint: .looplineBlue,
-                    title: "4 to 6+ Voices per Arrangement",
-                    detail: "Free includes up to 3 voices. Pro unlocks full quartets, quintets, and sextets."
+                    title: "4 or More Voices",
+                    detail: "Free includes up to 3 voices. Go Pro for quartets and bigger groups."
                 )
                 Divider()
                 featureRow(
                     icon: "rectangle.3.group.fill",
                     tint: .looplineCoral,
-                    title: "All 16 Collage & Asymmetric Layouts",
-                    detail: "Unlock Frames 40/60, Diptic 60/40, Center Stage, Hero splits, and 3×N / 4×N grids."
+                    title: "All 16 Layouts",
+                    detail: "More ways to arrange your frames, from spotlight layouts to big grids."
                 )
                 Divider()
                 featureRow(
                     icon: "4k.tv.fill",
                     tint: .looplineGold,
-                    title: "4K UHD & HEVC (.mov / .mp4) Export",
-                    detail: "Render crisp 2160×3840 masters and space-saving HEVC files alongside 1080p H.264."
+                    title: "4K Export",
+                    detail: "Sharper videos, plus smaller files that are easier to share."
                 )
                 Divider()
                 featureRow(
                     icon: "sparkles.rectangle.stack.fill",
                     tint: .looplineMint,
                     title: "Clean Video — No Watermark",
-                    detail: "Remove the subtle \"Made with Loopline\" corner badge on every exported video."
+                    detail: "Remove the \"Made with Loopline\" badge from your videos."
                 )
                 Divider()
                 featureRow(
                     icon: "wand.and.stars",
                     tint: .looplineBlue,
-                    title: "Unlimited Automatic Sync Assist",
-                    detail: "One-tap millisecond alignment with confidence scoring across all your takes."
+                    title: "Unlimited Sync Assist",
+                    detail: "Line up your parts with one tap, as often as you like."
                 )
                 Divider()
                 featureRow(
                     icon: "folder.fill.badge.plus",
                     tint: .looplineCoral,
-                    title: "Unlimited Local Sessions",
-                    detail: "Save and manage as many multi-track sessions as your iPhone or iPad storage holds."
+                    title: "Unlimited Sessions",
+                    detail: "Keep as many sessions as you want."
                 )
             }
         }
@@ -157,100 +155,37 @@ struct LooplinePaywallView: View {
     }
 
     private var pricingSection: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Button {
-                selectedProductID = LooplineStoreService.lifetimeProductID
-            } label: {
-                HStack(spacing: 12) {
-                    Image(systemName: selectedProductID == LooplineStoreService.lifetimeProductID ? "checkmark.circle.fill" : "circle")
-                        .font(LooplineTheme.text(20, weight: .bold))
-                        .foregroundStyle(Color.looplineBlue)
-                    VStack(alignment: .leading, spacing: 4) {
-                        HStack(spacing: 6) {
-                            Text("Loopline Pro — Lifetime Unlock")
-                                .font(LooplineTheme.text(15, weight: .bold))
-                            Text("OWN FOREVER")
-                                .font(LooplineTheme.text(8, weight: .bold, mono: true))
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 3)
-                                .background(Color.looplinePastelGreen, in: Capsule())
-                        }
-                        Text("Pay once. Yours forever on iPhone & iPad with Family Sharing.")
-                            .font(LooplineTheme.text(11))
-                            .foregroundStyle(Color.looplineMuted)
-                    }
-                    Spacer()
-                    VStack(alignment: .trailing, spacing: 2) {
-                        Text(store.lifetimeDisplayPrice)
-                            .font(LooplineTheme.text(18, weight: .bold, mono: true))
-                        Text("one-time")
-                            .font(LooplineTheme.text(10, mono: true))
-                            .foregroundStyle(Color.looplineMuted)
-                    }
-                }
-                .padding(16)
-                .background(
-                    selectedProductID == LooplineStoreService.lifetimeProductID ? Color.looplinePastelBlue.opacity(0.45) : Color.looplineSurface,
-                    in: RoundedRectangle(cornerRadius: 18)
-                )
-                .overlay {
-                    RoundedRectangle(cornerRadius: 18)
-                        .stroke(
-                            selectedProductID == LooplineStoreService.lifetimeProductID ? Color.looplineBlue : Color.looplineLine,
-                            lineWidth: selectedProductID == LooplineStoreService.lifetimeProductID ? 2 : 1
-                        )
-                }
+        HStack(spacing: 12) {
+            Image(systemName: "checkmark.seal.fill")
+                .font(LooplineTheme.text(20, weight: .bold))
+                .foregroundStyle(Color.looplineBlue)
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Loopline Pro")
+                    .font(LooplineTheme.text(15, weight: .bold))
+                Text("Pay once. Yours forever on iPhone & iPad, with Family Sharing.")
+                    .font(LooplineTheme.text(11))
+                    .foregroundStyle(Color.looplineMuted)
             }
-            .buttonStyle(.plain)
-            .accessibilityIdentifier("paywall.option.lifetime")
-
-            if let annual = store.annualProduct {
-                Button {
-                    selectedProductID = annual.id
-                } label: {
-                    HStack(spacing: 12) {
-                        Image(systemName: selectedProductID == annual.id ? "checkmark.circle.fill" : "circle")
-                            .font(LooplineTheme.text(20, weight: .bold))
-                            .foregroundStyle(Color.looplineBlue)
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(annual.displayName.isEmpty ? "Loopline Pro — Annual Pass" : annual.displayName)
-                                .font(LooplineTheme.text(15, weight: .bold))
-                            Text("Auto-renews yearly unless canceled at least 24 hours before renewal.")
-                                .font(LooplineTheme.text(11))
-                                .foregroundStyle(Color.looplineMuted)
-                        }
-                        Spacer()
-                        VStack(alignment: .trailing, spacing: 2) {
-                            Text(annual.displayPrice)
-                                .font(LooplineTheme.text(16, weight: .bold, mono: true))
-                            Text("/ year")
-                                .font(LooplineTheme.text(10, mono: true))
-                                .foregroundStyle(Color.looplineMuted)
-                        }
-                    }
-                    .padding(16)
-                    .background(
-                        selectedProductID == annual.id ? Color.looplinePastelBlue.opacity(0.45) : Color.looplineSurface,
-                        in: RoundedRectangle(cornerRadius: 18)
-                    )
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 18)
-                            .stroke(
-                                selectedProductID == annual.id ? Color.looplineBlue : Color.looplineLine,
-                                lineWidth: selectedProductID == annual.id ? 2 : 1
-                            )
-                    }
-                }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("paywall.option.annual")
+            Spacer()
+            VStack(alignment: .trailing, spacing: 2) {
+                Text(store.lifetimeDisplayPrice)
+                    .font(LooplineTheme.text(18, weight: .bold, mono: true))
+                Text("one-time")
+                    .font(LooplineTheme.text(10, mono: true))
+                    .foregroundStyle(Color.looplineMuted)
             }
         }
+        .padding(16)
+        .background(Color.looplinePastelBlue.opacity(0.45), in: RoundedRectangle(cornerRadius: 18))
+        .overlay { RoundedRectangle(cornerRadius: 18).stroke(Color.looplineBlue, lineWidth: 2) }
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("paywall.option.lifetime")
     }
 
     private var primaryActionSection: some View {
         VStack(spacing: 10) {
             LooplinePrimaryButton(
-                title: store.isPurchasing ? "Processing…" : "Unlock Loopline Pro · \(selectedPriceLabel)",
+                title: store.isPurchasing ? "Processing…" : "Unlock Loopline Pro · \(store.lifetimeDisplayPrice)",
                 icon: "lock.open.fill",
                 tint: .looplineHalftoneBlue,
                 isDisabled: store.isPurchasing
@@ -289,7 +224,7 @@ struct LooplinePaywallView: View {
                 Text("Continue with Free Export")
                     .font(LooplineTheme.text(14, weight: .bold))
                     .foregroundStyle(Color.looplineInk)
-                Text("1080p H.264 MP4 · Classic frame layout · With \"Made with Loopline\" badge")
+                Text("1080p · Classic layout · \"Made with Loopline\" badge")
                     .font(LooplineTheme.text(11, mono: true))
                     .foregroundStyle(Color.looplineMuted)
             }
@@ -360,47 +295,19 @@ struct LooplinePaywallView: View {
             }
             .font(LooplineTheme.text(11, weight: .medium))
             .tint(.looplineBlue)
-
-            Text("Purchases are processed securely by Apple via StoreKit 2 and verified locally on your device. No account sign-in or cloud connection is required.")
-                .font(LooplineTheme.text(10, mono: true))
-                .foregroundStyle(Color.looplineMuted)
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
         }
         .frame(maxWidth: .infinity)
         .padding(.top, 4)
     }
 
-    private var selectedPriceLabel: String {
-        if selectedProductID == LooplineStoreService.annualProductID, let annual = store.annualProduct {
-            return annual.displayPrice
-        }
-        return store.lifetimeDisplayPrice
-    }
-
     private func handlePurchaseTap() async {
-        if selectedProductID == LooplineStoreService.annualProductID, let annual = store.annualProduct {
-            let unlocked = await store.purchase(annual)
-            if unlocked {
-                model.completePendingProActionAfterUnlock(for: trigger)
-            }
+        if store.lifetimeProduct == nil { await store.loadProducts() }
+        guard let lifetime = store.lifetimeProduct else {
+            store.statusMessage = "Couldn't load prices. Check your connection and try again."
             return
         }
-        if let lifetime = store.lifetimeProduct {
-            let unlocked = await store.purchase(lifetime)
-            if unlocked {
-                model.completePendingProActionAfterUnlock(for: trigger)
-            }
-        } else {
-            await store.loadProducts()
-            if let lifetime = store.lifetimeProduct {
-                let unlocked = await store.purchase(lifetime)
-                if unlocked {
-                    model.completePendingProActionAfterUnlock(for: trigger)
-                }
-            } else {
-                store.statusMessage = "App Store products are being prepared. Please check your connection or use Restore Purchases."
-            }
+        if await store.purchase(lifetime) {
+            model.completePendingProActionAfterUnlock(for: trigger)
         }
     }
 }

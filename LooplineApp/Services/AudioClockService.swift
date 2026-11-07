@@ -33,7 +33,7 @@ final class AudioClockService: ObservableObject {
                     if began {
                         stopMetronome()
                         if reset { engine = AVAudioEngine() }
-                        interruptionMessage = "The audio route changed or was interrupted. Check your headphones before continuing."
+                        interruptionMessage = "Audio was interrupted. Check your headphones and try again."
                         onInterruption?()
                     }
                 }

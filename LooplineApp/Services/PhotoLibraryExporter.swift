@@ -38,7 +38,7 @@ enum PhotoLibraryExportError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .notAuthorized: "Photos access is required to save this verified local video."
+        case .notAuthorized: "Allow Photos access in Settings to save your video."
         case .saveFailed: "The video could not be saved to Photos."
         }
     }

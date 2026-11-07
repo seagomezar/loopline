@@ -9,7 +9,7 @@ struct LooplineExportView: View {
         ScrollViewReader { proxy in
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 24) {
-                    LooplineTopBar(eyebrow: "Made here. Saved here.", title: "Yours to share.")
+                    LooplineTopBar(eyebrow: "Your video", title: "Yours to share.")
                     if !model.tracks.isEmpty {
                         LooplineExportPreviewCard(model: model)
                             .id("exportPreviewCard")
@@ -43,12 +43,13 @@ struct LooplineExportView: View {
                                 isProUnlocked: model.isProUnlocked
                             )
                             Divider()
-                            picker("Video", selection: $model.exportFormat, choices: ["H.264 MP4", "HEVC MP4", "HEVC MOV"])
+                            picker("Format", selection: $model.exportFormat, choices: LooplineExportFormat.choices,
+                                   label: LooplineExportFormat.label(for:))
                             Divider()
                             picker("Resolution", selection: $model.exportResolution, choices: ["720p", "1080p", "4K"])
                             Divider()
                             watermarkRow
-                            Text("Portrait · 30 fps · AAC audio\nYour timing, levels, and frame layout carry through to the finished video.")
+                            Text("Your timing, volume, and layout are kept in the final video.")
                                 .font(LooplineTheme.text(11, mono: true)).foregroundStyle(Color.looplineMuted).lineSpacing(5)
                         }.font(LooplineTheme.text(14))
                     }.disabled(model.exportState.isRendering)
@@ -56,8 +57,6 @@ struct LooplineExportView: View {
                         LooplinePrimaryButton(title: "Create my video", icon: "arrow.down.to.line", tint: .looplineHalftoneBlue,
                             isDisabled: model.tracks.isEmpty || model.transportBusy) { model.requestExport() }
                     }
-                    Text("Your recording stays on your iPhone. Sharing is always your choice.")
-                        .font(LooplineTheme.text(12)).foregroundStyle(Color.looplineMuted).frame(maxWidth: .infinity).multilineTextAlignment(.center)
                 }.padding(20)
             }
             .onChange(of: model.nativeExportURL) { _, newURL in
@@ -99,10 +98,10 @@ struct LooplineExportView: View {
         case .idle:
             LooplineSurface {
                 HStack(spacing: 14) {
-                    Image(systemName: "internaldrive").font(LooplineTheme.text(24))
+                    Image(systemName: "film").font(LooplineTheme.text(24))
                     VStack(alignment: .leading, spacing: 5) {
                         Text("A little studio. A real file.").font(LooplineTheme.text(17, weight: .bold))
-                        Text("Your video is created and checked on this device before you save or share it.")
+                        Text(model.tracks.isEmpty ? "Record a part to create your video." : "When it looks right, create your video to save or share it.")
                             .font(LooplineTheme.text(13)).foregroundStyle(Color.looplineMuted)
                     }
                 }
@@ -116,7 +115,7 @@ struct LooplineExportView: View {
                         Text("\(Int(progress * 100))%").font(LooplineTheme.text(13, mono: true))
                     }
                     ProgressView(value: progress).tint(.looplineBlue)
-                    Button("Cancel render") { model.cancelExport() }.font(LooplineTheme.text(13)).frame(minHeight: 44)
+                    Button("Cancel") { model.cancelExport() }.font(LooplineTheme.text(13)).frame(minHeight: 44)
                 }
             }
         case let .completed(name, size, duration):
@@ -144,10 +143,11 @@ struct LooplineExportView: View {
         }
     }
 
-    private func picker(_ title: String, selection: Binding<String>, choices: [String]) -> some View {
+    private func picker(_ title: String, selection: Binding<String>, choices: [String],
+                        label: @escaping (String) -> String = { $0 }) -> some View {
         HStack {
             Text(title); Spacer()
-            Picker(title, selection: selection) { ForEach(choices, id: \.self) { Text($0).tag($0) } }.tint(.looplineInk)
+            Picker(title, selection: selection) { ForEach(choices, id: \.self) { Text(label($0)).tag($0) } }.tint(.looplineInk)
         }
     }
 
@@ -156,7 +156,7 @@ struct LooplineExportView: View {
         HStack(spacing: 10) {
             VStack(alignment: .leading, spacing: 2) {
                 Text("Corner badge")
-                Text(model.effectiveIncludeWatermark ? "\"Made with Loopline\" enabled" : "Clean video (no watermark)")
+                Text(model.effectiveIncludeWatermark ? "Shows \"Made with Loopline\"" : "No badge")
                     .font(LooplineTheme.text(11, mono: true))
                     .foregroundStyle(Color.looplineMuted)
             }
@@ -210,7 +210,7 @@ private struct LooplineExportPreviewCard: View {
     private var headerRow: some View {
         HStack(spacing: 8) {
             if model.nativeExportURL != nil {
-                LooplinePill(text: "Rendered video", tint: .looplineMint, icon: "checkmark.circle.fill")
+                LooplinePill(text: "Your video", tint: .looplineMint, icon: "checkmark.circle.fill")
             } else {
                 HStack(spacing: 4) {
                     ForEach(ExportPreviewMode.allCases) { mode in
@@ -481,7 +481,7 @@ private struct LooplineFullPreviewSheet: View {
                             .font(LooplineTheme.text(17, weight: .bold))
                             .foregroundStyle(Color.white)
                             .lineLimit(1)
-                        Text("\(model.exportLayout.title) · \(model.exportResolution) · \(model.exportFormat)")
+                        Text("\(model.exportLayout.title) · \(model.exportResolution) · \(LooplineExportFormat.label(for: model.exportFormat))")
                             .font(LooplineTheme.text(11, mono: true))
                             .foregroundStyle(Color.white.opacity(0.7))
                             .lineLimit(1)
@@ -668,5 +668,19 @@ private struct LooplineFullPreviewSheet: View {
             }
         }
         .preferredColorScheme(.dark)
+    }
+}
+
+/// Friendly names for the stored export format values (which stay technical for the render pipeline).
+enum LooplineExportFormat {
+    static let choices = ["H.264 MP4", "HEVC MP4", "HEVC MOV"]
+
+    static func label(for format: String) -> String {
+        switch format {
+        case "H.264 MP4": "Most compatible"
+        case "HEVC MP4": "Smaller file"
+        case "HEVC MOV": "Smaller file (Apple)"
+        default: format
+        }
     }
 }

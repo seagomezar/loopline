@@ -143,9 +143,9 @@ final class LocalProjectStore {
                 let backup = directory.appendingPathComponent("project.previous.json")
                 if let recovered = try? load(from: backup) {
                     projects.append(recovered)
-                    loadWarnings.append("Recovered \(recovered.title) from its previous save. Your source takes are retained.")
+                    loadWarnings.append("We restored \(recovered.title) from its last save.")
                 } else {
-                    loadWarnings.append("A project could not be opened. Its files are retained for recovery.")
+                    loadWarnings.append("A session couldn't be opened. Its recordings are still saved.")
                 }
             }
         }
@@ -369,10 +369,10 @@ enum ProjectStoreError: LocalizedError, Equatable {
     case invalidProject, invalidTake, invalidPath, lowStorage
     var errorDescription: String? {
         switch self {
-        case .invalidProject: "The project document is invalid. Its source files have been retained."
-        case .invalidTake: "This take has not finished writing. The draft is retained so you can retry."
-        case .invalidPath: "The project contains an unsafe media path."
-        case .lowStorage: "There is not enough free storage. Free some space, then retry."
+        case .invalidProject: "This session couldn't be opened. Its recordings are still saved."
+        case .invalidTake: "This take didn't finish saving. Please try again."
+        case .invalidPath: "This session couldn't be opened."
+        case .lowStorage: "Not enough storage. Free up some space and try again."
         }
     }
 }

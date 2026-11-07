@@ -64,7 +64,7 @@ final class RenderCoordinator: ObservableObject {
             for await value in session.states(updateInterval: 0.15) {
                 guard case let .exporting(progress) = value else { continue }
                 guard !Task.isCancelled, self?.activeExportID == exportID else { return }
-                self?.state = .rendering(progress: progress.fractionCompleted * 0.95, message: "Rendering on this device")
+                self?.state = .rendering(progress: progress.fractionCompleted * 0.95, message: "Creating your video")
             }
         }
         defer {
@@ -103,10 +103,10 @@ enum RenderError: LocalizedError {
     case exportUnavailable, noSourceTracks, noVideoTracks, outputVerificationFailed
     var errorDescription: String? {
         switch self {
-        case .exportUnavailable: "This device does not support the selected export settings. Try H.264 at 1080p."
-        case .noSourceTracks: "Record a take before rendering."
-        case .noVideoTracks: "The project needs at least one readable video take."
-        case .outputVerificationFailed: "The rendered file could not be verified. Your source takes are safe."
+        case .exportUnavailable: "This device can't create a video with these settings. Try 1080p and Most compatible."
+        case .noSourceTracks: "Record a part first."
+        case .noVideoTracks: "Record at least one part with video first."
+        case .outputVerificationFailed: "Your video couldn't be created. Your recordings are safe, so try again."
         }
     }
 }

@@ -119,10 +119,10 @@ enum OfflineSyncError: LocalizedError {
     case noAudioTrack, readerUnavailable, takeTooShort, noCorrelation
     var errorDescription: String? {
         switch self {
-        case .noAudioTrack: "Sync Assist needs audio in both takes."
-        case .readerUnavailable: "The local take could not be decoded."
-        case .takeTooShort: "Record a longer phrase before running Sync Assist."
-        case .noCorrelation: "No reliable match was found. Use the manual timing controls to align these parts."
+        case .noAudioTrack: "Both parts need sound to be lined up."
+        case .readerUnavailable: "This take couldn't be read."
+        case .takeTooShort: "Record a longer phrase so the parts can be lined up."
+        case .noCorrelation: "Couldn't find a match. Try adjusting the timing by hand."
         }
     }
 }

@@ -1,4 +1,4 @@
-# Loopline v1.0 (Build 15) — Guía y Resumen de Envío a App Store Connect (ES / EN)
+# Loopline v1.0 (Build 16) — Guía y Resumen de Envío a App Store Connect (ES / EN)
 
 ## 1. URLs Oficiales en GitHub Pages (Verificadas con HTTP 200)
 
@@ -19,13 +19,14 @@ Todas las páginas requeridas por Apple están publicadas en **Español (`es-MX`
 - **Bundle Identifier:** `com.seagomezar.loopline`
 - **Team ID:** `QWY6U4KSA6` (*Sebastian Gomez*)
 - **Versión de Tienda:** `1.0`
-- **Build Subido a App Store Connect / TestFlight:** **Build `15` (`v1.0 (15)`)**
+- **Build Subido a App Store Connect / TestFlight:** **Build `16` (`v1.0 (16)`)**
 - **In-App Purchase (Non-Consumable):**
   - **Apple IAP ID:** `6826871438`
   - **Product ID:** `com.seagomezar.loopline.pro.lifetime`
-  - **Reference Name:** `Loopline Pro - Lifetime Unlock`
+  - **Reference Name:** `Loopline Pro - Lifetime Unlock` • **Nombre visible:** `Loopline Pro`
   - **Tipo:** `Non-Consumable` (Compra única de por vida • Sin suscripciones)
-  - **Precio de Lanzamiento:** `$9.99 USD` (Regular `$14.99 USD`) • **Apple Family Sharing:** Activado
+  - **Precio:** `$0.99 USD` (precio base EE. UU.; Apple ajusta los demás países) • **Apple Family Sharing:** Activado
+  - **Sin suscripciones:** el pase anual se eliminó de la app y del archivo StoreKit.
 - **Cifrado de Exportación:** `ITSAppUsesNonExemptEncryption = false` (Declarado en `Info.plist`)
 - **Categorías:** `Música` (Principal) • `Educación` (Secundaria)
 - **Clasificación por Edades:** `4+`
@@ -100,3 +101,13 @@ How to test core features & StoreKit 2 In-App Purchase in Build 15:
    - Tap the "Loopline Pro" pill in the top header, or select any Pro feature (recording a 4th+ voice, choosing one of the 12 PRO asymmetric layouts, tapping "Find a match" Auto Sync Assist, or selecting 4K / HEVC / Remove watermark on Export) to open the Loopline Pro sheet.
    - The paywall clearly displays the one-time price, "Restore Purchases" button, and direct links to Terms of Use (EULA) and Privacy Policy.
 ```
+
+---
+
+## 6. Build 16 — Cambios
+
+- Cámara corregida en iPad: la vista previa y la grabación siguen la orientación del dispositivo (`AVCaptureDevice.RotationCoordinator`), incluido el iPad Pro M4/M5 con la cámara frontal en el borde horizontal.
+- Textos de la app simplificados (sin "On device", "offline", códecs ni tecnicismos).
+- Loopline Pro pasa a costar `$0.99 USD` como compra única; se eliminó la suscripción anual.
+- Ficha de la tienda (ES/EN), notas para revisión y textos de la compra integrada actualizados con `scripts/submit_to_app_store.py`; los textos vigentes viven en ese script.
+

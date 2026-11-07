@@ -53,10 +53,10 @@ enum SyncAssistState {
     }
     var detail: String {
         switch self {
-        case let .ready(confidence, offset): "Suggested placement \(offset) ms · \(confidence)% confidence"
-        case .analyzing: "Comparing the selected part with the first other recorded part."
-        case let .applied(offset): "Part placed at \(offset) ms. You can undo this adjustment."
-        case .manual: "Find a timing match or nudge a part by milliseconds."
+        case let .ready(_, offset): "Suggested shift: \(offset) ms"
+        case .analyzing: "Listening to your parts…"
+        case .applied: "Timing updated. You can undo this."
+        case .manual: "Line up this part automatically or adjust it by hand."
         }
     }
     var isAnalyzing: Bool { if case .analyzing = self { true } else { false } }
@@ -85,8 +85,8 @@ enum ExportPreviewMode: String, CaseIterable, Identifiable {
     var id: String { rawValue }
     var title: String {
         switch self {
-        case .realPreview: "Real preview"
-        case .frameCrop: "Touch crop"
+        case .realPreview: "Preview"
+        case .frameCrop: "Adjust frames"
         }
     }
     var icon: String {
@@ -447,7 +447,7 @@ final class LooplineViewModel: ObservableObject {
             let url = try? store.mediaURL(for: take.media.mediaPath, in: project)
             let exists = url.map { FileManager.default.fileExists(atPath: $0.path) } ?? false
             return LooplineTrack(id: track.id.rawValue, name: track.name,
-                role: exists ? "Saved on this iPhone" : "Source file unavailable",
+                role: exists ? "" : "Recording missing",
                 duration: Double(take.media.duration.rawValue) / Double(take.media.sampleRate.hertz),
                 offsetMilliseconds: Int(project.manifest.project.timebase.milliseconds(for: track.placement.effectiveTimelineStart)),
                 volume: track.mix.gainCentibels <= -12000 ? 0 : pow(10, Double(track.mix.gainCentibels) / 2000),
@@ -831,7 +831,7 @@ final class LooplineViewModel: ObservableObject {
                 refreshTracks()
                 selectedTrackID = tracks.last?.id
                 hasRecoverableDraft = false
-            } catch { errorMessage = "The draft could not be reopened. Its file is retained. \(error.localizedDescription)" }
+            } catch { errorMessage = "This take couldn't be recovered. Try again, or start fresh." }
         }
     }
 
@@ -1084,7 +1084,7 @@ final class LooplineViewModel: ObservableObject {
     func runSyncAssist() {
         guard !transportBusy, !syncState.isAnalyzing, let target = selectedTrack, let targetURL = target.sourceURL,
               let reference = tracks.first(where: { $0.id != target.id && $0.sourceURL != nil }), let referenceURL = reference.sourceURL else {
-            errorMessage = "Record two parts before running Sync Assist."
+            errorMessage = "Record at least two parts to line them up."
             return
         }
         syncState = .analyzing

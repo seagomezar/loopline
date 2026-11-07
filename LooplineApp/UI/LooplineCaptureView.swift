@@ -9,17 +9,15 @@ struct LooplineCaptureView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 20) {
-                LooplineTopBar(eyebrow: "Your offline studio", title: "Every part.\nAll you.") {
-                    LooplinePill(text: "On device", tint: .looplineMint, icon: "internaldrive")
-                }
+                LooplineTopBar(eyebrow: "Your studio", title: "Every part.\nAll you.")
                 if model.hasRecoverableDraft {
                     LooplineSurface {
                         VStack(alignment: .leading, spacing: 12) {
                             Text("A take is waiting for you").font(LooplineTheme.text(18, weight: .bold))
-                            Text("Reopen your saved draft before starting another recording.").foregroundStyle(Color.looplineMuted)
-                            LooplinePrimaryButton(title: "Recover draft", icon: "arrow.counterclockwise", tint: .looplinePastelYellow,
+                            Text("Pick up where you left off before recording again.").foregroundStyle(Color.looplineMuted)
+                            LooplinePrimaryButton(title: "Recover take", icon: "arrow.counterclockwise", tint: .looplinePastelYellow,
                                 isDisabled: model.transportBusy) { model.recoverDraft() }
-                            Button("Keep draft file and start fresh") { model.setAsideDraft() }
+                            Button("Start fresh") { model.setAsideDraft() }
                                 .font(LooplineTheme.text(13, weight: .medium)).tint(.looplineInk)
                                 .frame(minHeight: 44).disabled(model.transportBusy)
                         }
@@ -69,16 +67,16 @@ struct LooplineCaptureView: View {
                 trackPendingDeletion = nil
             }
         } message: { track in
-            Text("This removes \(track.name) and its recorded video and audio from this session.")
+            Text("This removes \(track.name) from this session.")
         }
         .sheet(item: $trackPendingRename) { track in
             VStack(alignment: .leading, spacing: 18) {
                 HStack(alignment: .top, spacing: 12) {
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("Part headline")
+                        Text("Part name")
                             .font(LooplineTheme.text(22, weight: .bold))
                             .foregroundStyle(Color.looplineInk)
-                        Text("Give this part a clear headline so you can spot it across your mix and export.")
+                        Text("Name it so it's easy to find later.")
                             .font(LooplineTheme.text(13))
                             .foregroundStyle(Color.looplineMuted)
                             .fixedSize(horizontal: false, vertical: true)
@@ -96,7 +94,7 @@ struct LooplineCaptureView: View {
                     .buttonStyle(.plain)
                 }
 
-                TextField("e.g. Flute 1, Flute 3, First voice…", text: $renameDraft)
+                TextField("e.g. Flute 1, Lead, Harmony", text: $renameDraft)
                     .font(LooplineTheme.text(16, weight: .bold))
                     .submitLabel(.done)
                     .onSubmit {
@@ -114,7 +112,7 @@ struct LooplineCaptureView: View {
                 }
 
                 LooplinePrimaryButton(
-                    title: "Save headline",
+                    title: "Save name",
                     icon: "checkmark",
                     tint: .looplinePastelGreen,
                     isDisabled: renameDraft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -139,7 +137,7 @@ struct LooplineCaptureView: View {
         LooplineSurface(padding: 14) {
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
-                    Text("PART HEADLINE").font(LooplineTheme.text(10, mono: true)).foregroundStyle(Color.looplineMuted)
+                    Text("PART NAME").font(LooplineTheme.text(10, mono: true)).foregroundStyle(Color.looplineMuted)
                     Spacer()
                     Text(model.effectiveNextPartTitle)
                         .font(LooplineTheme.text(11, weight: .bold, mono: true))
@@ -147,7 +145,7 @@ struct LooplineCaptureView: View {
                 }
                 HStack(spacing: 8) {
                     Image(systemName: "music.note").foregroundStyle(Color.looplineMuted)
-                    TextField("e.g. Flute 1, Flute 3, First voice… (\(model.defaultNextPartTitle))", text: $model.nextPartTitle)
+                    TextField(model.defaultNextPartTitle, text: $model.nextPartTitle)
                         .font(LooplineTheme.text(14, weight: .medium))
                         .textFieldStyle(.plain)
                         .submitLabel(.done)
@@ -160,7 +158,7 @@ struct LooplineCaptureView: View {
                                 .foregroundStyle(Color.looplineMuted)
                         }
                         .buttonStyle(.plain)
-                        .accessibilityLabel("Clear part headline")
+                        .accessibilityLabel("Clear part name")
                     }
                 }
                 .padding(.horizontal, 12)
@@ -247,12 +245,12 @@ struct LooplineCaptureView: View {
                     }.pickerStyle(.segmented).frame(maxWidth: 215).accessibilityIdentifier("capture.countIn")
                 }
                 HStack {
-                    Text("Subdivisions").font(LooplineTheme.text(13))
+                    Text("Clicks per beat").font(LooplineTheme.text(13))
                     Spacer()
-                    Picker("Subdivisions", selection: $model.subdivisions) { Text("1").tag(1); Text("2").tag(2); Text("3").tag(3); Text("4").tag(4) }
+                    Picker("Clicks per beat", selection: $model.subdivisions) { Text("1").tag(1); Text("2").tag(2); Text("3").tag(3); Text("4").tag(4) }
                         .pickerStyle(.segmented).frame(maxWidth: 215)
                 }
-                Toggle("Accent the downbeat", isOn: $model.accentEnabled).font(LooplineTheme.text(13)).tint(.looplineBlue)
+                Toggle("Accent beat 1", isOn: $model.accentEnabled).font(LooplineTheme.text(13)).tint(.looplineBlue)
                 HStack {
                     Image(systemName: "speaker.wave.2")
                     Slider(value: $model.clickVolume).tint(.looplineBlue).accessibilityLabel("Click volume")
@@ -275,8 +273,8 @@ private struct CapturePreviewCard: View {
     private var statusPillText: String {
         let headline = model.effectiveNextPartTitle
         if model.isCountingIn { return "Count in · \(headline)" }
-        if model.isRecording { return "Live take · \(headline)" }
-        return "Camera · \(headline)"
+        if model.isRecording { return "Recording · \(headline)" }
+        return headline
     }
 
     var body: some View {
@@ -327,8 +325,8 @@ private struct CapturePreviewCard: View {
             HStack(spacing: 12) {
                 Image(systemName: "headphones").foregroundStyle(Color.looplineInk)
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(clock.routeName).font(LooplineTheme.text(12, weight: .medium))
-                    Text(clock.routeName == "Not configured" ? "Use headphones for overdubbing" : String(format: "%.0f ms route latency · headphones recommended", clock.routeLatencyMilliseconds))
+                    Text(clock.routeName == "Not configured" ? "Headphones" : clock.routeName).font(LooplineTheme.text(12, weight: .medium))
+                    Text("Headphones recommended")
                         .font(LooplineTheme.text(10, mono: true)).foregroundStyle(Color.looplineMuted)
                 }
                 Spacer(minLength: 4)

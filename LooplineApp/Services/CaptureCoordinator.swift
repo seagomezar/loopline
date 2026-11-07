@@ -15,6 +15,8 @@ final class CaptureCoordinator: NSObject, ObservableObject, @unchecked Sendable 
     @Published private(set) var inputLevel: Double = 0
     @Published private(set) var errorMessage: String?
     @Published private(set) var timelineOffsetMilliseconds: Int?
+    /// Unique ID of the camera feeding the session, used by the preview to build its rotation coordinator.
+    @Published private(set) var activeCameraID: String?
     private let queue = DispatchQueue(label: "com.loopline.capture", qos: .userInitiated)
     private let videoOutput = AVCaptureVideoDataOutput()
     private let audioOutput = AVCaptureAudioDataOutput()
@@ -26,6 +28,10 @@ final class CaptureCoordinator: NSObject, ObservableObject, @unchecked Sendable 
     private var firstSample: CMTime?
     private var offsetMilliseconds = 0
     private var position: AVCaptureDevice.Position = .front
+    /// Rotation applied to recorded frames. Driven by the preview's rotation coordinator so takes
+    /// match what the user sees, whatever the device orientation or camera placement (e.g. iPad Pro
+    /// front camera on the landscape edge). Portrait (90°) until the coordinator reports otherwise.
+    private var captureRotationAngle: CGFloat = 90
 
     func prepare() async throws {
         guard await AVCaptureDevice.requestAccess(for: .video),
@@ -68,13 +74,32 @@ final class CaptureCoordinator: NSObject, ObservableObject, @unchecked Sendable 
         videoOutput.setSampleBufferDelegate(self, queue: queue)
         audioOutput.setSampleBufferDelegate(self, queue: queue)
         if let connection = videoOutput.connection(with: .video) {
-            if connection.isVideoRotationAngleSupported(90) { connection.videoRotationAngle = 90 }
             if connection.isVideoMirroringSupported {
                 connection.automaticallyAdjustsVideoMirroring = false
                 connection.isVideoMirrored = position == .front
             }
         }
+        applyCaptureRotation()
         configured = true
+        let cameraID = camera.uniqueID
+        DispatchQueue.main.async { self.activeCameraID = cameraID }
+    }
+
+    /// Called by the preview whenever the horizon-level rotation changes (device turned, camera switched).
+    func updateCaptureRotation(_ angle: CGFloat) {
+        queue.async { [self] in
+            captureRotationAngle = angle
+            applyCaptureRotation()
+        }
+    }
+
+    /// Must run on `queue`. The writer's frame size is fixed when recording starts, so a rotation
+    /// that arrives mid-take is held and applied once the take finishes.
+    private func applyCaptureRotation() {
+        guard writer == nil, let connection = videoOutput.connection(with: .video),
+              connection.isVideoRotationAngleSupported(captureRotationAngle),
+              connection.videoRotationAngle != captureRotationAngle else { return }
+        connection.videoRotationAngle = captureRotationAngle
     }
 
     func switchCamera() async throws {
@@ -132,6 +157,7 @@ final class CaptureCoordinator: NSObject, ObservableObject, @unchecked Sendable 
                 guard let writer, let url = outputURL else { continuation.resume(returning: nil); return }
                 self.writer = nil
                 outputURL = nil
+                applyCaptureRotation()
                 let offset = offsetMilliseconds
                 DispatchQueue.main.async { self.isRecording = false }
                 guard firstSample != nil else {
@@ -185,12 +211,12 @@ extension CaptureCoordinator: AVCaptureVideoDataOutputSampleBufferDelegate, AVCa
         guard let input else { return }
         if !input.isReadyForMoreMediaData {
             if output === audioOutput {
-                DispatchQueue.main.async { self.errorMessage = "Recording stopped because audio could not be written fast enough. Your draft is retained." }
+                DispatchQueue.main.async { self.errorMessage = "Recording stopped unexpectedly. Your take is safe." }
             }
             return
         }
         if !input.append(buffer) {
-            let message = writer.error?.localizedDescription ?? "The take could not be written. Your draft has been retained."
+            let message = "Something went wrong while recording. Your take is safe."
             DispatchQueue.main.async { self.errorMessage = message }
         }
     }
@@ -201,9 +227,9 @@ enum CaptureError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .permissionDenied: "Allow camera and microphone access in Settings to record a take."
-        case .cameraUnavailable: "A camera or microphone is unavailable on this device."
-        case .cannotConfigure: "The recording session could not be prepared. Check the audio route and retry."
-        case .writeFailed: "The take could not be finalized. Its draft has been retained for recovery."
+        case .cameraUnavailable: "The camera or microphone isn't available right now."
+        case .cannotConfigure: "The camera couldn't start. Check your headphones and try again."
+        case .writeFailed: "This take couldn't be saved. You can recover it and try again."
         }
     }
 }

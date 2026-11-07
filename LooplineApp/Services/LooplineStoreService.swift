@@ -25,13 +25,13 @@ public enum LooplinePaywallTrigger: Identifiable, Equatable, Sendable {
 
     public var eyebrow: String {
         switch self {
-        case .general: "LOOPLINE PRO · LIFETIME STUDIO"
-        case .fourthVoice: "4 TO 6+ VOICES · ENSEMBLE RECORDING"
-        case .proLayout: "16 COLLAGE LAYOUTS · ASYMMETRIC FRAMES"
-        case .proExportFormat: "4K UHD & HEVC · MASTER QUALITY"
-        case .removeWatermark: "CLEAN EXPORT · NO WATERMARK"
-        case .syncAssist: "SYNC ASSIST · AUTOMATIC ALIGNMENT"
-        case .unlimitedSessions: "UNLIMITED SESSIONS · LOCAL LIBRARY"
+        case .general: "LOOPLINE PRO"
+        case .fourthVoice: "4 OR MORE VOICES"
+        case .proLayout: "ALL 16 LAYOUTS"
+        case .proExportFormat: "4K EXPORT"
+        case .removeWatermark: "NO BADGE"
+        case .syncAssist: "SYNC ASSIST"
+        case .unlimitedSessions: "UNLIMITED SESSIONS"
         }
     }
 
@@ -43,33 +43,33 @@ public enum LooplinePaywallTrigger: Identifiable, Equatable, Sendable {
             "Record quartets, quintets, and full ensembles."
         case let .proLayout(layoutTitle):
             "Export with \(layoutTitle) and all 16 frame layouts."
-        case let .proExportFormat(resolution, format):
-            "Render in \(resolution) \(format) right on your device."
+        case .proExportFormat:
+            "Export sharper videos and smaller files."
         case .removeWatermark:
             "Export a clean video without the Loopline badge."
         case .syncAssist:
-            "Align every voice to the millisecond in one tap."
+            "Line up every voice in one tap."
         case .unlimitedSessions:
-            "Keep as many sessions as your device can hold."
+            "Keep as many sessions as you want."
         }
     }
 
     public var subtitle: String {
         switch self {
         case .general:
-            "One-time unlock. No accounts, no cloud uploads, and no recurring subscriptions required."
+            "Pay once and keep it forever. No account needed."
         case .fourthVoice:
-            "The free studio includes up to 3 voices for solos, duos, and trios. Unlock Loopline Pro to layer 4 to 6+ parts."
+            "Free includes up to 3 voices. Go Pro to record 4 or more."
         case .proLayout:
-            "Preview any frame style anytime. Unlock Loopline Pro to export asymmetric combinations, Hero frames, and 3×N / 4×N grids."
+            "Try any layout for free. Go Pro to export with all of them."
         case .proExportFormat:
-            "1080p H.264 MP4 is always free. Unlock Loopline Pro for 4K UHD resolution and high-efficiency HEVC (.mov and .mp4) masters."
+            "1080p is always free. Go Pro for 4K and smaller files."
         case .removeWatermark:
-            "Remove the subtle \"Made with Loopline\" corner badge so your performance is 100% yours to publish anywhere."
+            "Remove the \"Made with Loopline\" badge so your video is all yours."
         case .syncAssist:
-            "Manual millisecond nudging is always free. Unlock Loopline Pro to apply automatic cross-correlation timing matches."
+            "Adjusting timing by hand is always free. Go Pro to line up parts automatically."
         case .unlimitedSessions:
-            "The free tier stores up to 2 active sessions at a time. Unlock Loopline Pro for unlimited local project packages."
+            "Free includes up to 2 sessions. Go Pro for unlimited sessions."
         }
     }
 
@@ -86,8 +86,7 @@ public enum LooplinePaywallTrigger: Identifiable, Equatable, Sendable {
 @MainActor
 public final class LooplineStoreService: ObservableObject {
     nonisolated public static let lifetimeProductID = "com.seagomezar.loopline.pro.lifetime"
-    nonisolated public static let annualProductID = "com.seagomezar.loopline.pro.annual"
-    nonisolated public static let allProductIDs: [String] = [lifetimeProductID, annualProductID]
+    nonisolated public static let allProductIDs: [String] = [lifetimeProductID]
 
     nonisolated public static let freeMaxTracks = 3
     nonisolated public static let freeMaxProjects = 2
@@ -147,16 +146,8 @@ public final class LooplineStoreService: ObservableObject {
         products.first { $0.id == Self.lifetimeProductID }
     }
 
-    public var annualProduct: Product? {
-        products.first { $0.id == Self.annualProductID }
-    }
-
     public var lifetimeDisplayPrice: String {
-        lifetimeProduct?.displayPrice ?? "$14.99"
-    }
-
-    public var annualDisplayPrice: String {
-        annualProduct?.displayPrice ?? "$6.99"
+        lifetimeProduct?.displayPrice ?? "$0.99"
     }
 
     public func setDebugProUnlocked(_ unlocked: Bool?) {
@@ -201,12 +192,12 @@ public final class LooplineStoreService: ObservableObject {
                 let transaction = try Self.checkVerified(verification)
                 updateEntitlement(for: transaction)
                 await transaction.finish()
-                statusMessage = "Loopline Pro is unlocked on this device."
+                statusMessage = "Loopline Pro is unlocked."
                 return true
             case .userCancelled:
                 return false
             case .pending:
-                statusMessage = "Your purchase is pending approval (Ask to Buy). It will unlock automatically once approved."
+                statusMessage = "Your purchase is waiting for approval. Pro unlocks automatically once it's approved."
                 return false
             @unknown default:
                 return false
