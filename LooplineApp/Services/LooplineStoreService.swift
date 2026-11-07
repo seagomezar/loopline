@@ -25,7 +25,7 @@ public enum LooplinePaywallTrigger: Identifiable, Equatable, Sendable {
 
     public var eyebrow: String {
         switch self {
-        case .general: "LOOPLINE PRO"
+        case .general: "OVERDUBLY PRO"
         case .fourthVoice: "4 OR MORE VOICES"
         case .proLayout: "ALL 16 LAYOUTS"
         case .proExportFormat: "4K EXPORT"
@@ -46,7 +46,7 @@ public enum LooplinePaywallTrigger: Identifiable, Equatable, Sendable {
         case .proExportFormat:
             "Export sharper videos and smaller files."
         case .removeWatermark:
-            "Export a clean video without the Loopline badge."
+            "Export a clean video without the Overdubly badge."
         case .syncAssist:
             "Line up every voice in one tap."
         case .unlimitedSessions:
@@ -65,7 +65,7 @@ public enum LooplinePaywallTrigger: Identifiable, Equatable, Sendable {
         case .proExportFormat:
             "1080p is always free. Go Pro for 4K and smaller files."
         case .removeWatermark:
-            "Remove the \"Made with Loopline\" badge so your video is all yours."
+            "Remove the \"Made with Overdubly\" badge so your video is all yours."
         case .syncAssist:
             "Adjusting timing by hand is always free. Go Pro to line up parts automatically."
         case .unlimitedSessions:
@@ -192,7 +192,7 @@ public final class LooplineStoreService: ObservableObject {
                 let transaction = try Self.checkVerified(verification)
                 updateEntitlement(for: transaction)
                 await transaction.finish()
-                statusMessage = "Loopline Pro is unlocked."
+                statusMessage = "Overdubly Pro is unlocked."
                 return true
             case .userCancelled:
                 return false
@@ -219,10 +219,10 @@ public final class LooplineStoreService: ObservableObject {
             try await AppStore.sync()
             await refreshEntitlements()
             if isProUnlocked {
-                statusMessage = "Your Loopline Pro purchase has been restored."
+                statusMessage = "Your Overdubly Pro purchase has been restored."
                 return true
             } else {
-                statusMessage = "No previous Loopline Pro purchases were found for this Apple Account."
+                statusMessage = "No previous Overdubly Pro purchases were found for this Apple Account."
                 return false
             }
         } catch {

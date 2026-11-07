@@ -321,7 +321,7 @@ final class LocalProjectStore {
         try preflight(minimumBytes: 200_000_000)
         let directory = projectDirectory(for: project.id).appendingPathComponent("Renders")
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-        return directory.appendingPathComponent("Loopline-\(UUID().uuidString.prefix(8)).\(fileExtension)")
+        return directory.appendingPathComponent("Overdubly-\(UUID().uuidString.prefix(8)).\(fileExtension)")
     }
 
     func mediaURL(for path: String, in project: StoredProject) throws -> URL {

@@ -724,7 +724,7 @@ enum MediaCompositionBuilder {
         scale: CGFloat,
         colorSpace: CGColorSpace
     ) {
-        let watermarkText = "Made with Loopline" as CFString
+        let watermarkText = "Made with Overdubly" as CFString
         let fontSize = max(14 * scale, min(22 * scale, size.width * 0.019))
         let font = CTFontCreateUIFontForLanguage(.emphasizedSystem, fontSize, nil)
             ?? CTFontCreateWithName("HelveticaNeue-Bold" as CFString, fontSize, nil)

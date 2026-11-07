@@ -111,3 +111,10 @@ How to test core features & StoreKit 2 In-App Purchase in Build 15:
 - Loopline Pro pasa a costar `$0.99 USD` como compra única; se eliminó la suscripción anual.
 - Ficha de la tienda (ES/EN), notas para revisión y textos de la compra integrada actualizados con `scripts/submit_to_app_store.py`; los textos vigentes viven en ese script.
 
+## 7. Build 17 — Nuevo nombre: Overdubly
+
+- La app pasa a llamarse **Overdubly** (dominio `overdubly.com` libre al 7 nov 2026; aún hay que registrarlo).
+- Cambia el nombre visible (`CFBundleDisplayName`), los textos de la app, la insignia «Made with Overdubly», la compra «Overdubly Pro», la ficha de la App Store y las páginas de GitHub Pages.
+- No cambian: Bundle ID `com.seagomezar.loopline`, Product ID `com.seagomezar.loopline.pro.lifetime`, App Apple ID `6826597725` ni las URLs de GitHub Pages (`seagomezar.github.io/loopline`).
+- Las secciones anteriores de esta guía conservan el nombre «Loopline» como registro histórico.
+

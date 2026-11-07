@@ -40,7 +40,7 @@ struct LooplinePaywallView: View {
                         .frame(width: 4.5, height: [11.0, 20.0, 14.0, 23.0][index])
                 }
             }
-            Text("loopline pro")
+            Text("overdubly pro")
                 .font(LooplineTheme.text(20, weight: .bold))
                 .tracking(-0.6)
             Spacer()
@@ -56,7 +56,7 @@ struct LooplinePaywallView: View {
             }
             .buttonStyle(.plain)
             .accessibilityIdentifier("paywall.close")
-            .accessibilityLabel("Close Loopline Pro")
+            .accessibilityLabel("Close Overdubly Pro")
         }
     }
 
@@ -82,7 +82,7 @@ struct LooplinePaywallView: View {
         LooplineSurface(padding: 18) {
             VStack(alignment: .leading, spacing: 14) {
                 HStack {
-                    Text("Everything in Loopline Pro")
+                    Text("Everything in Overdubly Pro")
                         .font(LooplineTheme.text(16, weight: .bold))
                     Spacer()
                     Text("FREE VS PRO")
@@ -115,7 +115,7 @@ struct LooplinePaywallView: View {
                     icon: "sparkles.rectangle.stack.fill",
                     tint: .looplineMint,
                     title: "Clean Video — No Watermark",
-                    detail: "Remove the \"Made with Loopline\" badge from your videos."
+                    detail: "Remove the \"Made with Overdubly\" badge from your videos."
                 )
                 Divider()
                 featureRow(
@@ -160,7 +160,7 @@ struct LooplinePaywallView: View {
                 .font(LooplineTheme.text(20, weight: .bold))
                 .foregroundStyle(Color.looplineBlue)
             VStack(alignment: .leading, spacing: 4) {
-                Text("Loopline Pro")
+                Text("Overdubly Pro")
                     .font(LooplineTheme.text(15, weight: .bold))
                 Text("Pay once. Yours forever on iPhone & iPad, with Family Sharing.")
                     .font(LooplineTheme.text(11))
@@ -185,7 +185,7 @@ struct LooplinePaywallView: View {
     private var primaryActionSection: some View {
         VStack(spacing: 10) {
             LooplinePrimaryButton(
-                title: store.isPurchasing ? "Processing…" : "Unlock Loopline Pro · \(store.lifetimeDisplayPrice)",
+                title: store.isPurchasing ? "Processing…" : "Unlock Overdubly Pro · \(store.lifetimeDisplayPrice)",
                 icon: "lock.open.fill",
                 tint: .looplineHalftoneBlue,
                 isDisabled: store.isPurchasing
@@ -224,7 +224,7 @@ struct LooplinePaywallView: View {
                 Text("Continue with Free Export")
                     .font(LooplineTheme.text(14, weight: .bold))
                     .foregroundStyle(Color.looplineInk)
-                Text("1080p · Classic layout · \"Made with Loopline\" badge")
+                Text("1080p · Classic layout · \"Made with Overdubly\" badge")
                     .font(LooplineTheme.text(11, mono: true))
                     .foregroundStyle(Color.looplineMuted)
             }

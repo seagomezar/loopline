@@ -4,7 +4,8 @@ import CoreGraphics
 import Foundation
 
 let root = URL(fileURLWithPath: "/Users/sebas/Documents/loopline")
-let rawDir = root.appendingPathComponent("docs/screenshots")
+let rawDir = root.appendingPathComponent("build/raw_scenes")  // from scripts/capture_appstore_scenes.sh
+let docsDir = root.appendingPathComponent("docs/screenshots")
 let outRoot = root.appendingPathComponent("build/appstore_screenshots")
 
 struct Accent {
@@ -34,18 +35,18 @@ struct SceneMeta {
 
 let scenesByLocale: [String: [SceneMeta]] = [
     "es-MX": [
-        SceneMeta(index: 1, badge: "01 · ESTUDIO EN IPHONE E IPAD", title: "Cada parte. Todo tú.", subtitle: "Graba voces o instrumentos con metrónomo visual, cuenta regresiva y monitoreo local."),
-        SceneMeta(index: 2, badge: "02 · VISTA PREVIA REAL Y COMPLETA", title: "Previsualiza tu arreglo.", subtitle: "Reproduce tu mosaico multipista completo en 9:16, 1:1 o 16:9 antes de exportar."),
-        SceneMeta(index: 3, badge: "03 · SINCRONIZACIÓN AL MILISEGUNDO", title: "Mejor en conjunto.", subtitle: "Alinea tus pistas con Sync Assist automático o ajusta cada voz con precisión."),
-        SceneMeta(index: 4, badge: "04 · ENCUADRE TÁCTIL Y ORDEN DE VOCES", title: "Encuadra cada toma.", subtitle: "Cambia el orden de los marcos, arrastra para encuadrar y haz zoom en cada video."),
-        SceneMeta(index: 5, badge: "05 · 100 % EN TU DISPOSITIVO", title: "Tus sesiones, contigo.", subtitle: "Organiza tus proyectos multipista sin cuentas, sin nube y con privacidad total.")
+        SceneMeta(index: 1, badge: "01 · GRABA PARTE POR PARTE", title: "Cada parte. Todo tú.", subtitle: "Graba tu voz o tu instrumento con metrónomo y cuenta regresiva."),
+        SceneMeta(index: 2, badge: "02 · MÍRALO ANTES DE CREARLO", title: "Mira tu video completo.", subtitle: "Reproduce todas tus partes juntas antes de crear el video."),
+        SceneMeta(index: 3, badge: "03 · MEZCLA Y SINCRONIZA", title: "Mejor en conjunto.", subtitle: "Ajusta el volumen y alinea tus partes con un toque o a mano."),
+        SceneMeta(index: 4, badge: "04 · 16 DISEÑOS", title: "Acomoda cada cuadro.", subtitle: "Cambia el orden, arrastra y acerca cada parte sin volver a grabar."),
+        SceneMeta(index: 5, badge: "05 · TODAS TUS SESIONES", title: "Tus sesiones, a mano.", subtitle: "Guarda tus proyectos y retómalos cuando quieras. Sin cuentas.")
     ],
     "en-US": [
-        SceneMeta(index: 1, badge: "01 · IPHONE & IPAD STUDIO", title: "Every part. All you.", subtitle: "Record vocals or instruments with visual count-in, metronome, and local monitoring."),
-        SceneMeta(index: 2, badge: "02 · REAL & FULL VIDEO PREVIEW", title: "Preview before export.", subtitle: "Play back your complete multi-track collage in 9:16, 1:1, or 16:9 before rendering."),
-        SceneMeta(index: 3, badge: "03 · MILLISECOND SYNC ASSIST", title: "Better together.", subtitle: "Align every take automatically with Sync Assist or nudge timing by milliseconds."),
-        SceneMeta(index: 4, badge: "04 · TOUCH CROP & VOICE REORDERING", title: "Frame every performance.", subtitle: "Reorder voice slots and drag or pinch inside any frame in the enlarged Touch Crop canvas."),
-        SceneMeta(index: 5, badge: "05 · 100% ON-DEVICE PRIVACY", title: "Your sessions, saved locally.", subtitle: "Manage multi-part arrangements offline with zero accounts, zero cloud, and zero tracking.")
+        SceneMeta(index: 1, badge: "01 · RECORD PART BY PART", title: "Every part. All you.", subtitle: "Record your voice or instrument with a metronome and count-in."),
+        SceneMeta(index: 2, badge: "02 · SEE IT FIRST", title: "Watch the whole video.", subtitle: "Play all your parts together before you create the video."),
+        SceneMeta(index: 3, badge: "03 · MIX AND SYNC", title: "Better together.", subtitle: "Set the volume and line up your parts with one tap or by hand."),
+        SceneMeta(index: 4, badge: "04 · 16 LAYOUTS", title: "Arrange every frame.", subtitle: "Reorder, drag, and zoom each part without recording again."),
+        SceneMeta(index: 5, badge: "05 · ALL YOUR SESSIONS", title: "Your sessions, close by.", subtitle: "Keep your projects and pick them up anytime. No accounts.")
     ]
 ]
 
@@ -225,12 +226,10 @@ func renderPoster(
 }
 
 let fm = FileManager.default
-try? fm.removeItem(at: rawDir.appendingPathComponent("capture.png"))
-try? fm.removeItem(at: rawDir.appendingPathComponent("export.png"))
-try? fm.removeItem(at: rawDir.appendingPathComponent("mix.png"))
-try fm.copyItem(at: rawDir.appendingPathComponent("iphone_scene_1.png"), to: rawDir.appendingPathComponent("capture.png"))
-try fm.copyItem(at: rawDir.appendingPathComponent("iphone_scene_2.png"), to: rawDir.appendingPathComponent("export.png"))
-try fm.copyItem(at: rawDir.appendingPathComponent("iphone_scene_3.png"), to: rawDir.appendingPathComponent("mix.png"))
+for (scene, name) in [(1, "capture.png"), (2, "export.png"), (3, "mix.png")] {
+    try? fm.removeItem(at: docsDir.appendingPathComponent(name))
+    try fm.copyItem(at: rawDir.appendingPathComponent("iphone_scene_\(scene).png"), to: docsDir.appendingPathComponent(name))
+}
 
 for (locale, list) in scenesByLocale {
     for (idx, meta) in list.enumerated() {

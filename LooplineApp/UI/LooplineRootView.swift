@@ -26,7 +26,7 @@ struct LooplineRootView: View {
                                 .frame(width: 5, height: [12.0, 22.0, 16.0, 26.0][index])
                         }
                     }
-                    Text("loopline").font(LooplineTheme.text(22, weight: .bold)).tracking(-0.7)
+                    Text("overdubly").font(LooplineTheme.text(22, weight: .bold)).tracking(-0.7)
                     Button {
                         model.presentPaywall(.general)
                     } label: {
@@ -122,7 +122,7 @@ struct LooplineRootView: View {
             LooplinePaywallView(model: model, trigger: trigger)
                 .preferredColorScheme(.light)
         }
-        .alert("Loopline", isPresented: Binding(get: { model.errorMessage != nil }, set: { if !$0 { model.errorMessage = nil } })) {
+        .alert("Overdubly", isPresented: Binding(get: { model.errorMessage != nil }, set: { if !$0 { model.errorMessage = nil } })) {
             Button("OK") { model.errorMessage = nil }
         } message: { Text(model.errorMessage ?? "") }
     }

@@ -1,4 +1,6 @@
-# Loopline
+# Overdubly
+
+> Formerly *Loopline*. The Xcode project, bundle ID (`com.seagomezar.loopline`), and Swift type names keep the original name.
 
 An offline iPhone studio for layering vocal or instrumental video takes and saving a finished grid video.
 The current implementation targets iOS 18 or later.

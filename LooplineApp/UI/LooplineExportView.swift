@@ -156,7 +156,7 @@ struct LooplineExportView: View {
         HStack(spacing: 10) {
             VStack(alignment: .leading, spacing: 2) {
                 Text("Corner badge")
-                Text(model.effectiveIncludeWatermark ? "Shows \"Made with Loopline\"" : "No badge")
+                Text(model.effectiveIncludeWatermark ? "Shows \"Made with Overdubly\"" : "No badge")
                     .font(LooplineTheme.text(11, mono: true))
                     .foregroundStyle(Color.looplineMuted)
             }

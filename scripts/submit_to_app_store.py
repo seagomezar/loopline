@@ -24,9 +24,9 @@ ES_INFO_LOC_ID = "a9b92c0f-07bc-459d-ad85-9700dc50a772"
 EN_INFO_LOC_ID = "1a1f3449-3d5f-445e-8776-6929fe6a700b"
 IAP_ID = "6826871438"
 
-BUILD_VERSION = "16"
+BUILD_VERSION = "17"
 
-ES_DESCRIPTION = """Loopline te ayuda a grabar cada parte de una canción en video y unirlas en una sola pantalla. Graba tu voz o tu instrumento una parte a la vez, escucha las anteriores mientras grabas y crea un video listo para compartir.
+ES_DESCRIPTION = """Overdubly te ayuda a grabar cada parte de una canción en video y unirlas en una sola pantalla. Graba tu voz o tu instrumento una parte a la vez, escucha las anteriores mientras grabas y crea un video listo para compartir.
 
 Graba primero y decide después: elige el diseño, el orden de las partes y el encuadre de cada una cuando ya terminaste de grabar.
 
@@ -56,10 +56,10 @@ Guarda tu video en Fotos o Archivos, o compártelo directamente.
 Sin cuentas ni registros.
 
 GRATIS Y PRO
-• Gratis: hasta 3 partes, 4 diseños clásicos, videos en 720p y 1080p con la insignia «Made with Loopline» y hasta 2 sesiones.
-• Loopline Pro (un solo pago, sin suscripciones): 4 o más partes, los 16 diseños, Sync Assist automático, videos en 4K, sin insignia y sesiones ilimitadas. Incluye Compartir en familia."""
+• Gratis: hasta 3 partes, 4 diseños clásicos, videos en 720p y 1080p con la insignia «Made with Overdubly» y hasta 2 sesiones.
+• Overdubly Pro (un solo pago, sin suscripciones): 4 o más partes, los 16 diseños, Sync Assist automático, videos en 4K, sin insignia y sesiones ilimitadas. Incluye Compartir en familia."""
 
-EN_DESCRIPTION = """Loopline helps you record every part of a song on video and bring them together on one screen. Record your voice or instrument one part at a time, hear the earlier parts while you play, and create a video that's ready to share.
+EN_DESCRIPTION = """Overdubly helps you record every part of a song on video and bring them together on one screen. Record your voice or instrument one part at a time, hear the earlier parts while you play, and create a video that's ready to share.
 
 Record first, decide later: pick the layout, the order of the parts, and how each one is framed after you're done recording.
 
@@ -89,33 +89,33 @@ Save your video to Photos or Files, or share it directly.
 No accounts or sign-ups.
 
 FREE AND PRO
-• Free: up to 3 parts, 4 classic layouts, 720p and 1080p videos with a "Made with Loopline" badge, and up to 2 sessions.
-• Loopline Pro (one payment, no subscriptions): 4 or more parts, all 16 layouts, automatic Sync Assist, 4K videos, no badge, and unlimited sessions. Includes Family Sharing."""
+• Free: up to 3 parts, 4 classic layouts, 720p and 1080p videos with a "Made with Overdubly" badge, and up to 2 sessions.
+• Overdubly Pro (one payment, no subscriptions): 4 or more parts, all 16 layouts, automatic Sync Assist, 4K videos, no badge, and unlimited sessions. Includes Family Sharing."""
 
-ES_PROMO = "Graba cada parte de tu canción y únelas en un solo video. Gratis hasta 3 partes; Loopline Pro con un solo pago, sin suscripciones."
-EN_PROMO = "Record every part of your song and bring them together in one video. Free for up to 3 parts; Loopline Pro is a single payment, no subscriptions."
+ES_PROMO = "Graba cada parte de tu canción y únelas en un solo video. Gratis hasta 3 partes; Overdubly Pro con un solo pago, sin suscripciones."
+EN_PROMO = "Record every part of your song and bring them together in one video. Free for up to 3 parts; Overdubly Pro is a single payment, no subscriptions."
 
 ES_KEYWORDS = "multipista,acappella,overdub,pantalla dividida,looper,metronomo,musica,video,collage,coro,flauta"
 EN_KEYWORDS = "multitrack,acappella,overdub,split screen,video looper,metronome,music studio,collage,harmony,choir"
 
-REVIEW_NOTES = """Loopline is a multi-track video and audio recording app for musicians. No sign-in or demo account is required.
+REVIEW_NOTES = """Overdubly is a multi-track video and audio recording app for musicians. No sign-in or demo account is required.
 
-What's new in Build 16: the camera preview and recordings now follow the device orientation on iPad (including iPad Pro models with the front camera on the landscape edge), simplified in-app text, and a single Loopline Pro purchase (no subscriptions).
+What's new in Build 17: the camera preview and recordings now follow the device orientation on iPad (including iPad Pro models with the front camera on the landscape edge), simplified in-app text, a single Overdubly Pro purchase (no subscriptions), and the app is now named Overdubly.
 
 How to test:
 1. Free features:
    - Capture tab: set tempo and count-in, name the part ("Flute 1"), and record up to 3 parts (allow Camera and Microphone).
    - Mix & Sync tab: adjust volume, Mute/Solo, and timing with the "Manual" panel.
    - Export tab: switch between "Preview" and "Adjust frames", reorder frames, choose one of the 4 classic layouts, and create a 720p or 1080p video.
-2. Loopline Pro (com.seagomezar.loopline.pro.lifetime, non-consumable, one-time purchase):
-   - Open it from the "Loopline Pro" button in the header, or by using any Pro feature (recording a 4th part, choosing a PRO layout, tapping "Find a match", or choosing 4K / Smaller file / removing the badge on Export).
+2. Overdubly Pro (com.seagomezar.loopline.pro.lifetime, non-consumable, one-time purchase):
+   - Open it from the "Overdubly Pro" button in the header, or by using any Pro feature (recording a 4th part, choosing a PRO layout, tapping "Find a match", or choosing 4K / Smaller file / removing the badge on Export).
    - The Pro screen shows the one-time price, "Restore Purchases", and links to the Terms of Use (EULA) and Privacy Policy."""
 
-IAP_ES_NAME = "Loopline Pro"
+IAP_ES_NAME = "Overdubly Pro"
 IAP_ES_DESC = "Desbloquea 4+ partes, 16 diseños, Sync Assist y 4K."
-IAP_EN_NAME = "Loopline Pro"
+IAP_EN_NAME = "Overdubly Pro"
 IAP_EN_DESC = "Unlock 4+ parts, 16 layouts, Sync Assist and 4K."
-IAP_REVIEW_NOTE = "One-time non-consumable unlock for Loopline Pro: 4 or more parts, all 16 layouts, automatic Sync Assist, 4K export, no badge, and unlimited sessions. No subscriptions."
+IAP_REVIEW_NOTE = "One-time non-consumable unlock for Overdubly Pro: 4 or more parts, all 16 layouts, automatic Sync Assist, 4K export, no badge, and unlimited sessions. No subscriptions."
 
 
 def run_chrome_js(js_code: str, wait_var: str = "__ascStepResult"):
@@ -212,22 +212,24 @@ def main():
                 type: "appInfoLocalizations",
                 id: p.esInfoLocId,
                 attributes: {{
+                    name: "Overdubly",
                     privacyPolicyUrl: "https://seagomezar.github.io/loopline/privacy-policy.html?lang=es"
                 }}
             }}
         }});
-        log.push({{step: "esInfoLoc", status: rEsInfo.status}});
+        log.push({{step: "esInfoLoc", status: rEsInfo.status, err: rEsInfo.ok ? null : rEsInfo.raw}});
 
         const rEnInfo = await req("/iris/v1/appInfoLocalizations/" + p.enInfoLocId, "PATCH", {{
             data: {{
                 type: "appInfoLocalizations",
                 id: p.enInfoLocId,
                 attributes: {{
+                    name: "Overdubly",
                     privacyPolicyUrl: "https://seagomezar.github.io/loopline/en/privacy-policy.html"
                 }}
             }}
         }});
-        log.push({{step: "enInfoLoc", status: rEnInfo.status}});
+        log.push({{step: "enInfoLoc", status: rEnInfo.status, err: rEnInfo.ok ? null : rEnInfo.raw}});
 
         // 3. Update es-MX & en-US appStoreVersionLocalizations
         const rEsVer = await req("/iris/v1/appStoreVersionLocalizations/" + p.esVerLocId, "PATCH", {{
