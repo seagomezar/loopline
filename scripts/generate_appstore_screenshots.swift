@@ -33,20 +33,22 @@ struct SceneMeta {
     let subtitle: String
 }
 
+// Ordered as a story (Apple asset best practices): outcome first, then how you get there.
+// `index` is the raw simulator scene captured by scripts/capture_appstore_scenes.sh.
 let scenesByLocale: [String: [SceneMeta]] = [
     "es-MX": [
-        SceneMeta(index: 1, badge: "01 · GRABA PARTE POR PARTE", title: "Cada parte. Todo tú.", subtitle: "Graba tu voz o tu instrumento con metrónomo y cuenta regresiva."),
-        SceneMeta(index: 2, badge: "02 · MÍRALO ANTES DE CREARLO", title: "Mira tu video completo.", subtitle: "Reproduce todas tus partes juntas antes de crear el video."),
-        SceneMeta(index: 3, badge: "03 · MEZCLA Y SINCRONIZA", title: "Mejor en conjunto.", subtitle: "Ajusta el volumen y alinea tus partes con un toque o a mano."),
-        SceneMeta(index: 4, badge: "04 · 16 DISEÑOS", title: "Acomoda cada cuadro.", subtitle: "Cambia el orden, arrastra y acerca cada parte sin volver a grabar."),
-        SceneMeta(index: 5, badge: "05 · TODAS TUS SESIONES", title: "Tus sesiones, a mano.", subtitle: "Guarda tus proyectos y retómalos cuando quieras. Sin cuentas.")
+        SceneMeta(index: 7, badge: "", title: "Tu canción, en una pantalla.", subtitle: ""),
+        SceneMeta(index: 1, badge: "", title: "Graba cada parte a tiempo.", subtitle: ""),
+        SceneMeta(index: 4, badge: "", title: "Acomoda cada cuadro.", subtitle: ""),
+        SceneMeta(index: 3, badge: "", title: "Mezcla y sincroniza.", subtitle: ""),
+        SceneMeta(index: 2, badge: "", title: "Guarda y comparte.", subtitle: "")
     ],
     "en-US": [
-        SceneMeta(index: 1, badge: "01 · RECORD PART BY PART", title: "Every part. All you.", subtitle: "Record your voice or instrument with a metronome and count-in."),
-        SceneMeta(index: 2, badge: "02 · SEE IT FIRST", title: "Watch the whole video.", subtitle: "Play all your parts together before you create the video."),
-        SceneMeta(index: 3, badge: "03 · MIX AND SYNC", title: "Better together.", subtitle: "Set the volume and line up your parts with one tap or by hand."),
-        SceneMeta(index: 4, badge: "04 · 16 LAYOUTS", title: "Arrange every frame.", subtitle: "Reorder, drag, and zoom each part without recording again."),
-        SceneMeta(index: 5, badge: "05 · ALL YOUR SESSIONS", title: "Your sessions, close by.", subtitle: "Keep your projects and pick them up anytime. No accounts.")
+        SceneMeta(index: 7, badge: "", title: "Your song, on one screen.", subtitle: ""),
+        SceneMeta(index: 1, badge: "", title: "Record every part on time.", subtitle: ""),
+        SceneMeta(index: 4, badge: "", title: "Arrange every frame.", subtitle: ""),
+        SceneMeta(index: 3, badge: "", title: "Mix and sync.", subtitle: ""),
+        SceneMeta(index: 2, badge: "", title: "Save and share.", subtitle: "")
     ]
 ]
 
@@ -95,66 +97,35 @@ func renderPoster(
     bgColor.setFill()
     NSBezierPath(rect: NSRect(x: 0, y: 0, width: W, height: H)).fill()
 
-    let marginX: CGFloat = isIPad ? 140 : 84
-    var cursorY: CGFloat = isIPad ? 92 : 88
+    let marginX: CGFloat = isIPad ? 120 : 64
+    var cursorY: CGFloat = isIPad ? 110 : 120
 
-    let badgeFont = NSFont.monospacedSystemFont(ofSize: isIPad ? 28 : 25, weight: .medium)
-    let titleFont = NSFont.systemFont(ofSize: isIPad ? 80 : 68, weight: .bold)
-    let subFont = NSFont.systemFont(ofSize: isIPad ? 42 : 36, weight: .regular)
-
-    // 1. Pill badge
-    let badgeAttrs: [NSAttributedString.Key: Any] = [
-        .font: badgeFont,
-        .foregroundColor: inkPrimary,
-        .kern: 1.2
-    ]
-    let badgeStr = NSAttributedString(string: meta.badge, attributes: badgeAttrs)
-    let badgeSize = badgeStr.size()
-    let pillH: CGFloat = isIPad ? 64 : 58
-    let pillW: CGFloat = badgeSize.width + 86
-
-    let pillRect = NSRect(x: marginX, y: cursorY, width: pillW, height: pillH)
-    accent.pillBg.setFill()
-    NSBezierPath(roundedRect: pillRect, xRadius: pillH / 2, yRadius: pillH / 2).fill()
-
-    let dotR: CGFloat = 10
-    let dotRect = NSRect(x: marginX + 22, y: cursorY + (pillH - dotR * 2) / 2, width: dotR * 2, height: dotR * 2)
-    accent.dot.setFill()
-    NSBezierPath(ovalIn: dotRect).fill()
-
-    badgeStr.draw(at: NSPoint(x: marginX + 54, y: cursorY + (pillH - badgeSize.height) / 2))
-    cursorY += pillH + 26
-
-    // 2. Title
+    // One short, centered caption (3-5 words) that stays legible at thumbnail size.
+    let titleFont = NSFont.systemFont(ofSize: isIPad ? 104 : 92, weight: .bold)
+    let titlePara = NSMutableParagraphStyle()
+    titlePara.alignment = .center
+    titlePara.lineSpacing = 4
     let titleAttrs: [NSAttributedString.Key: Any] = [
         .font: titleFont,
         .foregroundColor: inkPrimary,
-        .kern: -1.4
-    ]
-    let titleStr = NSAttributedString(string: meta.title, attributes: titleAttrs)
-    let titleSize = titleStr.size()
-    titleStr.draw(at: NSPoint(x: marginX, y: cursorY))
-    cursorY += titleSize.height + 16
-
-    // 3. Subtitle wrapped
-    let para = NSMutableParagraphStyle()
-    para.lineSpacing = 6
-    let subAttrs: [NSAttributedString.Key: Any] = [
-        .font: subFont,
-        .foregroundColor: inkSecondary,
-        .paragraphStyle: para
+        .kern: -1.6,
+        .paragraphStyle: titlePara
     ]
     let maxTextW = W - marginX * 2
-    let subStr = NSAttributedString(string: meta.subtitle, attributes: subAttrs)
-    let subBounds = subStr.boundingRect(
-        with: NSSize(width: maxTextW, height: 400),
-        options: [.usesLineFragmentOrigin, .usesFontLeading]
-    )
-    subStr.draw(
-        with: NSRect(x: marginX, y: cursorY, width: maxTextW, height: ceil(subBounds.height) + 12),
-        options: [.usesLineFragmentOrigin, .usesFontLeading]
-    )
-    cursorY += ceil(subBounds.height) + (isIPad ? 46 : 42)
+    let titleStr = NSAttributedString(string: meta.title, attributes: titleAttrs)
+    let titleBounds = titleStr.boundingRect(with: NSSize(width: maxTextW, height: 600),
+                                            options: [.usesLineFragmentOrigin, .usesFontLeading])
+    titleStr.draw(with: NSRect(x: marginX, y: cursorY, width: maxTextW, height: ceil(titleBounds.height) + 8),
+                  options: [.usesLineFragmentOrigin, .usesFontLeading])
+    cursorY += ceil(titleBounds.height)
+
+    // Small accent bar under the caption keeps the brand colors without extra words.
+    let barW: CGFloat = isIPad ? 120 : 96
+    let barH: CGFloat = isIPad ? 12 : 10
+    accent.dot.setFill()
+    NSBezierPath(roundedRect: NSRect(x: (W - barW) / 2, y: cursorY + 24, width: barW, height: barH),
+                 xRadius: barH / 2, yRadius: barH / 2).fill()
+    cursorY += 24 + barH + (isIPad ? 56 : 56)
 
     // 4. Device Bezel + Raw Screenshot
     let bottomMargin: CGFloat = isIPad ? 64 : 56
@@ -238,11 +209,12 @@ for (locale, list) in scenesByLocale {
         let iphoneRaw = rawDir.appendingPathComponent("iphone_scene_\(s).png")
         let ipadRaw = rawDir.appendingPathComponent("ipad_scene_\(s).png")
 
-        let iphoneOut = outRoot.appendingPathComponent("\(locale)/0\(s)_iphone67.png")
-        let ipadOut = outRoot.appendingPathComponent("\(locale)/0\(s)_ipad129.png")
+        let position = idx + 1
+        let iphoneOut = outRoot.appendingPathComponent("\(locale)/0\(position)_iphone67.png")
+        let ipadOut = outRoot.appendingPathComponent("\(locale)/0\(position)_ipad129.png")
 
         try renderPoster(width: 1290, height: 2796, rawURL: iphoneRaw, meta: meta, accent: accent, isIPad: false, outURL: iphoneOut)
         try renderPoster(width: 2064, height: 2752, rawURL: ipadRaw, meta: meta, accent: accent, isIPad: true, outURL: ipadOut)
-        print("[\(locale)] Generated 0\(s)_iphone67.png & 0\(s)_ipad129.png")
+        print("[\(locale)] Generated 0\(position) from scene \(s)")
     }
 }

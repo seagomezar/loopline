@@ -4,10 +4,20 @@
 set -euo pipefail
 APP="$1"; OUT="$2"; BUNDLE=com.seagomezar.loopline
 mkdir -p "$OUT"
-declare -a DEVICES=("iphone:7A7647AD-7FA7-4277-9F5D-E73E66701DD4" "ipad:25A8D394-D8D2-4581-A8BC-5A51FBBD5E87")
-if [ -n "${ONLY:-}" ]; then DEVICES=($(printf "%s\n" "${DEVICES[@]}" | grep "^$ONLY:")); fi
+# kind:Device Type Name — simulators are created on demand (latest installed iOS runtime).
+declare -a DEVICES=("iphone:iPhone 17 Pro Max" "ipad:iPad Pro 13-inch (M5)")
+if [ -n "${DUO:-}" ]; then DEVICES=("duo:${DUO}"); fi
+if [ -n "${ONLY:-}" ]; then
+  filtered=(); for e in "${DEVICES[@]}"; do [ "${e%%:*}" = "$ONLY" ] && filtered+=("$e"); done; DEVICES=("${filtered[@]}")
+fi
+udid_for() {
+  local name="$1" id
+  id="$(xcrun simctl list devices available -j | python3 -c "import sys,json;n=sys.argv[1];print(next((d['udid'] for r in json.load(sys.stdin)['devices'].values() for d in r if d['name']==n),''))" "$name")"
+  if [ -z "$id" ]; then id="$(xcrun simctl create "$name" "$name")"; fi
+  echo "$id"
+}
 for entry in "${DEVICES[@]}"; do
-  kind="${entry%%:*}"; udid="${entry#*:}"
+  kind="${entry%%:*}"; udid="$(udid_for "${entry#*:}")"
   # English system locale so the status bar date matches across localizations.
   xcrun simctl boot "$udid" 2>/dev/null || true
   xcrun simctl bootstatus "$udid" -b >/dev/null
@@ -20,13 +30,18 @@ for entry in "${DEVICES[@]}"; do
   xcrun simctl status_bar "$udid" override --time "9:41" --dataNetwork wifi --wifiBars 3 --cellularBars 4 --batteryState charged --batteryLevel 100
   xcrun simctl uninstall "$udid" "$BUNDLE" 2>/dev/null || true
   xcrun simctl install "$udid" "$APP"
+  # Illustrated performers (scripts/fixtures/part-N.png) replace the generated placeholder clips.
+  data_dir="$(xcrun simctl get_app_container "$udid" "$BUNDLE" data)"
+  mkdir -p "$data_dir/Documents/Fixtures"
+  cp "$(dirname "$0")"/fixtures/part-*.png "$data_dir/Documents/Fixtures/" 2>/dev/null || true
+  first=1
   root="Screenshots-$kind"
-  for scene in ${SCENES:-1 2 3 4 5}; do
+  for scene in ${SCENES:-7 1 2 3 4 6}; do
     xcrun simctl terminate "$udid" "$BUNDLE" 2>/dev/null || true
     xcrun simctl launch "$udid" "$BUNDLE" -LooplineHarnessMode -LooplineProjectRoot "$root" \
       -LooplineSeedTrackCount 4 -LooplineScreenshotScene "$scene" >/dev/null
     # First launch generates the seeded media; later launches reuse it.
-    if [ "$scene" = "${SCENES:-1 2 3 4 5}" ] || [ "$scene" = 1 ]; then sleep 45; else sleep 14; fi
+    if [ "$first" = 1 ]; then sleep 50; first=0; else sleep 14; fi
     xcrun simctl io "$udid" screenshot "$OUT/${kind}_scene_${scene}.png" >/dev/null 2>&1
     echo "captured $kind scene $scene"
   done

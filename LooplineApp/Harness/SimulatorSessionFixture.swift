@@ -82,8 +82,65 @@ enum SimulatorSessionFixture {
         try AVAudioFile(forWriting: url, settings: format.settings).write(from: buffer)
     }
 
+    /// Optional illustrated performer for App Store screenshots, copied into the app's
+    /// Documents/Fixtures folder by scripts/capture_appstore_scenes.sh.
+    private static func fixtureImage(index: Int) -> CGImage? {
+        guard let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
+              let data = try? Data(contentsOf: documents.appendingPathComponent("Fixtures/part-\(index).png")),
+              let provider = CGDataProvider(data: data as CFData) else { return nil }
+        return CGImage(pngDataProviderSource: provider, decode: nil, shouldInterpolate: true, intent: .defaultIntent)
+    }
+
+    /// Renders a still illustration as a short clip with a slow push-in so it reads as video.
+    private static func writeIllustratedVideo(_ image: CGImage, to url: URL) async throws {
+        let writer = try AVAssetWriter(outputURL: url, fileType: .mov)
+        let w = 720
+        let h = 960
+        let input = AVAssetWriterInput(mediaType: .video, outputSettings: [
+            AVVideoCodecKey: AVVideoCodecType.h264, AVVideoWidthKey: w, AVVideoHeightKey: h])
+        let adaptor = AVAssetWriterInputPixelBufferAdaptor(assetWriterInput: input,
+            sourcePixelBufferAttributes: [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32ARGB,
+                kCVPixelBufferWidthKey as String: w, kCVPixelBufferHeightKey as String: h])
+        writer.add(input)
+        guard writer.startWriting() else { throw writer.error ?? CaptureError.writeFailed }
+        defer { if writer.status == .writing { writer.cancelWriting() } }
+        writer.startSession(atSourceTime: .zero)
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let fill = max(CGFloat(w) / CGFloat(image.width), CGFloat(h) / CGFloat(image.height))
+        for frame in 0..<60 {
+            while !input.isReadyForMoreMediaData {
+                try Task.checkCancellation()
+                guard writer.status == .writing else { throw writer.error ?? CaptureError.writeFailed }
+                try await Task.sleep(for: .milliseconds(5))
+            }
+            var pixel: CVPixelBuffer?
+            guard CVPixelBufferCreate(kCFAllocatorDefault, w, h, kCVPixelFormatType_32ARGB, nil, &pixel) == kCVReturnSuccess,
+                  let pixel, CVPixelBufferLockBaseAddress(pixel, []) == kCVReturnSuccess else { throw CaptureError.writeFailed }
+            if let context = CGContext(data: CVPixelBufferGetBaseAddress(pixel), width: w, height: h, bitsPerComponent: 8,
+                                       bytesPerRow: CVPixelBufferGetBytesPerRow(pixel), space: colorSpace,
+                                       bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue | CGBitmapInfo.byteOrder32Big.rawValue) {
+                let scale = fill * (1.0 + 0.05 * CGFloat(frame) / 59.0)
+                let dw = CGFloat(image.width) * scale
+                let dh = CGFloat(image.height) * scale
+                context.interpolationQuality = .high
+                context.draw(image, in: CGRect(x: (CGFloat(w) - dw) / 2, y: (CGFloat(h) - dh) / 2, width: dw, height: dh))
+            }
+            CVPixelBufferUnlockBaseAddress(pixel, [])
+            guard adaptor.append(pixel, withPresentationTime: CMTime(value: Int64(frame), timescale: 10)) else {
+                throw writer.error ?? CaptureError.writeFailed
+            }
+        }
+        input.markAsFinished()
+        await writer.finishWriting()
+        guard writer.status == .completed else { throw writer.error ?? CaptureError.writeFailed }
+    }
+
     private static func writeVideo(in directory: URL, index: Int, color: UInt32) async throws -> URL {
         let url = directory.appendingPathComponent("video-\(index).mov")
+        if let image = fixtureImage(index: index) {
+            try await writeIllustratedVideo(image, to: url)
+            return url
+        }
         let writer = try AVAssetWriter(outputURL: url, fileType: .mov)
         let w = 180
         let h = 240
