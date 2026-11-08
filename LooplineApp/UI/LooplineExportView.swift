@@ -319,7 +319,7 @@ private struct LooplineExportPreviewCard: View {
                             showFallbackTitles: model.nativeExportURL == nil && model.exportPreviewOverlayImage == nil
                         )
                     }
-                    if !model.isExportPreviewPlaying {
+                    if !model.isExportPreviewPlaying && !LooplineScreenshotMode.isActive {
                         Circle()
                             .fill(Color.looplineInk.opacity(0.62))
                             .frame(width: 54, height: 54)
@@ -524,7 +524,7 @@ private struct LooplineFullPreviewSheet: View {
                             showFallbackTitles: model.nativeExportURL == nil && model.exportPreviewOverlayImage == nil
                         )
                     }
-                    if !model.isExportPreviewPlaying {
+                    if !model.isExportPreviewPlaying && !LooplineScreenshotMode.isActive {
                         Circle()
                             .fill(Color.looplineInk.opacity(0.65))
                             .frame(width: 68, height: 68)
@@ -682,5 +682,16 @@ enum LooplineExportFormat {
         case "HEVC MOV": "Smaller file (Apple)"
         default: format
         }
+    }
+}
+
+/// App Store screenshot runs (simulator, DEBUG only) hide transient playback chrome.
+enum LooplineScreenshotMode {
+    static var isActive: Bool {
+        #if DEBUG && targetEnvironment(simulator)
+        ProcessInfo.processInfo.arguments.contains("-LooplineScreenshotScene")
+        #else
+        false
+        #endif
     }
 }
