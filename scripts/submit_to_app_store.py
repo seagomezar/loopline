@@ -16,15 +16,15 @@ import subprocess
 import time
 
 APP_ID = "6826597725"
-VERSION_ID = "71c97f5b-50ec-4d1f-9568-081b90e98995"
+VERSION_ID = "0f3c4568-fad7-449c-9842-d540b3e703fd"  # 1.0.1
 INFO_ID = "f95b5ff2-ace2-40f9-92df-d7325f99f594"
-ES_VER_LOC_ID = "bf44c88a-b48a-46c0-a328-b38f8a7f4c3a"
-EN_VER_LOC_ID = "ec36094c-4d7f-4b9d-a9b5-66209febc59b"
+ES_VER_LOC_ID = "0baa6b0c-aff9-4b07-945c-568785869e35"
+EN_VER_LOC_ID = "12293c5b-b9ac-47d5-8368-8ccdc575d5f8"
 ES_INFO_LOC_ID = "a9b92c0f-07bc-459d-ad85-9700dc50a772"
 EN_INFO_LOC_ID = "1a1f3449-3d5f-445e-8776-6929fe6a700b"
 IAP_ID = "6826871438"
 
-BUILD_VERSION = "18"
+BUILD_VERSION = "20"
 
 ES_DESCRIPTION = """Overdubly te ayuda a grabar cada parte de una canción en video y unirlas en una sola pantalla. Graba tu voz o tu instrumento una parte a la vez, escucha las anteriores mientras grabas y crea un video listo para compartir.
 
@@ -49,6 +49,9 @@ Reproduce el video completo, también en pantalla completa.
 
 • Mezclar y sincronizar:
 Ajusta el volumen de cada parte, silénciala o escúchala sola, y corrige la sincronización a mano o con Sync Assist.
+
+• Agregar fotos:
+Usa una foto de tu galería como una parte más del video.
 
 • Compartir:
 Guarda tu video en Fotos o Archivos, o compártelo directamente.
@@ -83,6 +86,9 @@ Play the whole video back, including in full screen.
 • Mix and sync:
 Set each part's volume, mute or solo it, and fix the timing by hand or with Sync Assist.
 
+• Add photos:
+Use a photo from your library as one of the parts.
+
 • Share:
 Save your video to Photos or Files, or share it directly.
 
@@ -92,6 +98,17 @@ FREE AND PRO
 • Free: up to 3 parts, 4 classic layouts, 720p and 1080p videos with a "Made with overdubly.com" badge, and up to 2 sessions.
 • Overdubly Pro (one payment, no subscriptions): 4 or more parts, all 16 layouts, automatic Sync Assist, 4K videos, no badge, and unlimited sessions. Includes Family Sharing."""
 
+ES_WHATS_NEW = """• Overdubly ahora está en español.
+• Agrega una foto de tu galería como una parte.
+• Silencia o ajusta el volumen de cada parte con controles más claros.
+• El metrónomo empieza apagado en las sesiones nuevas.
+• Lista para iPhone Duo."""
+EN_WHATS_NEW = """• Overdubly now speaks Spanish.
+• Add a photo from your library as a part.
+• Mute or set the volume of each part with clearer controls.
+• The metronome starts off in new sessions.
+• Ready for iPhone Duo."""
+
 ES_PROMO = "Graba cada parte de tu canción y únelas en un solo video. Gratis hasta 3 partes; Overdubly Pro con un solo pago, sin suscripciones."
 EN_PROMO = "Record every part of your song and bring them together in one video. Free for up to 3 parts; Overdubly Pro is a single payment, no subscriptions."
 
@@ -100,7 +117,7 @@ EN_KEYWORDS = "multitrack,acappella,overdub,split screen,video looper,metronome,
 
 REVIEW_NOTES = """Overdubly is a multi-track video and audio recording app for musicians. No sign-in or demo account is required.
 
-What's new in Build 18: the camera preview and recordings now follow the device orientation on iPad (including iPad Pro models with the front camera on the landscape edge), simplified in-app text, a single Overdubly Pro purchase (no subscriptions), and the app is now named Overdubly.
+What's new in 1.0.1 (Build 20): Spanish localization (follows the device language), add a photo from the library as a part (Capture tab > "Add a photo as a part"), labeled Mute/Solo buttons and volume control per part in Mix, the metronome is off by default for new sessions, and the app is built with the iOS 27.2 SDK for iPhone Duo.
 
 How to test:
 1. Free features:
@@ -177,6 +194,8 @@ def main():
         "esKeywords": ES_KEYWORDS,
         "enKeywords": EN_KEYWORDS,
         "reviewNotes": REVIEW_NOTES,
+        "esWhatsNew": ES_WHATS_NEW,
+        "enWhatsNew": EN_WHATS_NEW,
         "buildVersion": BUILD_VERSION,
     }
     js = f"""
@@ -240,6 +259,7 @@ def main():
                 id: p.esVerLocId,
                 attributes: {{
                     description: p.esDesc,
+                    whatsNew: p.esWhatsNew,
                     promotionalText: p.esPromo,
                     keywords: p.esKeywords,
                     marketingUrl: "https://overdubly.com/?lang=es",
@@ -247,7 +267,7 @@ def main():
                 }}
             }}
         }});
-        log.push({{step: "esVerLoc", status: rEsVer.status}});
+        log.push({{step: "esVerLoc", status: rEsVer.status, err: rEsVer.ok ? null : rEsVer.raw}});
 
         const rEnVer = await req("/iris/v1/appStoreVersionLocalizations/" + p.enVerLocId, "PATCH", {{
             data: {{
@@ -255,6 +275,7 @@ def main():
                 id: p.enVerLocId,
                 attributes: {{
                     description: p.enDesc,
+                    whatsNew: p.enWhatsNew,
                     promotionalText: p.enPromo,
                     keywords: p.enKeywords,
                     marketingUrl: "https://overdubly.com/en/index.html",
@@ -262,7 +283,7 @@ def main():
                 }}
             }}
         }});
-        log.push({{step: "enVerLoc", status: rEnVer.status}});
+        log.push({{step: "enVerLoc", status: rEnVer.status, err: rEnVer.ok ? null : rEnVer.raw}});
 
         // 4. Update appStoreReviewDetails
         const revCheck = await req("/iris/v1/appStoreVersions/" + p.verId + "/appStoreReviewDetail", "GET");

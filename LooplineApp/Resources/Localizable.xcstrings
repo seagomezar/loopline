@@ -3,6 +3,12 @@
   "strings": {
     "#%lld": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "#%lld"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -13,6 +19,12 @@
     },
     "%@ · %@ · %@": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %@ · %@"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -23,6 +35,12 @@
     },
     "%@%lld": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@%lld"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -33,6 +51,12 @@
     },
     "%@%lld ms": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@%lld ms"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -43,6 +67,12 @@
     },
     "%@, %@": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -53,6 +83,12 @@
     },
     "%lld": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -63,6 +99,12 @@
     },
     "%lld / %lld": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld / %lld"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -73,6 +115,12 @@
     },
     "%lld parts": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld parts"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -83,6 +131,12 @@
     },
     "%lld percent": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld percent"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -93,6 +147,12 @@
     },
     "%lld%%": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld%%"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -103,6 +163,12 @@
     },
     "-%lld": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "-%lld"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -113,6 +179,12 @@
     },
     "1": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -123,6 +195,12 @@
     },
     "1 + 2 Rows": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 + 2 Rows"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -133,6 +211,12 @@
     },
     "1 bar": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 bar"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -143,6 +227,12 @@
     },
     "1 col + rows": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 col + rows"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -153,6 +243,12 @@
     },
     "1 over 2 rows": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 over 2 rows"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -163,6 +259,12 @@
     },
     "1 part": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 part"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -173,6 +275,12 @@
     },
     "1 row + cols": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 row + cols"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -183,6 +291,12 @@
     },
     "1080p is always free. Go Pro for 4K and smaller files.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1080p is always free. Go Pro for 4K and smaller files."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -193,6 +307,12 @@
     },
     "1080p · Classic layout · \"Made with overdubly.com\" badge": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1080p · Classic layout · \"Made with overdubly.com\" badge"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -203,6 +323,12 @@
     },
     "2": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -213,6 +339,12 @@
     },
     "2 + 1 Rows": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 + 1 Rows"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -223,6 +355,12 @@
     },
     "2 + 3 Rows": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 + 3 Rows"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -233,6 +371,12 @@
     },
     "2 bars": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 bars"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -243,6 +387,12 @@
     },
     "2 columns": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 columns"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -253,6 +403,12 @@
     },
     "2 over 1 rows": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 over 1 rows"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -263,6 +419,12 @@
     },
     "2 over 3 rows": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 over 3 rows"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -273,6 +435,12 @@
     },
     "2×N Grid": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2×N Grid"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -283,6 +451,12 @@
     },
     "3": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -293,6 +467,12 @@
     },
     "3 + 2 Rows": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 + 2 Rows"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -303,6 +483,12 @@
     },
     "3 / 4": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 / 4"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -313,6 +499,12 @@
     },
     "3 columns": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 columns"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -323,6 +515,12 @@
     },
     "3 over 2 rows": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 over 2 rows"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -333,6 +531,12 @@
     },
     "3×N Grid": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3×N Grid"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -343,6 +547,12 @@
     },
     "4": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -353,6 +563,12 @@
     },
     "4 / 4": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4 / 4"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -363,6 +579,12 @@
     },
     "4 OR MORE VOICES": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4 OR MORE VOICES"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -373,6 +595,12 @@
     },
     "4 columns": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4 columns"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -383,6 +611,12 @@
     },
     "4 or More Voices": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4 or More Voices"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -393,6 +627,12 @@
     },
     "40% col + rows": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "40% col + rows"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -403,6 +643,12 @@
     },
     "4K EXPORT": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4K EXPORT"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -413,6 +659,12 @@
     },
     "4K Export": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4K Export"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -423,6 +675,12 @@
     },
     "4×N Grid": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4×N Grid"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -433,6 +691,12 @@
     },
     "6 / 8": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "6 / 8"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -443,6 +707,12 @@
     },
     "60/40 & 40/60": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "60/40 & 40/60"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -453,6 +723,12 @@
     },
     "9:16 · %@": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "9:16 · %@"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -463,6 +739,12 @@
     },
     "A little studio. A real file.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A little studio. A real file."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -473,6 +755,12 @@
     },
     "A session couldn't be opened. Its recordings are still saved.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A session couldn't be opened. Its recordings are still saved."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -483,6 +771,12 @@
     },
     "A take is waiting for you": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A take is waiting for you"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -493,6 +787,12 @@
     },
     "ALL 16 LAYOUTS": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ALL 16 LAYOUTS"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -503,6 +803,12 @@
     },
     "Accent beat 1": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accent beat 1"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -513,6 +819,12 @@
     },
     "Add a photo as a part": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a photo as a part"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -523,6 +835,12 @@
     },
     "Adjust frames": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adjust frames"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -533,6 +851,12 @@
     },
     "Adjusting timing by hand is always free. Go Pro to line up parts automatically.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adjusting timing by hand is always free. Go Pro to line up parts automatically."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -543,6 +867,12 @@
     },
     "Align your parts": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Align your parts"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -553,6 +883,12 @@
     },
     "Alignment applied": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alignment applied"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -563,6 +899,12 @@
     },
     "All 16 Layouts": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All 16 Layouts"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -573,6 +915,12 @@
     },
     "Allow Photos access in Settings to save your video.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow Photos access in Settings to save your video."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -583,6 +931,12 @@
     },
     "Allow camera and microphone access in Settings to record a take.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow camera and microphone access in Settings to record a take."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -593,6 +947,12 @@
     },
     "Alto voice": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alto voice"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -603,6 +963,12 @@
     },
     "Apply timing": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apply timing"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -613,6 +979,12 @@
     },
     "Arrange your frames": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrange your frames"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -623,6 +995,12 @@
     },
     "Audio was interrupted. Check your headphones and try again.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Audio was interrupted. Check your headphones and try again."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -633,6 +1011,12 @@
     },
     "BAR %lld · BEAT %lld/%lld": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BAR %lld · BEAT %lld/%lld"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -643,6 +1027,12 @@
     },
     "BAR %lld/%lld · %lld BPM · %lld/%lld": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BAR %lld/%lld · %lld BPM · %lld/%lld"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -653,6 +1043,12 @@
     },
     "Bassoon": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bassoon"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -663,6 +1059,12 @@
     },
     "Beat %lld of %lld": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beat %lld of %lld"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -673,6 +1075,12 @@
     },
     "Better together.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Better together."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -683,6 +1091,12 @@
     },
     "Both parts need sound to be lined up.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Both parts need sound to be lined up."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -693,6 +1107,12 @@
     },
     "Bringing it together": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bringing it together"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -703,6 +1123,12 @@
     },
     "Built-in audio": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Built-in audio"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -713,6 +1139,12 @@
     },
     "COLUMNS & GRIDS · VERTICAL SPLITS": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "COLUMNS & GRIDS · VERTICAL SPLITS"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -723,6 +1155,12 @@
     },
     "COMBINATIONS · FRAMES & DIPTIC": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "COMBINATIONS · FRAMES & DIPTIC"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -733,6 +1171,12 @@
     },
     "COUNT IN · %lld BPM": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "COUNT IN · %lld BPM"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -743,6 +1187,12 @@
     },
     "COUNT IN · %lld BPM · %lld/%lld": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "COUNT IN · %lld BPM · %lld/%lld"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -753,6 +1203,12 @@
     },
     "Cancel": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -763,6 +1219,12 @@
     },
     "Capture": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Capture"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -773,6 +1235,12 @@
     },
     "Cello": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cello"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -783,6 +1251,12 @@
     },
     "Center %@": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Center %@"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -793,6 +1267,12 @@
     },
     "Center Stage": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Center Stage"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -803,6 +1283,12 @@
     },
     "Chamber Quartet — Bach": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chamber Quartet — Bach"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -813,6 +1299,12 @@
     },
     "Change the order, or drag and pinch inside a frame.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change the order, or drag and pinch inside a frame."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -823,6 +1315,12 @@
     },
     "Clean Video — No Watermark": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clean Video — No Watermark"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -833,6 +1331,12 @@
     },
     "Clear part name": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear part name"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -843,6 +1347,12 @@
     },
     "Click volume": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click volume"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -853,6 +1363,12 @@
     },
     "Clicks per beat": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clicks per beat"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -863,6 +1379,12 @@
     },
     "Close Overdubly Pro": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close Overdubly Pro"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -873,6 +1395,12 @@
     },
     "Cols + 1 row": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cols + 1 row"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -883,6 +1411,12 @@
     },
     "Columns Strip": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Columns Strip"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -893,6 +1427,12 @@
     },
     "Continue with Free Export": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continue with Free Export"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -903,6 +1443,12 @@
     },
     "Corner badge": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Corner badge"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -913,6 +1459,12 @@
     },
     "Couldn't find a match. Try adjusting the timing by hand.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't find a match. Try adjusting the timing by hand."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -923,6 +1475,12 @@
     },
     "Couldn't load prices. Check your connection and try again.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't load prices. Check your connection and try again."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -933,6 +1491,12 @@
     },
     "Count in": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Count in"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -943,6 +1507,12 @@
     },
     "Count in · %@": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Count in · %@"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -953,6 +1523,12 @@
     },
     "Countdown %lld": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Countdown %lld"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -963,6 +1539,12 @@
     },
     "Create another version": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create another version"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -973,6 +1555,12 @@
     },
     "Create my video": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create my video"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -983,6 +1571,12 @@
     },
     "Creating your video": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Creating your video"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -993,6 +1587,12 @@
     },
     "Delete": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1003,6 +1603,12 @@
     },
     "Delete \"%@\"?": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete \"%@\"?"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1013,6 +1619,12 @@
     },
     "Delete %@": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete %@"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1023,6 +1635,12 @@
     },
     "Delete %@?": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete %@?"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1033,6 +1651,12 @@
     },
     "Delete part": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete part"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1043,6 +1667,12 @@
     },
     "Delete part?": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete part?"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1053,6 +1683,12 @@
     },
     "Delete session": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete session"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1063,6 +1699,12 @@
     },
     "Diptic 60/40": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diptic 60/40"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1073,6 +1715,12 @@
     },
     "Done": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1083,6 +1731,12 @@
     },
     "Drag to move · Pinch or tap + / − to zoom": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag to move · Pinch or tap + / − to zoom"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1093,6 +1747,12 @@
     },
     "Earlier": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Earlier"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1103,6 +1763,12 @@
     },
     "Earlier parts play through your headphones while you record.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Earlier parts play through your headphones while you record."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1113,6 +1779,12 @@
     },
     "Every part.\nAll you.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every part.\nAll you."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1123,6 +1795,12 @@
     },
     "Everything in Overdubly Pro": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Everything in Overdubly Pro"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1133,6 +1811,12 @@
     },
     "Export": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1143,6 +1827,12 @@
     },
     "Export a clean video without the Overdubly badge.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export a clean video without the Overdubly badge."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1153,6 +1843,12 @@
     },
     "Export sharper videos and smaller files.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export sharper videos and smaller files."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1163,6 +1859,12 @@
     },
     "Export with %@ and all 16 frame layouts.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export with %@ and all 16 frame layouts."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1173,6 +1875,12 @@
     },
     "FREE VS PRO": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FREE VS PRO"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1183,6 +1891,12 @@
     },
     "Find a match": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find a match"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1193,6 +1907,12 @@
     },
     "Finding a timing match": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finding a timing match"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1203,6 +1923,12 @@
     },
     "Finish take": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish take"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1213,6 +1939,12 @@
     },
     "First voice": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First voice"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1223,6 +1955,12 @@
     },
     "Flute 1": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flute 1"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1233,6 +1971,12 @@
     },
     "Flute 2": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flute 2"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1243,6 +1987,12 @@
     },
     "Flute 3": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flute 3"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1253,6 +2003,12 @@
     },
     "Format": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Format"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1263,6 +2019,12 @@
     },
     "Frame #%lld of %lld": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frame #%lld of %lld"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1273,6 +2035,12 @@
     },
     "Frame layout": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frame layout"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1283,6 +2051,12 @@
     },
     "Frame slot for %@": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frame slot for %@"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1293,6 +2067,12 @@
     },
     "Frames 40/60": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frames 40/60"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1303,6 +2083,12 @@
     },
     "Free includes up to 2 sessions. Go Pro for unlimited sessions.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Free includes up to 2 sessions. Go Pro for unlimited sessions."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1313,6 +2099,12 @@
     },
     "Free includes up to 3 voices. Go Pro for quartets and bigger groups.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Free includes up to 3 voices. Go Pro for quartets and bigger groups."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1323,6 +2115,12 @@
     },
     "Free includes up to 3 voices. Go Pro to record 4 or more.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Free includes up to 3 voices. Go Pro to record 4 or more."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1333,6 +2131,12 @@
     },
     "Full preview": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Full preview"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1343,6 +2147,12 @@
     },
     "Give your mix a first part.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Give your mix a first part."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1353,6 +2163,12 @@
     },
     "Harmony": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Harmony"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1363,6 +2179,12 @@
     },
     "Headphones": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Headphones"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1373,6 +2195,12 @@
     },
     "Headphones recommended": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Headphones recommended"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1383,6 +2211,12 @@
     },
     "Hero Bottom": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hero Bottom"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1393,6 +2227,12 @@
     },
     "Hero Left": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hero Left"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1403,6 +2243,12 @@
     },
     "Hero Right": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hero Right"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1413,6 +2259,12 @@
     },
     "Hero Top": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hero Top"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1423,6 +2275,12 @@
     },
     "Horizontal": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Horizontal"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1433,6 +2291,12 @@
     },
     "Horizontal position for %@": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Horizontal position for %@"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1443,6 +2307,12 @@
     },
     "Horizontal rows": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Horizontal rows"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1453,6 +2323,12 @@
     },
     "Input level": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Input level"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1463,6 +2339,12 @@
     },
     "Keep as many sessions as you want.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep as many sessions as you want."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1473,6 +2355,12 @@
     },
     "Keep your time": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep your time"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1483,6 +2371,12 @@
     },
     "Later": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Later"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1493,6 +2387,12 @@
     },
     "Lead": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lead"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1503,6 +2403,12 @@
     },
     "Lead Flute": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lead Flute"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1513,6 +2419,12 @@
     },
     "Line up every voice in one tap.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Line up every voice in one tap."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1523,6 +2435,12 @@
     },
     "Line up this part automatically or adjust it by hand.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Line up this part automatically or adjust it by hand."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1533,6 +2451,12 @@
     },
     "Line up your parts with one tap, as often as you like.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Line up your parts with one tap, as often as you like."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1543,6 +2467,12 @@
     },
     "Listen to the mix": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listen to the mix"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1553,6 +2483,12 @@
     },
     "Listening to your parts…": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listening to your parts…"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1563,6 +2499,12 @@
     },
     "Listening…": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listening…"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1573,6 +2515,12 @@
     },
     "Loop preview": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loop preview"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1583,6 +2531,12 @@
     },
     "M": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "M"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1593,6 +2547,12 @@
     },
     "METER": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "METER"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1603,6 +2563,12 @@
     },
     "Make it yours": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Make it yours"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1613,6 +2579,12 @@
     },
     "Manual": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manual"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1623,6 +2595,12 @@
     },
     "Manual timing offset for %@": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manual timing offset for %@"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1633,6 +2611,12 @@
     },
     "Metronome": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Metronome"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1643,6 +2627,12 @@
     },
     "Mix & Sync": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mix & Sync"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1653,6 +2643,12 @@
     },
     "More ways to arrange your frames, from spotlight layouts to big grids.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More ways to arrange your frames, from spotlight layouts to big grids."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1663,6 +2659,12 @@
     },
     "Most compatible": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Most compatible"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1673,6 +2675,12 @@
     },
     "Move %@ by %lld milliseconds": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move %@ by %lld milliseconds"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1683,6 +2691,12 @@
     },
     "Move %@ to earlier frame": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move %@ to earlier frame"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1693,6 +2707,12 @@
     },
     "Move %@ to frame %lld": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move %@ to frame %lld"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1703,6 +2723,12 @@
     },
     "Move %@ to later frame": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move %@ to later frame"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1713,6 +2739,12 @@
     },
     "Mute": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mute"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1723,6 +2755,12 @@
     },
     "Mute %@": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mute %@"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1733,6 +2771,12 @@
     },
     "Muted": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Muted"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1743,6 +2787,12 @@
     },
     "My first session": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My first session"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1753,6 +2803,12 @@
     },
     "NO BADGE": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NO BADGE"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1763,6 +2819,12 @@
     },
     "Name it so it's easy to find later.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name it so it's easy to find later."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1773,6 +2835,12 @@
     },
     "New session": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New session"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1783,6 +2851,12 @@
     },
     "No badge": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No badge"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1793,6 +2867,12 @@
     },
     "No previous Overdubly Pro purchases were found for this Apple Account.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No previous Overdubly Pro purchases were found for this Apple Account."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1803,6 +2883,12 @@
     },
     "Not enough storage. Free up some space and try again.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not enough storage. Free up some space and try again."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1813,6 +2899,12 @@
     },
     "Not selected": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not selected"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1823,6 +2915,12 @@
     },
     "OK": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1833,6 +2931,12 @@
     },
     "OPEN": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OPEN"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1843,6 +2947,12 @@
     },
     "OVERDUBLY PRO": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OVERDUBLY PRO"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1853,6 +2963,12 @@
     },
     "Off": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1863,6 +2979,12 @@
     },
     "On": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1873,6 +2995,12 @@
     },
     "Overdubly": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overdubly"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1883,6 +3011,12 @@
     },
     "Overdubly Pro": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overdubly Pro"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1893,6 +3027,12 @@
     },
     "Overdubly Pro is unlocked.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overdubly Pro is unlocked."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1903,6 +3043,12 @@
     },
     "Own your multitrack studio forever.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Own your multitrack studio forever."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1913,6 +3059,12 @@
     },
     "PART NAME": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PART NAME"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1923,6 +3075,12 @@
     },
     "PRO": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PRO"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1933,6 +3091,12 @@
     },
     "Part %lld": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Part %lld"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1943,6 +3107,12 @@
     },
     "Part name": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Part name"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1953,6 +3123,12 @@
     },
     "Part name (e.g. Flute 1, Lead)": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Part name (e.g. Flute 1, Lead)"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1963,6 +3139,12 @@
     },
     "Pause": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1973,6 +3155,12 @@
     },
     "Pause preview": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause preview"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1983,6 +3171,12 @@
     },
     "Pay once and keep it forever. No account needed.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pay once and keep it forever. No account needed."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -1993,6 +3187,12 @@
     },
     "Pay once. Yours forever on iPhone & iPad, with Family Sharing.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pay once. Yours forever on iPhone & iPad, with Family Sharing."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2003,6 +3203,12 @@
     },
     "Percussion": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Percussion"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2013,6 +3219,12 @@
     },
     "Pick up where you left off before recording again.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick up where you left off before recording again."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2023,6 +3235,12 @@
     },
     "Play preview": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play preview"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2033,6 +3251,12 @@
     },
     "Preparing your performance": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preparing your performance"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2043,6 +3267,12 @@
     },
     "Preparing…": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preparing…"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2053,6 +3283,12 @@
     },
     "Preview": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preview"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2063,6 +3299,12 @@
     },
     "Preview timeline scrubber": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preview timeline scrubber"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2073,6 +3315,12 @@
     },
     "Preview video": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preview video"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2083,6 +3331,12 @@
     },
     "Privacy Policy": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privacy Policy"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2093,6 +3347,12 @@
     },
     "Processing…": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Processing…"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2103,6 +3363,12 @@
     },
     "READY": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "READY"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2113,6 +3379,12 @@
     },
     "RECORDING · BAR %lld": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "RECORDING · BAR %lld"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2123,6 +3395,12 @@
     },
     "ROWS · HORIZONTAL SPLITS": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ROWS · HORIZONTAL SPLITS"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2133,6 +3411,12 @@
     },
     "Ready to align": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ready to align"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2143,6 +3427,12 @@
     },
     "Record a longer phrase so the parts can be lined up.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record a longer phrase so the parts can be lined up."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2153,6 +3443,12 @@
     },
     "Record a part": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record a part"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2163,6 +3459,12 @@
     },
     "Record a part first.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record a part first."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2173,6 +3475,12 @@
     },
     "Record a part to create your video.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record a part to create your video."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2183,6 +3491,12 @@
     },
     "Record a take, then come back to listen and line it up.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record a take, then come back to listen and line it up."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2193,6 +3507,12 @@
     },
     "Record another part": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record another part"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2203,6 +3523,12 @@
     },
     "Record at least one part with video first.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record at least one part with video first."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2213,6 +3539,12 @@
     },
     "Record at least two parts to line them up.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record at least two parts to line them up."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2223,6 +3555,12 @@
     },
     "Record quartets, quintets, and full ensembles.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record quartets, quintets, and full ensembles."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2233,6 +3571,12 @@
     },
     "Recorded audio waveform": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recorded audio waveform"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2243,6 +3587,12 @@
     },
     "Recording missing": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recording missing"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2253,6 +3603,12 @@
     },
     "Recording stopped unexpectedly. Your take is safe.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recording stopped unexpectedly. Your take is safe."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2263,6 +3619,12 @@
     },
     "Recording · %@": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recording · %@"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2273,6 +3635,12 @@
     },
     "Recover take": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recover take"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2283,6 +3651,12 @@
     },
     "Remove the \"Made with overdubly.com\" badge from your videos.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove the \"Made with overdubly.com\" badge from your videos."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2293,6 +3667,12 @@
     },
     "Remove the \"Made with overdubly.com\" badge so your video is all yours.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove the \"Made with overdubly.com\" badge so your video is all yours."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2303,6 +3683,12 @@
     },
     "Remove · PRO": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove · PRO"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2313,6 +3699,12 @@
     },
     "Rename": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rename"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2323,6 +3715,12 @@
     },
     "Rename %@": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rename %@"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2333,6 +3731,12 @@
     },
     "Rename session": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rename session"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2343,6 +3747,12 @@
     },
     "Reset": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2353,6 +3763,12 @@
     },
     "Reset all": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset all"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2363,6 +3779,12 @@
     },
     "Reset framing for %@": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset framing for %@"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2373,6 +3795,12 @@
     },
     "Resolution": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resolution"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2383,6 +3811,12 @@
     },
     "Restart preview": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restart preview"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2393,6 +3827,12 @@
     },
     "Restore Purchases": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restore Purchases"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2403,6 +3843,12 @@
     },
     "Rhythm": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rhythm"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2413,6 +3859,12 @@
     },
     "Row + hero + row": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Row + hero + row"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2423,6 +3875,12 @@
     },
     "Rows + 1 col": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rows + 1 col"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2433,6 +3891,12 @@
     },
     "Rows Stack": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rows Stack"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2443,6 +3907,12 @@
     },
     "S": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "S"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2453,6 +3923,12 @@
     },
     "SAVING TAKE": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SAVING TAKE"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2463,6 +3939,12 @@
     },
     "SYNC ASSIST": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SYNC ASSIST"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2473,6 +3955,12 @@
     },
     "Save": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2483,6 +3971,12 @@
     },
     "Save to Files": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save to Files"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2493,6 +3987,12 @@
     },
     "Save to Photos": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save to Photos"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2503,6 +4003,12 @@
     },
     "Saved sessions": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved sessions"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2513,6 +4019,12 @@
     },
     "Saved to Files": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved to Files"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2523,6 +4035,12 @@
     },
     "Saved to Photos": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved to Photos"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2533,6 +4051,12 @@
     },
     "Saving…": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saving…"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2543,6 +4067,12 @@
     },
     "Second voice": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Second voice"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2553,6 +4083,12 @@
     },
     "Select %@": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select %@"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2563,6 +4099,12 @@
     },
     "Selected": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selected"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2573,6 +4115,12 @@
     },
     "Session %lld": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session %lld"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2583,6 +4131,12 @@
     },
     "Session name": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session name"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2593,6 +4147,12 @@
     },
     "Share video": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share video"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2603,6 +4163,12 @@
     },
     "Sharper videos, plus smaller files that are easier to share.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sharper videos, plus smaller files that are easier to share."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2613,6 +4179,12 @@
     },
     "Shows \"Made with overdubly.com\"": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows \"Made with overdubly.com\""
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2623,6 +4195,12 @@
     },
     "Simulator Preview: Unlock Pro Immediately": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simulator Preview: Unlock Pro Immediately"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2633,6 +4211,12 @@
     },
     "Smaller file": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smaller file"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2643,6 +4227,12 @@
     },
     "Smaller file (Apple)": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smaller file (Apple)"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2653,6 +4243,12 @@
     },
     "Solo": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2663,6 +4259,12 @@
     },
     "Solo %@": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo %@"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2673,6 +4275,12 @@
     },
     "Something went wrong while recording. Your take is safe.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Something went wrong while recording. Your take is safe."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2683,6 +4291,12 @@
     },
     "Start fresh": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start fresh"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2693,6 +4307,12 @@
     },
     "Start with a voice, an instrument, or a little rhythm.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start with a voice, an instrument, or a little rhythm."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2703,6 +4323,12 @@
     },
     "Stop preview": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop preview"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2713,6 +4339,12 @@
     },
     "Suggested shift: %lld ms": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suggested shift: %lld ms"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2723,6 +4355,12 @@
     },
     "Support": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Support"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2733,6 +4371,12 @@
     },
     "Switch camera": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Switch camera"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2743,6 +4387,12 @@
     },
     "Sync Assist": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sync Assist"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2753,6 +4403,12 @@
     },
     "TEMPO": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TEMPO"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2763,6 +4419,12 @@
     },
     "Tap a part to select": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap a part to select"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2773,6 +4435,12 @@
     },
     "Tempo": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tempo"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2783,6 +4451,12 @@
     },
     "Terms of Use (EULA)": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Terms of Use (EULA)"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2793,6 +4467,12 @@
     },
     "The camera couldn't start. Check your headphones and try again.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The camera couldn't start. Check your headphones and try again."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2803,6 +4483,12 @@
     },
     "The camera or microphone isn't available right now.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The camera or microphone isn't available right now."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2813,6 +4499,12 @@
     },
     "The video could not be saved to Photos.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The video could not be saved to Photos."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2823,6 +4515,12 @@
     },
     "This device can't create a video with these settings. Try 1080p and Most compatible.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This device can't create a video with these settings. Try 1080p and Most compatible."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2833,6 +4531,12 @@
     },
     "This permanently deletes the session, its recordings, and its videos.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This permanently deletes the session, its recordings, and its videos."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2843,6 +4547,12 @@
     },
     "This photo couldn't be added. Please try again.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This photo couldn't be added. Please try again."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2853,6 +4563,12 @@
     },
     "This photo couldn't be opened. Try another one.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This photo couldn't be opened. Try another one."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2863,6 +4579,12 @@
     },
     "This removes %@ from this session.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This removes %@ from this session."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2873,6 +4595,12 @@
     },
     "This session couldn't be opened.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This session couldn't be opened."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2883,6 +4611,12 @@
     },
     "This session couldn't be opened. Its recordings are still saved.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This session couldn't be opened. Its recordings are still saved."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2893,6 +4627,12 @@
     },
     "This take couldn't be read.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This take couldn't be read."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2903,6 +4643,12 @@
     },
     "This take couldn't be recovered. Try again, or start fresh.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This take couldn't be recovered. Try again, or start fresh."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2913,6 +4659,12 @@
     },
     "This take couldn't be saved. You can recover it and try again.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This take couldn't be saved. You can recover it and try again."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2923,6 +4675,12 @@
     },
     "This take didn't finish saving. Please try again.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This take didn't finish saving. Please try again."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2933,6 +4691,12 @@
     },
     "Timing updated. You can undo this.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Timing updated. You can undo this."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2943,6 +4707,12 @@
     },
     "Timing: %@%lld ms": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Timing: %@%lld ms"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2953,6 +4723,12 @@
     },
     "Tip: Double-tap any frame to center it.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tip: Double-tap any frame to center it."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2963,6 +4739,12 @@
     },
     "Try any layout for free. Go Pro to export with all of them.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try any layout for free. Go Pro to export with all of them."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2973,6 +4755,12 @@
     },
     "UNLIMITED SESSIONS": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UNLIMITED SESSIONS"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2983,6 +4771,12 @@
     },
     "Undo last adjustment": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Undo last adjustment"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -2993,6 +4787,12 @@
     },
     "Unlimited Sessions": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unlimited Sessions"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3003,6 +4803,12 @@
     },
     "Unlimited Sync Assist": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unlimited Sync Assist"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3013,6 +4819,12 @@
     },
     "Unlock Overdubly Pro · %@": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unlock Overdubly Pro · %@"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3023,6 +4835,12 @@
     },
     "Vertical": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vertical"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3033,6 +4851,12 @@
     },
     "Vertical position for %@": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vertical position for %@"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3043,6 +4867,12 @@
     },
     "Vertical strips": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vertical strips"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3053,6 +4883,12 @@
     },
     "Violin": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Violin"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3063,6 +4899,12 @@
     },
     "Vocal Harmony Arrangement": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vocal Harmony Arrangement"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3073,6 +4915,12 @@
     },
     "Volume for %@": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volume for %@"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3083,6 +4931,12 @@
     },
     "We restored %@ from its last save.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "We restored %@ from its last save."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3093,6 +4947,12 @@
     },
     "When it looks right, create your video to save or share it.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When it looks right, create your video to save or share it."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3103,6 +4963,12 @@
     },
     "Your Overdubly Pro purchase has been restored.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your Overdubly Pro purchase has been restored."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3113,6 +4979,12 @@
     },
     "Your finishing touches": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your finishing touches"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3123,6 +4995,12 @@
     },
     "Your next part starts here": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your next part starts here"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3133,6 +5011,12 @@
     },
     "Your parts": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your parts"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3143,6 +5027,12 @@
     },
     "Your purchase is waiting for approval. Pro unlocks automatically once it's approved.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your purchase is waiting for approval. Pro unlocks automatically once it's approved."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3153,6 +5043,12 @@
     },
     "Your session": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your session"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3163,6 +5059,12 @@
     },
     "Your sessions": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your sessions"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3173,6 +5075,12 @@
     },
     "Your studio": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your studio"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3183,6 +5091,12 @@
     },
     "Your timing, volume, and layout are kept in the final video.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your timing, volume, and layout are kept in the final video."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3193,6 +5107,12 @@
     },
     "Your video": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your video"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3203,6 +5123,12 @@
     },
     "Your video couldn't be created. Your recordings are safe, so try again.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your video couldn't be created. Your recordings are safe, so try again."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3213,6 +5139,12 @@
     },
     "Your video is ready": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your video is ready"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3223,6 +5155,12 @@
     },
     "Yours to share.": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yours to share."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3233,6 +5171,12 @@
     },
     "Zoom / Crop": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zoom / Crop"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3243,6 +5187,12 @@
     },
     "Zoom for %@": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zoom for %@"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3253,6 +5203,12 @@
     },
     "Zoom in %@": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zoom in %@"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3263,6 +5219,12 @@
     },
     "Zoom out %@": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zoom out %@"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3273,6 +5235,12 @@
     },
     "e.g. Flute 1, Lead, Harmony": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "e.g. Flute 1, Lead, Harmony"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3283,6 +5251,12 @@
     },
     "one-time": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "one-time"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3293,6 +5267,12 @@
     },
     "overdubly": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "overdubly"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3303,6 +5283,12 @@
     },
     "overdubly pro": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "overdubly pro"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -3313,6 +5299,12 @@
     },
     "·": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "·"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",

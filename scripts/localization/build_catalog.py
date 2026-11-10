@@ -14,6 +14,14 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 ES = json.load(open(os.path.join(ROOT, "scripts/localization/es.json"), encoding="utf-8"))
 
+INFO_PLIST_EN = {
+    "CFBundleDisplayName": "Overdubly",
+    "CFBundleName": "Overdubly",
+    "NSCameraUsageDescription": "Overdubly uses the camera to record each part of your video.",
+    "NSMicrophoneUsageDescription": "Overdubly uses the microphone to record your voice or instrument.",
+    "NSPhotoLibraryAddUsageDescription": "Overdubly saves finished performances to your Photos library when you choose.",
+}
+
 INFO_PLIST_ES = {
     "CFBundleDisplayName": "Overdubly",
     "CFBundleName": "Overdubly",
@@ -27,10 +35,14 @@ def unit(value):
     return {"stringUnit": {"state": "translated", "value": value}}
 
 
-def catalog(strings):
+def catalog(strings, english=None):
+    # Explicit English entries make Xcode emit en.lproj. Without it the bundle only has es.lproj
+    # and iOS would show Spanish to everyone.
+    english = english or {}
     return {
         "sourceLanguage": "en",
-        "strings": {key: {"localizations": {"es": unit(value)}} for key, value in sorted(strings.items())},
+        "strings": {key: {"localizations": {"en": unit(english.get(key, key)), "es": unit(value)}}
+                    for key, value in sorted(strings.items())},
         "version": "1.0",
     }
 
@@ -56,5 +68,5 @@ if "--check" in sys.argv:
     sys.exit(1 if missing else 0)
 
 write(os.path.join(ROOT, "LooplineApp/Resources/Localizable.xcstrings"), catalog(ES))
-write(os.path.join(ROOT, "LooplineApp/Resources/InfoPlist.xcstrings"), catalog(INFO_PLIST_ES))
+write(os.path.join(ROOT, "LooplineApp/Resources/InfoPlist.xcstrings"), catalog(INFO_PLIST_ES, INFO_PLIST_EN))
 print(f"Wrote {len(ES)} strings and {len(INFO_PLIST_ES)} Info.plist strings.")

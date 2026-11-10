@@ -3,6 +3,12 @@
   "strings": {
     "CFBundleDisplayName": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overdubly"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -13,6 +19,12 @@
     },
     "CFBundleName": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overdubly"
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -23,6 +35,12 @@
     },
     "NSCameraUsageDescription": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overdubly uses the camera to record each part of your video."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -33,6 +51,12 @@
     },
     "NSMicrophoneUsageDescription": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overdubly uses the microphone to record your voice or instrument."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",
@@ -43,6 +67,12 @@
     },
     "NSPhotoLibraryAddUsageDescription": {
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overdubly saves finished performances to your Photos library when you choose."
+          }
+        },
         "es": {
           "stringUnit": {
             "state": "translated",

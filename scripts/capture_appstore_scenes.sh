@@ -20,7 +20,11 @@ wait_booted() {
 }
 udid_for() {
   local name="$1" id
-  id="$(xcrun simctl list devices available -j | python3 -c "import sys,json;n=sys.argv[1];print(next((d['udid'] for r in json.load(sys.stdin)['devices'].values() for d in r if d['name']==n),''))" "$name")"
+  # Always start from a brand-new device: reused devices can return stale framebuffers.
+  for old in $(xcrun simctl list devices -j | python3 -c "import sys,json;n=sys.argv[1];print(' '.join(d['udid'] for r in json.load(sys.stdin)['devices'].values() for d in r if d['name']==n))" "$name"); do
+    xcrun simctl delete "$old" 2>/dev/null || true
+  done
+  id=""
   if [ -z "$id" ]; then
     if [ "$name" = "iPhone Duo" ]; then
       # The Duo ships with its own runtime variant (iPhone19,4).
@@ -34,6 +38,8 @@ udid_for() {
 }
 for entry in "${DEVICES[@]}"; do
   kind="${entry%%:*}"; udid="$(udid_for "${entry#*:}")"
+  # One simulator at a time keeps simctl responsive; start from a clean device.
+  xcrun simctl shutdown all 2>/dev/null || true
   # English system locale so the status bar date matches across localizations.
   xcrun simctl boot "$udid" 2>/dev/null || true
   wait_booted "$udid"
@@ -56,7 +62,7 @@ for entry in "${DEVICES[@]}"; do
     root="Screenshots-$kind-$lang"
     for scene in ${SCENES:-7 1 2 3 4 6}; do
       xcrun simctl terminate "$udid" "$BUNDLE" 2>/dev/null || true
-      xcrun simctl launch "$udid" "$BUNDLE" -AppleLanguages "($lang)" -AppleLocale "$locale" \
+      xcrun simctl launch --terminate-running-process "$udid" "$BUNDLE" -AppleLanguages "($lang)" -AppleLocale "$locale" \
         -LooplineHarnessMode -LooplineProjectRoot "$root" \
         -LooplineSeedTrackCount 4 -LooplineScreenshotScene "$scene" >/dev/null
       # First launch per language generates the seeded media; later launches reuse it.
@@ -72,4 +78,6 @@ for entry in "${DEVICES[@]}"; do
     done
   done
   xcrun simctl terminate "$udid" "$BUNDLE" 2>/dev/null || true
+  xcrun simctl shutdown "$udid" 2>/dev/null || true
+  xcrun simctl delete "$udid" 2>/dev/null || true
 done
