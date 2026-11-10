@@ -4,8 +4,9 @@ import CoreGraphics
 import Foundation
 
 let root = URL(fileURLWithPath: "/Users/sebas/Documents/loopline")
-let rawDir = root.appendingPathComponent("build/raw_scenes")  // from scripts/capture_appstore_scenes.sh
+let rawDir = root.appendingPathComponent("build/raw_v101")  // from scripts/capture_appstore_scenes.sh
 let docsDir = root.appendingPathComponent("docs/screenshots")
+let duoDir = root.appendingPathComponent("build/raw_duo")  // from scripts/capture_duo.sh
 let outRoot = root.appendingPathComponent("build/appstore_screenshots")
 
 struct Accent {
@@ -217,8 +218,9 @@ for (locale, list) in scenesByLocale {
         try renderPoster(width: 1290, height: 2796, rawURL: iphoneRaw, meta: meta, accent: accent, isIPad: false, outURL: iphoneOut)
         try renderPoster(width: 2064, height: 2752, rawURL: ipadRaw, meta: meta, accent: accent, isIPad: true, outURL: ipadOut)
         // iPhone Duo: inner (unfolded) and outer displays, uploaded to the APP_IPHONE_DUO set.
-        for (display, width, height, wide) in [("duoinner", 2007, 2853, true), ("duoouter", 1398, 2034, false)] {
-            let raw = rawDir.appendingPathComponent("\(display)_\(lang)_scene_\(s).png")
+        // Inner display is captured in landscape (2853x2007), the outer one in portrait (1398x2034).
+        for (display, width, height, wide) in [("duoinner", 2853, 2007, true), ("duoouter", 1398, 2034, false)] {
+            let raw = duoDir.appendingPathComponent("\(display)_\(lang)_scene_\(s).png")
             guard fm.fileExists(atPath: raw.path) else { continue }
             let out = outRoot.appendingPathComponent("\(locale)/0\(position)_\(display).png")
             try renderPoster(width: width, height: height, rawURL: raw, meta: meta, accent: accent, isIPad: wide, outURL: out)

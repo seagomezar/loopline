@@ -6,7 +6,7 @@ set -euo pipefail
 APP="$1"; OUT="$2"; BUNDLE=com.seagomezar.loopline
 mkdir -p "$OUT"
 # kind:Device Type Name — simulators are created on demand (latest installed iOS runtime).
-declare -a DEVICES=("iphone:iPhone 17 Pro Max" "ipad:iPad Pro 13-inch (M5)" "duo:iPhone Duo")
+declare -a DEVICES=("iphone:iPhone 17 Pro Max" "ipad:iPad Pro 13-inch (M5)")  # iPhone Duo: scripts/capture_duo.sh
 if [ -n "${ONLY:-}" ]; then
   filtered=(); for e in "${DEVICES[@]}"; do [ "${e%%:*}" = "$ONLY" ] && filtered+=("$e"); done; DEVICES=("${filtered[@]}")
 fi
@@ -38,8 +38,7 @@ udid_for() {
 }
 for entry in "${DEVICES[@]}"; do
   kind="${entry%%:*}"; udid="$(udid_for "${entry#*:}")"
-  # One simulator at a time keeps simctl responsive; start from a clean device.
-  xcrun simctl shutdown all 2>/dev/null || true
+  # Each device is created fresh and deleted when done (other simulators are left untouched).
   # English system locale so the status bar date matches across localizations.
   xcrun simctl boot "$udid" 2>/dev/null || true
   wait_booted "$udid"
@@ -56,7 +55,9 @@ for entry in "${DEVICES[@]}"; do
   data_dir="$(xcrun simctl get_app_container "$udid" "$BUNDLE" data)"
   mkdir -p "$data_dir/Documents/Fixtures"
   cp "$(dirname "$0")"/fixtures/part-*.png "$data_dir/Documents/Fixtures/" 2>/dev/null || true
-  for lang in ${LANGS:-en es}; do
+  # No permission prompts over the screenshots.
+  for service in camera microphone photos; do xcrun simctl privacy "$udid" grant "$service" "$BUNDLE" 2>/dev/null || true; done
+  for lang in ${LANGS:-en es en}; do
     case "$lang" in es) locale=es_MX ;; *) locale=en_US ;; esac
     first=1
     root="Screenshots-$kind-$lang"
