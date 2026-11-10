@@ -1,3 +1,4 @@
+import PhotosUI
 import SwiftUI
 
 struct LooplineCaptureView: View {
@@ -5,6 +6,7 @@ struct LooplineCaptureView: View {
     @State private var trackPendingDeletion: LooplineTrack?
     @State private var trackPendingRename: LooplineTrack?
     @State private var renameDraft = ""
+    @State private var photoSelection: PhotosPickerItem?
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -25,7 +27,28 @@ struct LooplineCaptureView: View {
                 }
                 CapturePreviewCard(model: model, capture: model.captureCoordinator, clock: model.audioClock)
                 partHeadlineCard
-                Text(model.tracks.isEmpty ? "Start with a voice, an instrument, or a little rhythm." : "Earlier parts play through your headphones while you record.")
+                PhotosPicker(selection: $photoSelection, matching: .images, photoLibrary: .shared()) {
+                    Label("Add a photo as a part", systemImage: "photo.on.rectangle")
+                        .font(LooplineTheme.text(14, weight: .medium))
+                        .foregroundStyle(Color.looplineInk)
+                        .frame(maxWidth: .infinity, minHeight: 48)
+                        .background(Color.looplineSurface, in: RoundedRectangle(cornerRadius: 14))
+                        .overlay { RoundedRectangle(cornerRadius: 14).stroke(Color.looplineLine, lineWidth: 1) }
+                }
+                .disabled(model.transportBusy || model.hasRecoverableDraft)
+                .accessibilityIdentifier("capture.addPhoto")
+                .onChange(of: photoSelection) { _, item in
+                    guard let item else { return }
+                    photoSelection = nil
+                    Task {
+                        if let data = try? await item.loadTransferable(type: Data.self) {
+                            model.addPhotoPart(data)
+                        } else {
+                            model.errorMessage = StillImageClipError.unreadableImage.errorDescription
+                        }
+                    }
+                }
+                Text(L(model.tracks.isEmpty ? "Start with a voice, an instrument, or a little rhythm." : "Earlier parts play through your headphones while you record."))
                     .font(LooplineTheme.text(13)).foregroundStyle(Color.looplineMuted)
                 metronome
                 if !model.tracks.isEmpty {
@@ -207,10 +230,10 @@ struct LooplineCaptureView: View {
     }
 
     private var transportStatusLabel: String {
-        if model.isFinalizing { return "SAVING TAKE" }
-        if model.isCountingIn { return "COUNT IN · \(model.tempo) BPM" }
-        if model.isRecording { return "RECORDING · BAR \(max(1, model.currentBarNumber))" }
-        return "READY"
+        if model.isFinalizing { return String(localized: "SAVING TAKE") }
+        if model.isCountingIn { return String(localized: "COUNT IN · \(model.tempo) BPM") }
+        if model.isRecording { return String(localized: "RECORDING · BAR \(max(1, model.currentBarNumber))") }
+        return String(localized: "READY")
     }
 
     private var metronome: some View {
@@ -272,8 +295,8 @@ private struct CapturePreviewCard: View {
 
     private var statusPillText: String {
         let headline = model.effectiveNextPartTitle
-        if model.isCountingIn { return "Count in · \(headline)" }
-        if model.isRecording { return "Recording · \(headline)" }
+        if model.isCountingIn { return String(localized: "Count in · \(headline)") }
+        if model.isRecording { return String(localized: "Recording · \(headline)") }
         return headline
     }
 
@@ -325,7 +348,7 @@ private struct CapturePreviewCard: View {
             HStack(spacing: 12) {
                 Image(systemName: "headphones").foregroundStyle(Color.looplineInk)
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(clock.routeName == "Not configured" ? "Headphones" : clock.routeName).font(LooplineTheme.text(12, weight: .medium))
+                    Text(clock.routeName == "Not configured" ? String(localized: "Headphones") : clock.routeName).font(LooplineTheme.text(12, weight: .medium))
                     Text("Headphones recommended")
                         .font(LooplineTheme.text(10, mono: true)).foregroundStyle(Color.looplineMuted)
                 }

@@ -7,7 +7,7 @@ enum LooplineTab: String, CaseIterable, Identifiable {
     case capture, mix, export
     var id: String { rawValue }
     var title: String {
-        switch self { case .capture: "Capture"; case .mix: "Mix & Sync"; case .export: "Export" }
+        switch self { case .capture: String(localized: "Capture"); case .mix: String(localized: "Mix & Sync"); case .export: String(localized: "Export") }
     }
     var icon: String {
         switch self { case .capture: "video.fill"; case .mix: "slider.horizontal.3"; case .export: "square.and.arrow.up" }
@@ -45,18 +45,18 @@ enum SyncAssistState {
     case analyzing, applied(offsetMilliseconds: Int), manual
     var title: String {
         switch self {
-        case .ready: "Ready to align"
-        case .analyzing: "Finding a timing match"
-        case .applied: "Alignment applied"
-        case .manual: "Align your parts"
+        case .ready: String(localized: "Ready to align")
+        case .analyzing: String(localized: "Finding a timing match")
+        case .applied: String(localized: "Alignment applied")
+        case .manual: String(localized: "Align your parts")
         }
     }
     var detail: String {
         switch self {
-        case let .ready(_, offset): "Suggested shift: \(offset) ms"
-        case .analyzing: "Listening to your parts…"
-        case .applied: "Timing updated. You can undo this."
-        case .manual: "Line up this part automatically or adjust it by hand."
+        case let .ready(_, offset): String(localized: "Suggested shift: \(offset) ms")
+        case .analyzing: String(localized: "Listening to your parts…")
+        case .applied: String(localized: "Timing updated. You can undo this.")
+        case .manual: String(localized: "Line up this part automatically or adjust it by hand.")
         }
     }
     var isAnalyzing: Bool { if case .analyzing = self { true } else { false } }
@@ -85,8 +85,8 @@ enum ExportPreviewMode: String, CaseIterable, Identifiable {
     var id: String { rawValue }
     var title: String {
         switch self {
-        case .realPreview: "Preview"
-        case .frameCrop: "Adjust frames"
+        case .realPreview: String(localized: "Preview")
+        case .frameCrop: String(localized: "Adjust frames")
         }
     }
     var icon: String {
@@ -102,13 +102,13 @@ final class LooplineViewModel: ObservableObject {
     @Published var selectedTab: LooplineTab = .capture
     @Published private(set) var tracks: [LooplineTrack] = []
     @Published var selectedTrackID: UUID? { didSet { if selectedTrackID != oldValue { cancelSync() } } }
-    @Published private(set) var projectTitle = "Your session"
+    @Published private(set) var projectTitle = String(localized: "Your session")
     @Published private(set) var projects: [StoredProject] = []
     @Published var tempo = 96 { didSet { persistSettings() } }
     @Published var beatsPerBar = 4 { didSet { persistSettings() } }
     @Published var beatDenominator = 4 { didSet { persistSettings() } }
     @Published var countInBars = 1 { didSet { persistSettings() } }
-    @Published var clickEnabled = true { didSet { persistSettings() } }
+    @Published var clickEnabled = false { didSet { persistSettings() } }
     @Published var clickVolume = 0.55 { didSet { persistSettings() } }
     @Published var subdivisions = 2 { didSet { persistSettings() } }
     @Published var accentEnabled = true { didSet { persistSettings() } }
@@ -198,7 +198,7 @@ final class LooplineViewModel: ObservableObject {
             projectStore = store
             projects = try store.loadProjects()
             if let first = projects.first { open(first) }
-            else if store.loadWarnings.isEmpty { open(try store.createProject(title: "My first session")) }
+            else if store.loadWarnings.isEmpty { open(try store.createProject(title: String(localized: "My first session"))) }
             if !store.loadWarnings.isEmpty { errorMessage = store.loadWarnings.joined(separator: "\n") }
         } catch {
             projectStore = nil
@@ -263,7 +263,7 @@ final class LooplineViewModel: ObservableObject {
     var formattedPreviewCurrentTime: String { LooplineTrack.time(previewCurrentTime) }
     var formattedPreviewDuration: String { LooplineTrack.time(effectivePreviewDuration) }
     var transportBusy: Bool { isRecording || isFinalizing || isPreparing || exportState.isRendering }
-    var trackCountLabel: String { "\(tracks.count) \(tracks.count == 1 ? "part" : "parts")" }
+    var trackCountLabel: String { tracks.count == 1 ? String(localized: "1 part") : String(localized: "\(tracks.count) parts") }
     var isProUnlocked: Bool { storeService.isProUnlocked }
     var effectiveIncludeWatermark: Bool { isProUnlocked ? includeWatermark : true }
     var renderOptions: RenderOptions {
@@ -417,7 +417,7 @@ final class LooplineViewModel: ObservableObject {
             try store.deleteProject(id)
             projects.removeAll { $0.id == id }
             if projects.isEmpty {
-                let fresh = try store.createProject(title: "My first session")
+                let fresh = try store.createProject(title: String(localized: "My first session"))
                 projects = [fresh]
                 open(fresh)
             } else if wasCurrentProject, let next = projects.first {
@@ -447,7 +447,7 @@ final class LooplineViewModel: ObservableObject {
             let url = try? store.mediaURL(for: take.media.mediaPath, in: project)
             let exists = url.map { FileManager.default.fileExists(atPath: $0.path) } ?? false
             return LooplineTrack(id: track.id.rawValue, name: track.name,
-                role: exists ? "" : "Recording missing",
+                role: exists ? "" : String(localized: "Recording missing"),
                 duration: Double(take.media.duration.rawValue) / Double(take.media.sampleRate.hertz),
                 offsetMilliseconds: Int(project.manifest.project.timebase.milliseconds(for: track.placement.effectiveTimelineStart)),
                 volume: track.mix.gainCentibels <= -12000 ? 0 : pow(10, Double(track.mix.gainCentibels) / 2000),
@@ -814,6 +814,37 @@ final class LooplineViewModel: ObservableObject {
         invalidateExport()
     }
 
+    /// Adds a still photo as a part. It becomes a silent clip as long as the session (at least 10 s).
+    func addPhotoPart(_ data: Data) {
+        guard !transportBusy, !hasRecoverableDraft, let store = projectStore, let project else { return }
+        if !isProUnlocked && tracks.count >= LooplineStoreService.freeMaxTracks {
+            presentPaywall(.fourthVoice)
+            return
+        }
+        stopPlayback()
+        isFinalizing = true
+        Task { [weak self] in
+            guard let self else { return }
+            defer { isFinalizing = false }
+            do {
+                guard let image = StillImageClipWriter.image(from: data) else { throw StillImageClipError.unreadableImage }
+                let (draft, url) = try store.beginTake(in: project)
+                self.project = draft
+                let duration = max(durationSeconds, StillImageClipWriter.minimumDuration)
+                try await StillImageClipWriter.write(image, duration: duration, to: url)
+                try await saveFinishedTake(CapturedTake(url: url, offsetMilliseconds: 0))
+            } catch {
+                if var pending = self.project, let relative = pending.pendingTake?.relativePath {
+                    if let url = try? store.mediaURL(for: relative, in: pending) { try? FileManager.default.removeItem(at: url) }
+                    pending.pendingTake = nil
+                    try? store.save(pending)
+                    self.project = pending
+                }
+                errorMessage = error.localizedDescription
+            }
+        }
+    }
+
     func recoverDraft() {
         guard !transportBusy, let project, let pending = project.pendingTake, let store = projectStore else { return }
         isFinalizing = true
@@ -831,7 +862,7 @@ final class LooplineViewModel: ObservableObject {
                 refreshTracks()
                 selectedTrackID = tracks.last?.id
                 hasRecoverableDraft = false
-            } catch { errorMessage = "This take couldn't be recovered. Try again, or start fresh." }
+            } catch { errorMessage = String(localized: "This take couldn't be recovered. Try again, or start fresh.") }
         }
     }
 
@@ -1084,7 +1115,7 @@ final class LooplineViewModel: ObservableObject {
     func runSyncAssist() {
         guard !transportBusy, !syncState.isAnalyzing, let target = selectedTrack, let targetURL = target.sourceURL,
               let reference = tracks.first(where: { $0.id != target.id && $0.sourceURL != nil }), let referenceURL = reference.sourceURL else {
-            errorMessage = "Record at least two parts to line them up."
+            errorMessage = String(localized: "Record at least two parts to line them up.")
             return
         }
         syncState = .analyzing

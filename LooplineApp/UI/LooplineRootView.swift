@@ -33,7 +33,7 @@ struct LooplineRootView: View {
                         HStack(spacing: 4) {
                             Image(systemName: model.isProUnlocked ? "checkmark.seal.fill" : "sparkles")
                                 .font(LooplineTheme.text(10, weight: .bold))
-                            Text(model.isProUnlocked ? "PRO" : "PRO")
+                            Text("PRO")
                                 .font(LooplineTheme.text(10, weight: .bold, mono: true))
                         }
                         .foregroundStyle(Color.looplineInk)
@@ -88,7 +88,7 @@ struct LooplineRootView: View {
                     let scene = arguments[sceneIdx + 1]
                     switch scene {
                     case "1":
-                        model.nextPartTitle = "Lead Flute"
+                        model.nextPartTitle = String(localized: "Lead Flute")
                         model.select(.capture)
                     case "2":
                         model.exportPreviewMode = .realPreview
@@ -101,9 +101,9 @@ struct LooplineRootView: View {
                     case "5":
                         model.newProject()
                         if let currentID = model.currentProjectID {
-                            model.renameProject(currentID, to: "Vocal Harmony Arrangement")
+                            model.renameProject(currentID, to: String(localized: "Vocal Harmony Arrangement"))
                         }
-                        if let first = model.projects.first(where: { $0.title.contains("Chamber") }) {
+                        if let first = model.projects.first(where: { $0.title == String(localized: "Chamber Quartet — Bach") }) {
                             model.open(first)
                         }
                         showingProjects = true
@@ -191,7 +191,7 @@ struct LooplineSessionsSheet: View {
                                             }
                                         }
                                         let count = project.manifest.project.tracks.count
-                                        Text("\(count) \(count == 1 ? "part" : "parts")")
+                                        Text(count == 1 ? String(localized: "1 part") : String(localized: "\(count) parts"))
                                             .font(LooplineTheme.text(12, mono: true))
                                             .foregroundStyle(Color.looplineMuted)
                                     }

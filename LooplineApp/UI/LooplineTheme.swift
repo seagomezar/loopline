@@ -2,6 +2,12 @@ import SwiftUI
 
 /// Typography and palette from the reference deck's Color & Typography slide.
 /// Fonts are bundled with their SIL Open Font Licenses, with no runtime download.
+/// Runtime lookup in Localizable.xcstrings by exact key (English text), falling back to the key.
+/// Use for String values that SwiftUI would otherwise render verbatim.
+func L(_ key: String) -> String {
+    Bundle.main.localizedString(forKey: key, value: key, table: nil)
+}
+
 enum LooplineTheme {
     static func text(_ size: CGFloat, weight: Font.Weight = .regular, mono: Bool = false) -> Font {
         let name = mono ? "RobotoMono-Light" : (weight == .bold || weight == .heavy ? "GoogleSans-Bold" :

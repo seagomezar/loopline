@@ -47,9 +47,10 @@ enum SimulatorSessionFixture {
         project.title = "Simulator \(trackCount) parts"
         project.manifest.project.name = project.title
         project.settings.exportResolution = "720p"
-        let defaultNames = ["Flute 1", "Flute 2", "First Voice", "Cello", "Violin", "Alto Voice", "Bassoon", "Percussion"]
+        let defaultNames = [String(localized: "Flute 1"), String(localized: "Flute 2"), String(localized: "First voice"), String(localized: "Cello"),
+                            String(localized: "Violin"), String(localized: "Alto voice"), String(localized: "Bassoon"), String(localized: "Percussion")]
         if ProcessInfo.processInfo.arguments.contains("-LooplineScreenshotScene") {
-            project.title = "Chamber Quartet — Bach"
+            project.title = String(localized: "Chamber Quartet — Bach")
             project.manifest.project.name = project.title
             project.settings.exportResolution = "1080p"
             project.settings.exportLayout = .heroTop

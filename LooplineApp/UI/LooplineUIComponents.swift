@@ -21,8 +21,8 @@ struct LooplineTopBar<Trailing: View>: View {
     var body: some View {
         HStack(alignment: .bottom) {
             VStack(alignment: .leading, spacing: 8) {
-                Text(eyebrow.uppercased()).font(LooplineTheme.text(11, mono: true)).foregroundStyle(Color.looplineMuted)
-                Text(title).font(LooplineTheme.text(34, weight: .bold)).tracking(-1.1)
+                Text(L(eyebrow).uppercased()).font(LooplineTheme.text(11, mono: true)).foregroundStyle(Color.looplineMuted)
+                Text(L(title)).font(LooplineTheme.text(34, weight: .bold)).tracking(-1.1)
             }
             Spacer(minLength: 8)
             trailing()
@@ -35,9 +35,9 @@ struct LooplineSectionHeader: View {
     var detail: String?
     var body: some View {
         HStack(alignment: .firstTextBaseline) {
-            Text(title).font(LooplineTheme.text(18, weight: .bold))
+            Text(L(title)).font(LooplineTheme.text(18, weight: .bold))
             Spacer()
-            if let detail { Text(detail).font(LooplineTheme.text(11, mono: true)).foregroundStyle(Color.looplineMuted) }
+            if let detail { Text(L(detail)).font(LooplineTheme.text(11, mono: true)).foregroundStyle(Color.looplineMuted) }
         }
     }
 }
@@ -59,7 +59,7 @@ struct LooplinePill: View {
     var body: some View {
         HStack(spacing: 5) {
             if let icon { Image(systemName: icon) }
-            Text(text)
+            Text(L(text))
         }
         .font(LooplineTheme.text(11, weight: .medium))
         .padding(.horizontal, 10).padding(.vertical, 7)
@@ -106,7 +106,7 @@ struct LooplinePartSuggestionStrip: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 6) {
-                ForEach(Self.suggestions, id: \.self) { item in
+                ForEach(Self.suggestions.map(L), id: \.self) { item in
                     let isMatching = currentText.trimmingCharacters(in: .whitespacesAndNewlines).caseInsensitiveCompare(item) == .orderedSame
                     Button {
                         onSelect(item)
@@ -840,9 +840,9 @@ struct LooplineFrameLayoutPicker: View {
 
     private func categoryLabel(for category: VideoLayoutCategory) -> String {
         switch category {
-        case .combinations: "COMBINATIONS · FRAMES & DIPTIC"
-        case .rows: "ROWS · HORIZONTAL SPLITS"
-        case .columns: "COLUMNS & GRIDS · VERTICAL SPLITS"
+        case .combinations: String(localized: "COMBINATIONS · FRAMES & DIPTIC")
+        case .rows: String(localized: "ROWS · HORIZONTAL SPLITS")
+        case .columns: String(localized: "COLUMNS & GRIDS · VERTICAL SPLITS")
         }
     }
 
@@ -903,7 +903,7 @@ struct LooplineFrameLayoutPicker: View {
         .buttonStyle(.plain)
         .accessibilityIdentifier("export.layout.\(style.rawValue)")
         .accessibilityLabel("\(style.title), \(style.subtitle)")
-        .accessibilityValue(isSelected ? "Selected" : "Not selected")
+        .accessibilityValue(L(isSelected ? "Selected" : "Not selected"))
     }
 }
 
@@ -962,7 +962,7 @@ struct LooplineTrackLane: View {
                     .contentShape(Rectangle())
                 }
                 .accessibilityLabel("Select \(track.name)")
-                .accessibilityValue(isSelected ? "Selected" : "Not selected")
+                .accessibilityValue(L(isSelected ? "Selected" : "Not selected"))
 
                 if onRename != nil {
                     Button {
@@ -1036,13 +1036,28 @@ struct LooplineTrackLane: View {
             }
 
             LooplineWaveform(samples: track.waveform, tint: track.tint).onTapGesture(perform: onSelect)
+            HStack(spacing: 8) {
+                Button(action: onMute) {
+                    Label(L(track.isMuted ? "Muted" : "Mute"), systemImage: track.isMuted ? "speaker.slash.fill" : "speaker.wave.2.fill")
+                        .font(LooplineTheme.text(12, weight: .bold))
+                        .frame(maxWidth: .infinity, minHeight: 44)
+                        .background(track.isMuted ? Color.looplinePastelYellow : Color.looplineBackground, in: RoundedRectangle(cornerRadius: 12))
+                }
+                .accessibilityLabel("Mute \(track.name)").accessibilityValue(L(track.isMuted ? "On" : "Off"))
+                Button(action: onSolo) {
+                    Label("Solo", systemImage: "headphones")
+                        .font(LooplineTheme.text(12, weight: .bold))
+                        .frame(maxWidth: .infinity, minHeight: 44)
+                        .background(track.isSolo ? Color.looplinePastelGreen : Color.looplineBackground, in: RoundedRectangle(cornerRadius: 12))
+                }
+                .accessibilityLabel("Solo \(track.name)").accessibilityValue(L(track.isSolo ? "On" : "Off"))
+            }
             HStack(spacing: 10) {
-                Button(action: onMute) { Text("M").frame(width: 44, height: 44).background(track.isMuted ? Color.looplinePastelYellow : Color.looplineBackground, in: RoundedRectangle(cornerRadius: 12)) }
-                    .accessibilityLabel("Mute \(track.name)").accessibilityValue(track.isMuted ? "On" : "Off")
-                Button(action: onSolo) { Text("S").frame(width: 44, height: 44).background(track.isSolo ? Color.looplinePastelGreen : Color.looplineBackground, in: RoundedRectangle(cornerRadius: 12)) }
-                    .accessibilityLabel("Solo \(track.name)").accessibilityValue(track.isSolo ? "On" : "Off")
+                Image(systemName: "speaker.fill").font(LooplineTheme.text(12)).foregroundStyle(Color.looplineMuted)
                 Slider(value: Binding(get: { track.volume }, set: { onVolumeChange($0) }), in: 0...1)
                     .tint(.looplineBlue).accessibilityLabel("Volume for \(track.name)")
+                    .disabled(track.isMuted)
+                Image(systemName: "speaker.wave.3.fill").font(LooplineTheme.text(12)).foregroundStyle(Color.looplineMuted)
                 Text("\(Int(track.volume * 100))%").font(LooplineTheme.text(11, mono: true)).frame(width: 42)
             }
             HStack(spacing: 6) {
@@ -1105,7 +1120,7 @@ struct LooplinePrimaryButton: View {
         Button(action: action) {
             HStack(spacing: 9) {
                 if let icon { Image(systemName: icon) }
-                Text(title).font(LooplineTheme.text(15, weight: .bold))
+                Text(L(title)).font(LooplineTheme.text(15, weight: .bold))
             }
             .foregroundStyle(isDisabled ? Color.looplineMuted : Color.looplineInk)
             .frame(maxWidth: .infinity, minHeight: 52)

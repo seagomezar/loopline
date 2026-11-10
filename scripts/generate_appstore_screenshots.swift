@@ -199,15 +199,16 @@ func renderPoster(
 let fm = FileManager.default
 for (scene, name) in [(1, "capture.png"), (2, "export.png"), (3, "mix.png")] {
     try? fm.removeItem(at: docsDir.appendingPathComponent(name))
-    try fm.copyItem(at: rawDir.appendingPathComponent("iphone_scene_\(scene).png"), to: docsDir.appendingPathComponent(name))
+    try fm.copyItem(at: rawDir.appendingPathComponent("iphone_en_scene_\(scene).png"), to: docsDir.appendingPathComponent(name))
 }
 
 for (locale, list) in scenesByLocale {
     for (idx, meta) in list.enumerated() {
         let accent = accents[idx]
         let s = meta.index
-        let iphoneRaw = rawDir.appendingPathComponent("iphone_scene_\(s).png")
-        let ipadRaw = rawDir.appendingPathComponent("ipad_scene_\(s).png")
+        let lang = locale.hasPrefix("es") ? "es" : "en"
+        let iphoneRaw = rawDir.appendingPathComponent("iphone_\(lang)_scene_\(s).png")
+        let ipadRaw = rawDir.appendingPathComponent("ipad_\(lang)_scene_\(s).png")
 
         let position = idx + 1
         let iphoneOut = outRoot.appendingPathComponent("\(locale)/0\(position)_iphone67.png")
@@ -215,6 +216,13 @@ for (locale, list) in scenesByLocale {
 
         try renderPoster(width: 1290, height: 2796, rawURL: iphoneRaw, meta: meta, accent: accent, isIPad: false, outURL: iphoneOut)
         try renderPoster(width: 2064, height: 2752, rawURL: ipadRaw, meta: meta, accent: accent, isIPad: true, outURL: ipadOut)
+        // iPhone Duo: inner (unfolded) and outer displays, uploaded to the APP_IPHONE_DUO set.
+        for (display, width, height, wide) in [("duoinner", 2007, 2853, true), ("duoouter", 1398, 2034, false)] {
+            let raw = rawDir.appendingPathComponent("\(display)_\(lang)_scene_\(s).png")
+            guard fm.fileExists(atPath: raw.path) else { continue }
+            let out = outRoot.appendingPathComponent("\(locale)/0\(position)_\(display).png")
+            try renderPoster(width: width, height: height, rawURL: raw, meta: meta, accent: accent, isIPad: wide, outURL: out)
+        }
         print("[\(locale)] Generated 0\(position) from scene \(s)")
     }
 }

@@ -211,12 +211,12 @@ extension CaptureCoordinator: AVCaptureVideoDataOutputSampleBufferDelegate, AVCa
         guard let input else { return }
         if !input.isReadyForMoreMediaData {
             if output === audioOutput {
-                DispatchQueue.main.async { self.errorMessage = "Recording stopped unexpectedly. Your take is safe." }
+                DispatchQueue.main.async { self.errorMessage = String(localized: "Recording stopped unexpectedly. Your take is safe.") }
             }
             return
         }
         if !input.append(buffer) {
-            let message = "Something went wrong while recording. Your take is safe."
+            let message = String(localized: "Something went wrong while recording. Your take is safe.")
             DispatchQueue.main.async { self.errorMessage = message }
         }
     }
@@ -226,10 +226,10 @@ enum CaptureError: LocalizedError {
     case permissionDenied, cameraUnavailable, cannotConfigure, writeFailed
     var errorDescription: String? {
         switch self {
-        case .permissionDenied: "Allow camera and microphone access in Settings to record a take."
-        case .cameraUnavailable: "The camera or microphone isn't available right now."
-        case .cannotConfigure: "The camera couldn't start. Check your headphones and try again."
-        case .writeFailed: "This take couldn't be saved. You can recover it and try again."
+        case .permissionDenied: String(localized: "Allow camera and microphone access in Settings to record a take.")
+        case .cameraUnavailable: String(localized: "The camera or microphone isn't available right now.")
+        case .cannotConfigure: String(localized: "The camera couldn't start. Check your headphones and try again.")
+        case .writeFailed: String(localized: "This take couldn't be saved. You can recover it and try again.")
         }
     }
 }

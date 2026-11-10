@@ -17,7 +17,7 @@ final class RenderCoordinator: ObservableObject {
 
     func render(inputs: [RenderTrackInput], destination: URL, options: RenderOptions) {
         cancel()
-        state = .rendering(progress: 0, message: "Preparing your performance")
+        state = .rendering(progress: 0, message: String(localized: "Preparing your performance"))
         task = Task { [weak self] in
             guard let self else { return }
             do {
@@ -64,7 +64,7 @@ final class RenderCoordinator: ObservableObject {
             for await value in session.states(updateInterval: 0.15) {
                 guard case let .exporting(progress) = value else { continue }
                 guard !Task.isCancelled, self?.activeExportID == exportID else { return }
-                self?.state = .rendering(progress: progress.fractionCompleted * 0.95, message: "Creating your video")
+                self?.state = .rendering(progress: progress.fractionCompleted * 0.95, message: String(localized: "Creating your video"))
             }
         }
         defer {
@@ -103,10 +103,10 @@ enum RenderError: LocalizedError {
     case exportUnavailable, noSourceTracks, noVideoTracks, outputVerificationFailed
     var errorDescription: String? {
         switch self {
-        case .exportUnavailable: "This device can't create a video with these settings. Try 1080p and Most compatible."
-        case .noSourceTracks: "Record a part first."
-        case .noVideoTracks: "Record at least one part with video first."
-        case .outputVerificationFailed: "Your video couldn't be created. Your recordings are safe, so try again."
+        case .exportUnavailable: String(localized: "This device can't create a video with these settings. Try 1080p and Most compatible.")
+        case .noSourceTracks: String(localized: "Record a part first.")
+        case .noVideoTracks: String(localized: "Record at least one part with video first.")
+        case .outputVerificationFailed: String(localized: "Your video couldn't be created. Your recordings are safe, so try again.")
         }
     }
 }

@@ -5,7 +5,7 @@ import LooplineCore
 
 struct SessionSettings: Codable, Equatable, Sendable {
     var countInBars = 1
-    var clickEnabled = true
+    var clickEnabled = false
     var clickVolume = 0.55
     var subdivisions = 2
     var accentEnabled = true
@@ -143,9 +143,9 @@ final class LocalProjectStore {
                 let backup = directory.appendingPathComponent("project.previous.json")
                 if let recovered = try? load(from: backup) {
                     projects.append(recovered)
-                    loadWarnings.append("We restored \(recovered.title) from its last save.")
+                    loadWarnings.append(String(localized: "We restored \(recovered.title) from its last save."))
                 } else {
-                    loadWarnings.append("A session couldn't be opened. Its recordings are still saved.")
+                    loadWarnings.append(String(localized: "A session couldn't be opened. Its recordings are still saved."))
                 }
             }
         }
@@ -187,10 +187,10 @@ final class LocalProjectStore {
     static func nextDefaultTrackName(for tracks: [Track]) -> String {
         var index = tracks.count + 1
         let existing = Set(tracks.map(\.name))
-        while existing.contains("Part \(index)") {
+        while existing.contains(String(localized: "Part \(index)")) {
             index += 1
         }
-        return "Part \(index)"
+        return String(localized: "Part \(index)")
     }
 
     func commitTake(in project: StoredProject, duration: TimeInterval, offsetMilliseconds: Int = 0, name: String? = nil) throws -> StoredProject {
@@ -280,10 +280,10 @@ final class LocalProjectStore {
     static func nextDefaultProjectTitle(for projects: [StoredProject]) -> String {
         var index = projects.count + 1
         let existing = Set(projects.map(\.title))
-        while existing.contains("Session \(index)") {
+        while existing.contains(String(localized: "Session \(index)")) {
             index += 1
         }
-        return "Session \(index)"
+        return String(localized: "Session \(index)")
     }
 
     func renameProject(_ project: StoredProject, to title: String) throws -> StoredProject {
@@ -369,10 +369,10 @@ enum ProjectStoreError: LocalizedError, Equatable {
     case invalidProject, invalidTake, invalidPath, lowStorage
     var errorDescription: String? {
         switch self {
-        case .invalidProject: "This session couldn't be opened. Its recordings are still saved."
-        case .invalidTake: "This take didn't finish saving. Please try again."
-        case .invalidPath: "This session couldn't be opened."
-        case .lowStorage: "Not enough storage. Free up some space and try again."
+        case .invalidProject: String(localized: "This session couldn't be opened. Its recordings are still saved.")
+        case .invalidTake: String(localized: "This take didn't finish saving. Please try again.")
+        case .invalidPath: String(localized: "This session couldn't be opened.")
+        case .lowStorage: String(localized: "Not enough storage. Free up some space and try again.")
         }
     }
 }

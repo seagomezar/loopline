@@ -33,7 +33,7 @@ final class AudioClockService: ObservableObject {
                     if began {
                         stopMetronome()
                         if reset { engine = AVAudioEngine() }
-                        interruptionMessage = "Audio was interrupted. Check your headphones and try again."
+                        interruptionMessage = String(localized: "Audio was interrupted. Check your headphones and try again.")
                         onInterruption?()
                     }
                 }
@@ -73,7 +73,7 @@ final class AudioClockService: ObservableObject {
 
     private func refreshRoute() {
         let route = session.currentRoute
-        routeName = route.outputs.first?.portName ?? "Built-in audio"
+        routeName = route.outputs.first?.portName ?? String(localized: "Built-in audio")
         routeLatencyMilliseconds = (session.inputLatency + session.outputLatency) * 1000
     }
 }

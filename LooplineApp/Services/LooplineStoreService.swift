@@ -25,51 +25,51 @@ public enum LooplinePaywallTrigger: Identifiable, Equatable, Sendable {
 
     public var eyebrow: String {
         switch self {
-        case .general: "OVERDUBLY PRO"
-        case .fourthVoice: "4 OR MORE VOICES"
-        case .proLayout: "ALL 16 LAYOUTS"
-        case .proExportFormat: "4K EXPORT"
-        case .removeWatermark: "NO BADGE"
-        case .syncAssist: "SYNC ASSIST"
-        case .unlimitedSessions: "UNLIMITED SESSIONS"
+        case .general: String(localized: "OVERDUBLY PRO")
+        case .fourthVoice: String(localized: "4 OR MORE VOICES")
+        case .proLayout: String(localized: "ALL 16 LAYOUTS")
+        case .proExportFormat: String(localized: "4K EXPORT")
+        case .removeWatermark: String(localized: "NO BADGE")
+        case .syncAssist: String(localized: "SYNC ASSIST")
+        case .unlimitedSessions: String(localized: "UNLIMITED SESSIONS")
         }
     }
 
     public var headline: String {
         switch self {
         case .general:
-            "Own your multitrack studio forever."
+            String(localized: "Own your multitrack studio forever.")
         case .fourthVoice:
-            "Record quartets, quintets, and full ensembles."
+            String(localized: "Record quartets, quintets, and full ensembles.")
         case let .proLayout(layoutTitle):
-            "Export with \(layoutTitle) and all 16 frame layouts."
+            String(localized: "Export with \(layoutTitle) and all 16 frame layouts.")
         case .proExportFormat:
-            "Export sharper videos and smaller files."
+            String(localized: "Export sharper videos and smaller files.")
         case .removeWatermark:
-            "Export a clean video without the Overdubly badge."
+            String(localized: "Export a clean video without the Overdubly badge.")
         case .syncAssist:
-            "Line up every voice in one tap."
+            String(localized: "Line up every voice in one tap.")
         case .unlimitedSessions:
-            "Keep as many sessions as you want."
+            String(localized: "Keep as many sessions as you want.")
         }
     }
 
     public var subtitle: String {
         switch self {
         case .general:
-            "Pay once and keep it forever. No account needed."
+            String(localized: "Pay once and keep it forever. No account needed.")
         case .fourthVoice:
-            "Free includes up to 3 voices. Go Pro to record 4 or more."
+            String(localized: "Free includes up to 3 voices. Go Pro to record 4 or more.")
         case .proLayout:
-            "Try any layout for free. Go Pro to export with all of them."
+            String(localized: "Try any layout for free. Go Pro to export with all of them.")
         case .proExportFormat:
-            "1080p is always free. Go Pro for 4K and smaller files."
+            String(localized: "1080p is always free. Go Pro for 4K and smaller files.")
         case .removeWatermark:
-            "Remove the \"Made with overdubly.com\" badge so your video is all yours."
+            String(localized: "Remove the \"Made with overdubly.com\" badge so your video is all yours.")
         case .syncAssist:
-            "Adjusting timing by hand is always free. Go Pro to line up parts automatically."
+            String(localized: "Adjusting timing by hand is always free. Go Pro to line up parts automatically.")
         case .unlimitedSessions:
-            "Free includes up to 2 sessions. Go Pro for unlimited sessions."
+            String(localized: "Free includes up to 2 sessions. Go Pro for unlimited sessions.")
         }
     }
 
@@ -192,12 +192,12 @@ public final class LooplineStoreService: ObservableObject {
                 let transaction = try Self.checkVerified(verification)
                 updateEntitlement(for: transaction)
                 await transaction.finish()
-                statusMessage = "Overdubly Pro is unlocked."
+                statusMessage = String(localized: "Overdubly Pro is unlocked.")
                 return true
             case .userCancelled:
                 return false
             case .pending:
-                statusMessage = "Your purchase is waiting for approval. Pro unlocks automatically once it's approved."
+                statusMessage = String(localized: "Your purchase is waiting for approval. Pro unlocks automatically once it's approved.")
                 return false
             @unknown default:
                 return false
@@ -219,10 +219,10 @@ public final class LooplineStoreService: ObservableObject {
             try await AppStore.sync()
             await refreshEntitlements()
             if isProUnlocked {
-                statusMessage = "Your Overdubly Pro purchase has been restored."
+                statusMessage = String(localized: "Your Overdubly Pro purchase has been restored.")
                 return true
             } else {
-                statusMessage = "No previous Overdubly Pro purchases were found for this Apple Account."
+                statusMessage = String(localized: "No previous Overdubly Pro purchases were found for this Apple Account.")
                 return false
             }
         } catch {

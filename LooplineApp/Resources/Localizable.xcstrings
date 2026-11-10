@@ -1,0 +1,3326 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "#%lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "#%lld"
+          }
+        }
+      }
+    },
+    "%@ · %@ · %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %@ · %@"
+          }
+        }
+      }
+    },
+    "%@%lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@%lld"
+          }
+        }
+      }
+    },
+    "%@%lld ms": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@%lld ms"
+          }
+        }
+      }
+    },
+    "%@, %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@"
+          }
+        }
+      }
+    },
+    "%lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld"
+          }
+        }
+      }
+    },
+    "%lld / %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld / %lld"
+          }
+        }
+      }
+    },
+    "%lld parts": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld partes"
+          }
+        }
+      }
+    },
+    "%lld percent": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld por ciento"
+          }
+        }
+      }
+    },
+    "%lld%%": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld%%"
+          }
+        }
+      }
+    },
+    "-%lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "-%lld"
+          }
+        }
+      }
+    },
+    "1": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1"
+          }
+        }
+      }
+    },
+    "1 + 2 Rows": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 + 2 filas"
+          }
+        }
+      }
+    },
+    "1 bar": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 compás"
+          }
+        }
+      }
+    },
+    "1 col + rows": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 columna + filas"
+          }
+        }
+      }
+    },
+    "1 over 2 rows": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 sobre 2 filas"
+          }
+        }
+      }
+    },
+    "1 part": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 parte"
+          }
+        }
+      }
+    },
+    "1 row + cols": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 fila + columnas"
+          }
+        }
+      }
+    },
+    "1080p is always free. Go Pro for 4K and smaller files.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1080p siempre es gratis. Hazte Pro para 4K y archivos más livianos."
+          }
+        }
+      }
+    },
+    "1080p · Classic layout · \"Made with overdubly.com\" badge": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1080p · Diseño clásico · Insignia «Made with overdubly.com»"
+          }
+        }
+      }
+    },
+    "2": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2"
+          }
+        }
+      }
+    },
+    "2 + 1 Rows": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 + 1 filas"
+          }
+        }
+      }
+    },
+    "2 + 3 Rows": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 + 3 filas"
+          }
+        }
+      }
+    },
+    "2 bars": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 compases"
+          }
+        }
+      }
+    },
+    "2 columns": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 columnas"
+          }
+        }
+      }
+    },
+    "2 over 1 rows": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 sobre 1 filas"
+          }
+        }
+      }
+    },
+    "2 over 3 rows": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 sobre 3 filas"
+          }
+        }
+      }
+    },
+    "2×N Grid": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuadrícula 2×N"
+          }
+        }
+      }
+    },
+    "3": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3"
+          }
+        }
+      }
+    },
+    "3 + 2 Rows": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 + 2 filas"
+          }
+        }
+      }
+    },
+    "3 / 4": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 / 4"
+          }
+        }
+      }
+    },
+    "3 columns": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 columnas"
+          }
+        }
+      }
+    },
+    "3 over 2 rows": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 sobre 2 filas"
+          }
+        }
+      }
+    },
+    "3×N Grid": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuadrícula 3×N"
+          }
+        }
+      }
+    },
+    "4": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4"
+          }
+        }
+      }
+    },
+    "4 / 4": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4 / 4"
+          }
+        }
+      }
+    },
+    "4 OR MORE VOICES": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4 O MÁS VOCES"
+          }
+        }
+      }
+    },
+    "4 columns": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4 columnas"
+          }
+        }
+      }
+    },
+    "4 or More Voices": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4 o más voces"
+          }
+        }
+      }
+    },
+    "40% col + rows": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Columna 40% + filas"
+          }
+        }
+      }
+    },
+    "4K EXPORT": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "EXPORTACIÓN 4K"
+          }
+        }
+      }
+    },
+    "4K Export": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exportación 4K"
+          }
+        }
+      }
+    },
+    "4×N Grid": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuadrícula 4×N"
+          }
+        }
+      }
+    },
+    "6 / 8": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "6 / 8"
+          }
+        }
+      }
+    },
+    "60/40 & 40/60": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "60/40 y 40/60"
+          }
+        }
+      }
+    },
+    "9:16 · %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "9:16 · %@"
+          }
+        }
+      }
+    },
+    "A little studio. A real file.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un pequeño estudio. Un archivo real."
+          }
+        }
+      }
+    },
+    "A session couldn't be opened. Its recordings are still saved.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo abrir una sesión. Sus grabaciones siguen guardadas."
+          }
+        }
+      }
+    },
+    "A take is waiting for you": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tienes una toma pendiente"
+          }
+        }
+      }
+    },
+    "ALL 16 LAYOUTS": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LOS 16 DISEÑOS"
+          }
+        }
+      }
+    },
+    "Accent beat 1": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acentuar el tiempo 1"
+          }
+        }
+      }
+    },
+    "Add a photo as a part": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agregar una foto como parte"
+          }
+        }
+      }
+    },
+    "Adjust frames": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajustar cuadros"
+          }
+        }
+      }
+    },
+    "Adjusting timing by hand is always free. Go Pro to line up parts automatically.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajustar la sincronización a mano siempre es gratis. Hazte Pro para alinear las partes automáticamente."
+          }
+        }
+      }
+    },
+    "Align your parts": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alinea tus partes"
+          }
+        }
+      }
+    },
+    "Alignment applied": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alineación aplicada"
+          }
+        }
+      }
+    },
+    "All 16 Layouts": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los 16 diseños"
+          }
+        }
+      }
+    },
+    "Allow Photos access in Settings to save your video.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permite el acceso a Fotos en Ajustes para guardar tu video."
+          }
+        }
+      }
+    },
+    "Allow camera and microphone access in Settings to record a take.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permite el acceso a la cámara y al micrófono en Ajustes para grabar una toma."
+          }
+        }
+      }
+    },
+    "Alto voice": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voz alto"
+          }
+        }
+      }
+    },
+    "Apply timing": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aplicar sincronización"
+          }
+        }
+      }
+    },
+    "Arrange your frames": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acomoda tus cuadros"
+          }
+        }
+      }
+    },
+    "Audio was interrupted. Check your headphones and try again.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se interrumpió el audio. Revisa tus audífonos e inténtalo de nuevo."
+          }
+        }
+      }
+    },
+    "BAR %lld · BEAT %lld/%lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "COMPÁS %lld · TIEMPO %lld/%lld"
+          }
+        }
+      }
+    },
+    "BAR %lld/%lld · %lld BPM · %lld/%lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "COMPÁS %lld/%lld · %lld BPM · %lld/%lld"
+          }
+        }
+      }
+    },
+    "Bassoon": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fagot"
+          }
+        }
+      }
+    },
+    "Beat %lld of %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tiempo %lld de %lld"
+          }
+        }
+      }
+    },
+    "Better together.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mejor en conjunto."
+          }
+        }
+      }
+    },
+    "Both parts need sound to be lined up.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ambas partes necesitan sonido para alinearse."
+          }
+        }
+      }
+    },
+    "Bringing it together": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uniendo todo"
+          }
+        }
+      }
+    },
+    "Built-in audio": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Audio integrado"
+          }
+        }
+      }
+    },
+    "COLUMNS & GRIDS · VERTICAL SPLITS": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "COLUMNAS Y CUADRÍCULAS · DIVISIONES VERTICALES"
+          }
+        }
+      }
+    },
+    "COMBINATIONS · FRAMES & DIPTIC": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "COMBINACIONES · CUADROS Y DÍPTICOS"
+          }
+        }
+      }
+    },
+    "COUNT IN · %lld BPM": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CUENTA · %lld BPM"
+          }
+        }
+      }
+    },
+    "COUNT IN · %lld BPM · %lld/%lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CUENTA · %lld BPM · %lld/%lld"
+          }
+        }
+      }
+    },
+    "Cancel": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancelar"
+          }
+        }
+      }
+    },
+    "Capture": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grabar"
+          }
+        }
+      }
+    },
+    "Cello": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Violonchelo"
+          }
+        }
+      }
+    },
+    "Center %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Centrar %@"
+          }
+        }
+      }
+    },
+    "Center Stage": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Centro del escenario"
+          }
+        }
+      }
+    },
+    "Chamber Quartet — Bach": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuarteto de cámara — Bach"
+          }
+        }
+      }
+    },
+    "Change the order, or drag and pinch inside a frame.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cambia el orden, o arrastra y pellizca dentro de un cuadro."
+          }
+        }
+      }
+    },
+    "Clean Video — No Watermark": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Video limpio, sin marca de agua"
+          }
+        }
+      }
+    },
+    "Clear part name": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Borrar el nombre de la parte"
+          }
+        }
+      }
+    },
+    "Click volume": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volumen del clic"
+          }
+        }
+      }
+    },
+    "Clicks per beat": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clics por tiempo"
+          }
+        }
+      }
+    },
+    "Close Overdubly Pro": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cerrar Overdubly Pro"
+          }
+        }
+      }
+    },
+    "Cols + 1 row": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Columnas + 1 fila"
+          }
+        }
+      }
+    },
+    "Columns Strip": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Franja de columnas"
+          }
+        }
+      }
+    },
+    "Continue with Free Export": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuar con la exportación gratis"
+          }
+        }
+      }
+    },
+    "Corner badge": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Insignia en la esquina"
+          }
+        }
+      }
+    },
+    "Couldn't find a match. Try adjusting the timing by hand.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se encontró coincidencia. Prueba ajustar la sincronización a mano."
+          }
+        }
+      }
+    },
+    "Couldn't load prices. Check your connection and try again.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudieron cargar los precios. Revisa tu conexión e inténtalo de nuevo."
+          }
+        }
+      }
+    },
+    "Count in": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuenta regresiva"
+          }
+        }
+      }
+    },
+    "Count in · %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuenta · %@"
+          }
+        }
+      }
+    },
+    "Countdown %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuenta regresiva %lld"
+          }
+        }
+      }
+    },
+    "Create another version": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crear otra versión"
+          }
+        }
+      }
+    },
+    "Create my video": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crear mi video"
+          }
+        }
+      }
+    },
+    "Creating your video": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Creando tu video"
+          }
+        }
+      }
+    },
+    "Delete": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminar"
+          }
+        }
+      }
+    },
+    "Delete \"%@\"?": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Eliminar «%@»?"
+          }
+        }
+      }
+    },
+    "Delete %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminar %@"
+          }
+        }
+      }
+    },
+    "Delete %@?": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Eliminar %@?"
+          }
+        }
+      }
+    },
+    "Delete part": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminar parte"
+          }
+        }
+      }
+    },
+    "Delete part?": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Eliminar parte?"
+          }
+        }
+      }
+    },
+    "Delete session": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminar sesión"
+          }
+        }
+      }
+    },
+    "Diptic 60/40": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Díptico 60/40"
+          }
+        }
+      }
+    },
+    "Done": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listo"
+          }
+        }
+      }
+    },
+    "Drag to move · Pinch or tap + / − to zoom": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrastra para mover · Pellizca o toca + / − para acercar"
+          }
+        }
+      }
+    },
+    "Earlier": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Antes"
+          }
+        }
+      }
+    },
+    "Earlier parts play through your headphones while you record.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Las partes anteriores suenan en tus audífonos mientras grabas."
+          }
+        }
+      }
+    },
+    "Every part.\nAll you.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada parte.\nTodo tú."
+          }
+        }
+      }
+    },
+    "Everything in Overdubly Pro": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todo lo que incluye Overdubly Pro"
+          }
+        }
+      }
+    },
+    "Export": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exportar"
+          }
+        }
+      }
+    },
+    "Export a clean video without the Overdubly badge.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exporta un video limpio, sin la insignia de Overdubly."
+          }
+        }
+      }
+    },
+    "Export sharper videos and smaller files.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exporta videos más nítidos y archivos más livianos."
+          }
+        }
+      }
+    },
+    "Export with %@ and all 16 frame layouts.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exporta con %@ y los 16 diseños de cuadros."
+          }
+        }
+      }
+    },
+    "FREE VS PRO": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GRATIS VS PRO"
+          }
+        }
+      }
+    },
+    "Find a match": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buscar coincidencia"
+          }
+        }
+      }
+    },
+    "Finding a timing match": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buscando la sincronización"
+          }
+        }
+      }
+    },
+    "Finish take": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Terminar toma"
+          }
+        }
+      }
+    },
+    "First voice": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Primera voz"
+          }
+        }
+      }
+    },
+    "Flute 1": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flauta 1"
+          }
+        }
+      }
+    },
+    "Flute 2": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flauta 2"
+          }
+        }
+      }
+    },
+    "Flute 3": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flauta 3"
+          }
+        }
+      }
+    },
+    "Format": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Formato"
+          }
+        }
+      }
+    },
+    "Frame #%lld of %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuadro #%lld de %lld"
+          }
+        }
+      }
+    },
+    "Frame layout": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diseño de cuadros"
+          }
+        }
+      }
+    },
+    "Frame slot for %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Posición del cuadro de %@"
+          }
+        }
+      }
+    },
+    "Frames 40/60": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuadros 40/60"
+          }
+        }
+      }
+    },
+    "Free includes up to 2 sessions. Go Pro for unlimited sessions.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La versión gratis incluye hasta 2 sesiones. Hazte Pro para tener sesiones ilimitadas."
+          }
+        }
+      }
+    },
+    "Free includes up to 3 voices. Go Pro for quartets and bigger groups.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La versión gratis incluye hasta 3 voces. Hazte Pro para cuartetos y grupos más grandes."
+          }
+        }
+      }
+    },
+    "Free includes up to 3 voices. Go Pro to record 4 or more.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La versión gratis incluye hasta 3 voces. Hazte Pro para grabar 4 o más."
+          }
+        }
+      }
+    },
+    "Full preview": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vista completa"
+          }
+        }
+      }
+    },
+    "Give your mix a first part.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dale una primera parte a tu mezcla."
+          }
+        }
+      }
+    },
+    "Harmony": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Armonía"
+          }
+        }
+      }
+    },
+    "Headphones": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Audífonos"
+          }
+        }
+      }
+    },
+    "Headphones recommended": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se recomiendan audífonos"
+          }
+        }
+      }
+    },
+    "Hero Bottom": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Destacado abajo"
+          }
+        }
+      }
+    },
+    "Hero Left": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Destacado a la izquierda"
+          }
+        }
+      }
+    },
+    "Hero Right": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Destacado a la derecha"
+          }
+        }
+      }
+    },
+    "Hero Top": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Destacado arriba"
+          }
+        }
+      }
+    },
+    "Horizontal": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Horizontal"
+          }
+        }
+      }
+    },
+    "Horizontal position for %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Posición horizontal de %@"
+          }
+        }
+      }
+    },
+    "Horizontal rows": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filas horizontales"
+          }
+        }
+      }
+    },
+    "Input level": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nivel de entrada"
+          }
+        }
+      }
+    },
+    "Keep as many sessions as you want.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guarda todas las sesiones que quieras."
+          }
+        }
+      }
+    },
+    "Keep your time": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lleva el tiempo"
+          }
+        }
+      }
+    },
+    "Later": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Después"
+          }
+        }
+      }
+    },
+    "Lead": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Principal"
+          }
+        }
+      }
+    },
+    "Lead Flute": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flauta principal"
+          }
+        }
+      }
+    },
+    "Line up every voice in one tap.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alinea todas las voces con un toque."
+          }
+        }
+      }
+    },
+    "Line up this part automatically or adjust it by hand.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alinea esta parte automáticamente o ajústala a mano."
+          }
+        }
+      }
+    },
+    "Line up your parts with one tap, as often as you like.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alinea tus partes con un toque, todas las veces que quieras."
+          }
+        }
+      }
+    },
+    "Listen to the mix": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escuchar la mezcla"
+          }
+        }
+      }
+    },
+    "Listening to your parts…": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escuchando tus partes…"
+          }
+        }
+      }
+    },
+    "Listening…": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escuchando…"
+          }
+        }
+      }
+    },
+    "Loop preview": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repetir vista previa"
+          }
+        }
+      }
+    },
+    "M": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "M"
+          }
+        }
+      }
+    },
+    "METER": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "COMPÁS"
+          }
+        }
+      }
+    },
+    "Make it yours": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hazlo tuyo"
+          }
+        }
+      }
+    },
+    "Manual": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manual"
+          }
+        }
+      }
+    },
+    "Manual timing offset for %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajuste manual de sincronización de %@"
+          }
+        }
+      }
+    },
+    "Metronome": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Metrónomo"
+          }
+        }
+      }
+    },
+    "Mix & Sync": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mezcla"
+          }
+        }
+      }
+    },
+    "More ways to arrange your frames, from spotlight layouts to big grids.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Más formas de acomodar tus cuadros, desde diseños con una parte destacada hasta cuadrículas grandes."
+          }
+        }
+      }
+    },
+    "Most compatible": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Más compatible"
+          }
+        }
+      }
+    },
+    "Move %@ by %lld milliseconds": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mover %@ %lld milisegundos"
+          }
+        }
+      }
+    },
+    "Move %@ to earlier frame": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mover %@ al cuadro anterior"
+          }
+        }
+      }
+    },
+    "Move %@ to frame %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mover %@ al cuadro %lld"
+          }
+        }
+      }
+    },
+    "Move %@ to later frame": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mover %@ al cuadro siguiente"
+          }
+        }
+      }
+    },
+    "Mute": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Silenciar"
+          }
+        }
+      }
+    },
+    "Mute %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Silenciar %@"
+          }
+        }
+      }
+    },
+    "Muted": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Silenciada"
+          }
+        }
+      }
+    },
+    "My first session": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mi primera sesión"
+          }
+        }
+      }
+    },
+    "NO BADGE": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SIN INSIGNIA"
+          }
+        }
+      }
+    },
+    "Name it so it's easy to find later.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ponle un nombre para encontrarla fácilmente."
+          }
+        }
+      }
+    },
+    "New session": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nueva sesión"
+          }
+        }
+      }
+    },
+    "No badge": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin insignia"
+          }
+        }
+      }
+    },
+    "No previous Overdubly Pro purchases were found for this Apple Account.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se encontraron compras anteriores de Overdubly Pro en esta cuenta de Apple."
+          }
+        }
+      }
+    },
+    "Not enough storage. Free up some space and try again.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No hay suficiente espacio. Libera espacio e inténtalo de nuevo."
+          }
+        }
+      }
+    },
+    "Not selected": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No seleccionado"
+          }
+        }
+      }
+    },
+    "OK": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
+    "OPEN": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ABIERTA"
+          }
+        }
+      }
+    },
+    "OVERDUBLY PRO": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OVERDUBLY PRO"
+          }
+        }
+      }
+    },
+    "Off": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No"
+          }
+        }
+      }
+    },
+    "On": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sí"
+          }
+        }
+      }
+    },
+    "Overdubly": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overdubly"
+          }
+        }
+      }
+    },
+    "Overdubly Pro": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overdubly Pro"
+          }
+        }
+      }
+    },
+    "Overdubly Pro is unlocked.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overdubly Pro está desbloqueado."
+          }
+        }
+      }
+    },
+    "Own your multitrack studio forever.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu estudio multipista, para siempre."
+          }
+        }
+      }
+    },
+    "PART NAME": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NOMBRE DE LA PARTE"
+          }
+        }
+      }
+    },
+    "PRO": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PRO"
+          }
+        }
+      }
+    },
+    "Part %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parte %lld"
+          }
+        }
+      }
+    },
+    "Part name": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nombre de la parte"
+          }
+        }
+      }
+    },
+    "Part name (e.g. Flute 1, Lead)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nombre de la parte (p. ej. Flauta 1, Principal)"
+          }
+        }
+      }
+    },
+    "Pause": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pausar"
+          }
+        }
+      }
+    },
+    "Pause preview": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pausar vista previa"
+          }
+        }
+      }
+    },
+    "Pay once and keep it forever. No account needed.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paga una vez y es tuyo para siempre. Sin cuentas."
+          }
+        }
+      }
+    },
+    "Pay once. Yours forever on iPhone & iPad, with Family Sharing.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pago único. Tuyo para siempre en iPhone y iPad, con En familia."
+          }
+        }
+      }
+    },
+    "Percussion": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Percusión"
+          }
+        }
+      }
+    },
+    "Pick up where you left off before recording again.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Retoma donde lo dejaste antes de volver a grabar."
+          }
+        }
+      }
+    },
+    "Play preview": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reproducir vista previa"
+          }
+        }
+      }
+    },
+    "Preparing your performance": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preparando tu interpretación"
+          }
+        }
+      }
+    },
+    "Preparing…": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preparando…"
+          }
+        }
+      }
+    },
+    "Preview": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vista previa"
+          }
+        }
+      }
+    },
+    "Preview timeline scrubber": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Línea de tiempo de la vista previa"
+          }
+        }
+      }
+    },
+    "Preview video": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ver vista previa"
+          }
+        }
+      }
+    },
+    "Privacy Policy": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Política de privacidad"
+          }
+        }
+      }
+    },
+    "Processing…": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Procesando…"
+          }
+        }
+      }
+    },
+    "READY": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LISTO"
+          }
+        }
+      }
+    },
+    "RECORDING · BAR %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GRABANDO · COMPÁS %lld"
+          }
+        }
+      }
+    },
+    "ROWS · HORIZONTAL SPLITS": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FILAS · DIVISIONES HORIZONTALES"
+          }
+        }
+      }
+    },
+    "Ready to align": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listo para alinear"
+          }
+        }
+      }
+    },
+    "Record a longer phrase so the parts can be lined up.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Graba una frase más larga para poder alinear las partes."
+          }
+        }
+      }
+    },
+    "Record a part": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grabar una parte"
+          }
+        }
+      }
+    },
+    "Record a part first.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Primero graba una parte."
+          }
+        }
+      }
+    },
+    "Record a part to create your video.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Graba una parte para crear tu video."
+          }
+        }
+      }
+    },
+    "Record a take, then come back to listen and line it up.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Graba una toma y vuelve aquí para escucharla y alinearla."
+          }
+        }
+      }
+    },
+    "Record another part": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grabar otra parte"
+          }
+        }
+      }
+    },
+    "Record at least one part with video first.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Primero graba al menos una parte con video."
+          }
+        }
+      }
+    },
+    "Record at least two parts to line them up.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Graba al menos dos partes para alinearlas."
+          }
+        }
+      }
+    },
+    "Record quartets, quintets, and full ensembles.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Graba cuartetos, quintetos y ensambles completos."
+          }
+        }
+      }
+    },
+    "Recorded audio waveform": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Forma de onda del audio grabado"
+          }
+        }
+      }
+    },
+    "Recording missing": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Falta la grabación"
+          }
+        }
+      }
+    },
+    "Recording stopped unexpectedly. Your take is safe.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La grabación se detuvo inesperadamente. Tu toma está a salvo."
+          }
+        }
+      }
+    },
+    "Recording · %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grabando · %@"
+          }
+        }
+      }
+    },
+    "Recover take": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recuperar toma"
+          }
+        }
+      }
+    },
+    "Remove the \"Made with overdubly.com\" badge from your videos.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quita la insignia «Made with overdubly.com» de tus videos."
+          }
+        }
+      }
+    },
+    "Remove the \"Made with overdubly.com\" badge so your video is all yours.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quita la insignia «Made with overdubly.com» para que tu video sea solo tuyo."
+          }
+        }
+      }
+    },
+    "Remove · PRO": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quitar · PRO"
+          }
+        }
+      }
+    },
+    "Rename": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renombrar"
+          }
+        }
+      }
+    },
+    "Rename %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renombrar %@"
+          }
+        }
+      }
+    },
+    "Rename session": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renombrar sesión"
+          }
+        }
+      }
+    },
+    "Reset": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restablecer"
+          }
+        }
+      }
+    },
+    "Reset all": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restablecer todo"
+          }
+        }
+      }
+    },
+    "Reset framing for %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restablecer el encuadre de %@"
+          }
+        }
+      }
+    },
+    "Resolution": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resolución"
+          }
+        }
+      }
+    },
+    "Restart preview": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reiniciar vista previa"
+          }
+        }
+      }
+    },
+    "Restore Purchases": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restaurar compras"
+          }
+        }
+      }
+    },
+    "Rhythm": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ritmo"
+          }
+        }
+      }
+    },
+    "Row + hero + row": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fila + destacado + fila"
+          }
+        }
+      }
+    },
+    "Rows + 1 col": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filas + 1 columna"
+          }
+        }
+      }
+    },
+    "Rows Stack": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filas apiladas"
+          }
+        }
+      }
+    },
+    "S": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "S"
+          }
+        }
+      }
+    },
+    "SAVING TAKE": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GUARDANDO TOMA"
+          }
+        }
+      }
+    },
+    "SYNC ASSIST": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SYNC ASSIST"
+          }
+        }
+      }
+    },
+    "Save": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guardar"
+          }
+        }
+      }
+    },
+    "Save to Files": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guardar en Archivos"
+          }
+        }
+      }
+    },
+    "Save to Photos": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guardar en Fotos"
+          }
+        }
+      }
+    },
+    "Saved sessions": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sesiones guardadas"
+          }
+        }
+      }
+    },
+    "Saved to Files": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guardado en Archivos"
+          }
+        }
+      }
+    },
+    "Saved to Photos": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guardado en Fotos"
+          }
+        }
+      }
+    },
+    "Saving…": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guardando…"
+          }
+        }
+      }
+    },
+    "Second voice": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Segunda voz"
+          }
+        }
+      }
+    },
+    "Select %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seleccionar %@"
+          }
+        }
+      }
+    },
+    "Selected": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seleccionado"
+          }
+        }
+      }
+    },
+    "Session %lld": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sesión %lld"
+          }
+        }
+      }
+    },
+    "Session name": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nombre de la sesión"
+          }
+        }
+      }
+    },
+    "Share video": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compartir video"
+          }
+        }
+      }
+    },
+    "Sharper videos, plus smaller files that are easier to share.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Videos más nítidos y archivos más livianos, fáciles de compartir."
+          }
+        }
+      }
+    },
+    "Shows \"Made with overdubly.com\"": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Muestra «Made with overdubly.com»"
+          }
+        }
+      }
+    },
+    "Simulator Preview: Unlock Pro Immediately": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vista previa en simulador: desbloquear Pro"
+          }
+        }
+      }
+    },
+    "Smaller file": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Archivo más liviano"
+          }
+        }
+      }
+    },
+    "Smaller file (Apple)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Archivo más liviano (Apple)"
+          }
+        }
+      }
+    },
+    "Solo": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo"
+          }
+        }
+      }
+    },
+    "Solo %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo %@"
+          }
+        }
+      }
+    },
+    "Something went wrong while recording. Your take is safe.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Algo salió mal al grabar. Tu toma está a salvo."
+          }
+        }
+      }
+    },
+    "Start fresh": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empezar de nuevo"
+          }
+        }
+      }
+    },
+    "Start with a voice, an instrument, or a little rhythm.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empieza con una voz, un instrumento o un poco de ritmo."
+          }
+        }
+      }
+    },
+    "Stop preview": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detener"
+          }
+        }
+      }
+    },
+    "Suggested shift: %lld ms": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajuste sugerido: %lld ms"
+          }
+        }
+      }
+    },
+    "Support": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Soporte"
+          }
+        }
+      }
+    },
+    "Switch camera": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cambiar cámara"
+          }
+        }
+      }
+    },
+    "Sync Assist": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sync Assist"
+          }
+        }
+      }
+    },
+    "TEMPO": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TEMPO"
+          }
+        }
+      }
+    },
+    "Tap a part to select": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toca una parte para seleccionarla"
+          }
+        }
+      }
+    },
+    "Tempo": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tempo"
+          }
+        }
+      }
+    },
+    "Terms of Use (EULA)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Términos de uso (EULA)"
+          }
+        }
+      }
+    },
+    "The camera couldn't start. Check your headphones and try again.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo iniciar la cámara. Revisa tus audífonos e inténtalo de nuevo."
+          }
+        }
+      }
+    },
+    "The camera or microphone isn't available right now.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La cámara o el micrófono no están disponibles en este momento."
+          }
+        }
+      }
+    },
+    "The video could not be saved to Photos.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo guardar el video en Fotos."
+          }
+        }
+      }
+    },
+    "This device can't create a video with these settings. Try 1080p and Most compatible.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Este dispositivo no puede crear un video con esta configuración. Prueba 1080p y Más compatible."
+          }
+        }
+      }
+    },
+    "This permanently deletes the session, its recordings, and its videos.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esto elimina para siempre la sesión, sus grabaciones y sus videos."
+          }
+        }
+      }
+    },
+    "This photo couldn't be added. Please try again.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo agregar esta foto. Inténtalo de nuevo."
+          }
+        }
+      }
+    },
+    "This photo couldn't be opened. Try another one.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo abrir esta foto. Prueba con otra."
+          }
+        }
+      }
+    },
+    "This removes %@ from this session.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esto quita %@ de esta sesión."
+          }
+        }
+      }
+    },
+    "This session couldn't be opened.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo abrir esta sesión."
+          }
+        }
+      }
+    },
+    "This session couldn't be opened. Its recordings are still saved.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo abrir esta sesión. Sus grabaciones siguen guardadas."
+          }
+        }
+      }
+    },
+    "This take couldn't be read.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo leer esta toma."
+          }
+        }
+      }
+    },
+    "This take couldn't be recovered. Try again, or start fresh.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo recuperar esta toma. Inténtalo de nuevo o empieza de cero."
+          }
+        }
+      }
+    },
+    "This take couldn't be saved. You can recover it and try again.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo guardar esta toma. Puedes recuperarla e intentarlo de nuevo."
+          }
+        }
+      }
+    },
+    "This take didn't finish saving. Please try again.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esta toma no terminó de guardarse. Inténtalo de nuevo."
+          }
+        }
+      }
+    },
+    "Timing updated. You can undo this.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sincronización actualizada. Puedes deshacerlo."
+          }
+        }
+      }
+    },
+    "Timing: %@%lld ms": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sincronización: %@%lld ms"
+          }
+        }
+      }
+    },
+    "Tip: Double-tap any frame to center it.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Consejo: toca dos veces un cuadro para centrarlo."
+          }
+        }
+      }
+    },
+    "Try any layout for free. Go Pro to export with all of them.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prueba cualquier diseño gratis. Hazte Pro para exportar con todos."
+          }
+        }
+      }
+    },
+    "UNLIMITED SESSIONS": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SESIONES ILIMITADAS"
+          }
+        }
+      }
+    },
+    "Undo last adjustment": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deshacer el último ajuste"
+          }
+        }
+      }
+    },
+    "Unlimited Sessions": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sesiones ilimitadas"
+          }
+        }
+      }
+    },
+    "Unlimited Sync Assist": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sync Assist ilimitado"
+          }
+        }
+      }
+    },
+    "Unlock Overdubly Pro · %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desbloquear Overdubly Pro · %@"
+          }
+        }
+      }
+    },
+    "Vertical": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vertical"
+          }
+        }
+      }
+    },
+    "Vertical position for %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Posición vertical de %@"
+          }
+        }
+      }
+    },
+    "Vertical strips": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Franjas verticales"
+          }
+        }
+      }
+    },
+    "Violin": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Violín"
+          }
+        }
+      }
+    },
+    "Vocal Harmony Arrangement": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arreglo vocal a varias voces"
+          }
+        }
+      }
+    },
+    "Volume for %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volumen de %@"
+          }
+        }
+      }
+    },
+    "We restored %@ from its last save.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recuperamos %@ desde su último guardado."
+          }
+        }
+      }
+    },
+    "When it looks right, create your video to save or share it.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuando se vea bien, crea tu video para guardarlo o compartirlo."
+          }
+        }
+      }
+    },
+    "Your Overdubly Pro purchase has been restored.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se restauró tu compra de Overdubly Pro."
+          }
+        }
+      }
+    },
+    "Your finishing touches": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tus últimos detalles"
+          }
+        }
+      }
+    },
+    "Your next part starts here": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu próxima parte empieza aquí"
+          }
+        }
+      }
+    },
+    "Your parts": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tus partes"
+          }
+        }
+      }
+    },
+    "Your purchase is waiting for approval. Pro unlocks automatically once it's approved.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu compra está pendiente de aprobación. Pro se desbloqueará automáticamente cuando se apruebe."
+          }
+        }
+      }
+    },
+    "Your session": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu sesión"
+          }
+        }
+      }
+    },
+    "Your sessions": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tus sesiones"
+          }
+        }
+      }
+    },
+    "Your studio": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu estudio"
+          }
+        }
+      }
+    },
+    "Your timing, volume, and layout are kept in the final video.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La sincronización, el volumen y el diseño se mantienen en el video final."
+          }
+        }
+      }
+    },
+    "Your video": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu video"
+          }
+        }
+      }
+    },
+    "Your video couldn't be created. Your recordings are safe, so try again.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo crear tu video. Tus grabaciones están a salvo, así que inténtalo de nuevo."
+          }
+        }
+      }
+    },
+    "Your video is ready": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu video está listo"
+          }
+        }
+      }
+    },
+    "Yours to share.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listo para compartir."
+          }
+        }
+      }
+    },
+    "Zoom / Crop": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zoom / Recorte"
+          }
+        }
+      }
+    },
+    "Zoom for %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zoom de %@"
+          }
+        }
+      }
+    },
+    "Zoom in %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acercar %@"
+          }
+        }
+      }
+    },
+    "Zoom out %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alejar %@"
+          }
+        }
+      }
+    },
+    "e.g. Flute 1, Lead, Harmony": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "p. ej. Flauta 1, Principal, Armonía"
+          }
+        }
+      }
+    },
+    "one-time": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "pago único"
+          }
+        }
+      }
+    },
+    "overdubly": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "overdubly"
+          }
+        }
+      }
+    },
+    "overdubly pro": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "overdubly pro"
+          }
+        }
+      }
+    },
+    "·": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "·"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

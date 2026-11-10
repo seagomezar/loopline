@@ -143,9 +143,9 @@ struct LooplinePaywallView: View {
                 .frame(width: 34, height: 34)
                 .background(tint.opacity(0.14), in: RoundedRectangle(cornerRadius: 10))
             VStack(alignment: .leading, spacing: 3) {
-                Text(title)
+                Text(L(title))
                     .font(LooplineTheme.text(14, weight: .bold))
-                Text(detail)
+                Text(L(detail))
                     .font(LooplineTheme.text(12))
                     .foregroundStyle(Color.looplineMuted)
                     .fixedSize(horizontal: false, vertical: true)
@@ -185,7 +185,7 @@ struct LooplinePaywallView: View {
     private var primaryActionSection: some View {
         VStack(spacing: 10) {
             LooplinePrimaryButton(
-                title: store.isPurchasing ? "Processing…" : "Unlock Overdubly Pro · \(store.lifetimeDisplayPrice)",
+                title: store.isPurchasing ? String(localized: "Processing…") : String(localized: "Unlock Overdubly Pro · \(store.lifetimeDisplayPrice)"),
                 icon: "lock.open.fill",
                 tint: .looplineHalftoneBlue,
                 isDisabled: store.isPurchasing
@@ -303,7 +303,7 @@ struct LooplinePaywallView: View {
     private func handlePurchaseTap() async {
         if store.lifetimeProduct == nil { await store.loadProducts() }
         guard let lifetime = store.lifetimeProduct else {
-            store.statusMessage = "Couldn't load prices. Check your connection and try again."
+            store.statusMessage = String(localized: "Couldn't load prices. Check your connection and try again.")
             return
         }
         if await store.purchase(lifetime) {

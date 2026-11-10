@@ -108,43 +108,43 @@ enum VideoLayoutStyle: String, Codable, CaseIterable, Identifiable, Sendable {
 
     var title: String {
         switch self {
-        case .bentoSplit: "Frames 40/60"
-        case .dipticAlternating: "Diptic 60/40"
-        case .heroTop: "Hero Top"
-        case .heroBottom: "Hero Bottom"
-        case .heroLeft: "Hero Left"
-        case .heroRight: "Hero Right"
-        case .centerStage: "Center Stage"
-        case .grid1: "Rows Stack"
-        case .splitRows12: "1 + 2 Rows"
-        case .splitRows21: "2 + 1 Rows"
-        case .splitRows23: "2 + 3 Rows"
-        case .splitRows32: "3 + 2 Rows"
-        case .horizontalStrip: "Columns Strip"
-        case .grid2: "2×N Grid"
-        case .grid3: "3×N Grid"
-        case .grid4: "4×N Grid"
+        case .bentoSplit: String(localized: "Frames 40/60")
+        case .dipticAlternating: String(localized: "Diptic 60/40")
+        case .heroTop: String(localized: "Hero Top")
+        case .heroBottom: String(localized: "Hero Bottom")
+        case .heroLeft: String(localized: "Hero Left")
+        case .heroRight: String(localized: "Hero Right")
+        case .centerStage: String(localized: "Center Stage")
+        case .grid1: String(localized: "Rows Stack")
+        case .splitRows12: String(localized: "1 + 2 Rows")
+        case .splitRows21: String(localized: "2 + 1 Rows")
+        case .splitRows23: String(localized: "2 + 3 Rows")
+        case .splitRows32: String(localized: "3 + 2 Rows")
+        case .horizontalStrip: String(localized: "Columns Strip")
+        case .grid2: String(localized: "2×N Grid")
+        case .grid3: String(localized: "3×N Grid")
+        case .grid4: String(localized: "4×N Grid")
         }
     }
 
     var subtitle: String {
         switch self {
-        case .bentoSplit: "40% col + rows"
-        case .dipticAlternating: "60/40 & 40/60"
-        case .heroTop: "1 row + cols"
-        case .heroBottom: "Cols + 1 row"
-        case .heroLeft: "1 col + rows"
-        case .heroRight: "Rows + 1 col"
-        case .centerStage: "Row + hero + row"
-        case .grid1: "Horizontal rows"
-        case .splitRows12: "1 over 2 rows"
-        case .splitRows21: "2 over 1 rows"
-        case .splitRows23: "2 over 3 rows"
-        case .splitRows32: "3 over 2 rows"
-        case .horizontalStrip: "Vertical strips"
-        case .grid2: "2 columns"
-        case .grid3: "3 columns"
-        case .grid4: "4 columns"
+        case .bentoSplit: String(localized: "40% col + rows")
+        case .dipticAlternating: String(localized: "60/40 & 40/60")
+        case .heroTop: String(localized: "1 row + cols")
+        case .heroBottom: String(localized: "Cols + 1 row")
+        case .heroLeft: String(localized: "1 col + rows")
+        case .heroRight: String(localized: "Rows + 1 col")
+        case .centerStage: String(localized: "Row + hero + row")
+        case .grid1: String(localized: "Horizontal rows")
+        case .splitRows12: String(localized: "1 over 2 rows")
+        case .splitRows21: String(localized: "2 over 1 rows")
+        case .splitRows23: String(localized: "2 over 3 rows")
+        case .splitRows32: String(localized: "3 over 2 rows")
+        case .horizontalStrip: String(localized: "Vertical strips")
+        case .grid2: String(localized: "2 columns")
+        case .grid3: String(localized: "3 columns")
+        case .grid4: String(localized: "4 columns")
         }
     }
 
@@ -366,7 +366,7 @@ struct RenderSnapshot: Codable, Equatable, Sendable {
                 offsetMilliseconds: Int(core.timebase.milliseconds(for: track.placement.effectiveTimelineStart)),
                 gain: track.mix.gainCentibels <= -12000 ? 0 : pow(10, Double(track.mix.gainCentibels) / 2000),
                 isMuted: track.mix.isMuted || (hasSolo && !track.mix.isSoloed), order: track.video.tileIndex,
-                title: trimmedTitle.isEmpty ? "Part \(index + 1)" : trimmedTitle,
+                title: trimmedTitle.isEmpty ? String(localized: "Part \(index + 1)") : trimmedTitle,
                 panX: track.video.panX,
                 panY: track.video.panY,
                 zoom: track.video.zoom,

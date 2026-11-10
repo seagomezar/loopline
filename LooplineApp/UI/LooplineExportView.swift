@@ -101,7 +101,7 @@ struct LooplineExportView: View {
                     Image(systemName: "film").font(LooplineTheme.text(24))
                     VStack(alignment: .leading, spacing: 5) {
                         Text("A little studio. A real file.").font(LooplineTheme.text(17, weight: .bold))
-                        Text(model.tracks.isEmpty ? "Record a part to create your video." : "When it looks right, create your video to save or share it.")
+                        Text(L(model.tracks.isEmpty ? "Record a part to create your video." : "When it looks right, create your video to save or share it."))
                             .font(LooplineTheme.text(13)).foregroundStyle(Color.looplineMuted)
                     }
                 }
@@ -146,8 +146,8 @@ struct LooplineExportView: View {
     private func picker(_ title: String, selection: Binding<String>, choices: [String],
                         label: @escaping (String) -> String = { $0 }) -> some View {
         HStack {
-            Text(title); Spacer()
-            Picker(title, selection: selection) { ForEach(choices, id: \.self) { Text(label($0)).tag($0) } }.tint(.looplineInk)
+            Text(L(title)); Spacer()
+            Picker(L(title), selection: selection) { ForEach(choices, id: \.self) { Text(label($0)).tag($0) } }.tint(.looplineInk)
         }
     }
 
@@ -156,7 +156,7 @@ struct LooplineExportView: View {
         HStack(spacing: 10) {
             VStack(alignment: .leading, spacing: 2) {
                 Text("Corner badge")
-                Text(model.effectiveIncludeWatermark ? "Shows \"Made with overdubly.com\"" : "No badge")
+                Text(L(model.effectiveIncludeWatermark ? "Shows \"Made with overdubly.com\"" : "No badge"))
                     .font(LooplineTheme.text(11, mono: true))
                     .foregroundStyle(Color.looplineMuted)
             }
@@ -427,7 +427,7 @@ private struct LooplineExportPreviewCard: View {
                 HStack(spacing: 8) {
                     Image(systemName: model.isExportPreviewPlaying ? "pause.fill" : "play.fill")
                         .font(LooplineTheme.text(14, weight: .bold))
-                    Text(model.isExportPreviewPlaying ? "Pause preview" : "Preview video")
+                    Text(L(model.isExportPreviewPlaying ? "Pause preview" : "Preview video"))
                         .font(LooplineTheme.text(14, weight: .bold))
                 }
                 .foregroundStyle(Color.looplineInk)
@@ -462,7 +462,7 @@ private struct LooplineExportPreviewCard: View {
             }
             .buttonStyle(.plain)
             .accessibilityLabel("Loop preview")
-            .accessibilityValue(model.isExportPreviewLooping ? "On" : "Off")
+            .accessibilityValue(L(model.isExportPreviewLooping ? "On" : "Off"))
         }
     }
 }
@@ -621,7 +621,7 @@ private struct LooplineFullPreviewSheet: View {
                         } label: {
                             HStack(spacing: 8) {
                                 Image(systemName: model.isExportPreviewPlaying ? "pause.fill" : "play.fill")
-                                Text(model.isExportPreviewPlaying ? "Pause" : "Play preview")
+                                Text(L(model.isExportPreviewPlaying ? "Pause" : "Play preview"))
                             }
                             .font(LooplineTheme.text(15, weight: .bold))
                             .foregroundStyle(Color.looplineInk)
@@ -677,9 +677,9 @@ enum LooplineExportFormat {
 
     static func label(for format: String) -> String {
         switch format {
-        case "H.264 MP4": "Most compatible"
-        case "HEVC MP4": "Smaller file"
-        case "HEVC MOV": "Smaller file (Apple)"
+        case "H.264 MP4": String(localized: "Most compatible")
+        case "HEVC MP4": String(localized: "Smaller file")
+        case "HEVC MOV": String(localized: "Smaller file (Apple)")
         default: format
         }
     }
